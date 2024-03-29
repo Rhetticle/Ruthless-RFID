@@ -81,10 +81,10 @@ const osThreadAttr_t Home_attributes = {
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* USER CODE BEGIN PV */
-uint8_t buffer[1024]={0x7C,0x04,0x18,0x04,0x78};
 char TC[]="HVE strongly condemns malicious use of it's products.The Ruthless RFID is sold as an educational device. HVE is not liable for damages caused by misuse.";
 char Standby[]="    RUTHLESS RFID                         STANDARD: ISO 14443-3                     STATE: READ                               STATUS: NO CARD                              ";
-
+Screen HOME,Read,Found;
+int count=0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -566,6 +566,9 @@ void Start_Init(void *argument)
     MFRC_ANTOFF();
     OLED_INIT();
     OLED_Print(TC);
+    SCREEN_INIT(&Read, 3, 2,(char**)READ_SCREEN,READ_DATLOC ,READ_SEL);
+    SCREEN_INIT(&Found,5,2,(char**)CARD_FOUNDSCREEN,CARD_FOUNDATLOC,CARD_FOUNDSEL);
+    SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
     while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)!=0);
     vTaskResume(HomeHandle);
     vTaskSuspend(NULL);
@@ -583,13 +586,9 @@ void Start_Init(void *argument)
 void StartReadCard(void *argument)
 {
   /* USER CODE BEGIN StartReadCard */
-	Screen Read,Found;
-	uint8_t cardinf[18];
-	char uid[16];
-	int count=0;
+	uint8_t uid[8];
+	uint8_t cardinf[16];
 	MFRC_ANTON();
-	SCREEN_INIT(&Read, 3, 2, READ_SCREEN,READ_DATLOC ,READ_SEL);
-	SCREEN_INIT(&Found,5,2,CARD_FOUNDSCREEN,CARD_FOUNDATLOC,CARD_FOUNDSEL);
 	OLED_SCREEN(&Read, NORMAL);
   /* Infinite loop */
   for(;;)
@@ -597,11 +596,12 @@ void StartReadCard(void *argument)
     if(DumpINFO(cardinf)==PCD_OK){
     	OLED_SCREEN(&Found, NORMAL);
     	OLED_SELECT(&Found, count,OLED_NORESTORE);
-    	sprintf(uid," %X%X%X%X%X%X%X",cardinf[0],cardinf[1],cardinf[2],cardinf[3],cardinf[4],cardinf[5],cardinf[6]);
+    	sprintf(uid,"%X%X%X%X%X%X%X",cardinf[0],cardinf[1],cardinf[2],cardinf[3],cardinf[4],cardinf[5],cardinf[6]);
     	OLED_SCRNREF(&Found, 1, uid);
     	OLED_SCRNREF(&Found,2," MIFARE ULTRALIGHT");
     	BUZZ();
     	MFRC_ANTOFF();
+
     	while(1){
     		if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
     				  __HAL_TIM_SET_COUNTER(&htim3,0);
@@ -609,10 +609,10 @@ void StartReadCard(void *argument)
     					  HAL_TIM_Base_Start(&htim3);
     					  if((__HAL_TIM_GET_COUNTER(&htim3)==999)&&(count==1)){
     						  HAL_TIM_Base_Stop(&htim3);
-    						  OLED_FREESCREEN(&Read);
-    						  OLED_FREESCREEN(&Found);
+    						  OLED_SCREEN(&HOME, NORMAL);
     						  vTaskResume(HomeHandle);
     						  vTaskSuspend(NULL);
+
     						  }
     					  }
     				  HAL_TIM_Base_Stop(&htim3);
@@ -622,9 +622,10 @@ void StartReadCard(void *argument)
     				  }
     				  OLED_SELECT(&Found, count,OLED_NORESTORE);
     				  }
-
-
     	}
+
+
+
 
     }
 
@@ -645,6 +646,7 @@ void StartWriteCard(void *argument)
   /* Infinite loop */
   for(;;)
   {
+	OLED_Clear();
     osDelay(1);
   }
   /* USER CODE END StartWriteCard */
@@ -660,11 +662,7 @@ void StartWriteCard(void *argument)
 void StartHome(void *argument)
 {
   /* USER CODE BEGIN StartHome */
-	Screen HOME; //We will free this when going to subsections of the home screen
-	int count=0;
-	SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
 	OLED_SCREEN(&HOME, NORMAL);
-	OLED_SELECT(&HOME, count,OLED_RESTORE);
   /* Infinite loop */
   for(;;)
   {
@@ -675,7 +673,6 @@ void StartHome(void *argument)
 			  HAL_TIM_Base_Start(&htim3);
 			  if(__HAL_TIM_GET_COUNTER(&htim3)==999){
 				  HAL_TIM_Base_Stop(&htim3);
-				  OLED_FREESCREEN(&HOME);
 				  vTaskResume(ReadCardHandle);
 				  vTaskSuspend(NULL);
 				  }

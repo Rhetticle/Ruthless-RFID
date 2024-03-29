@@ -68,8 +68,8 @@ all: main-build
 main-build: Ruthless\ RFID.elf secondary-outputs
 
 # Tool invocations
-Ruthless\ RFID.elf Ruthless\ RFID.map: $(OBJS) $(USER_OBJS) C:\Users\rhett\STM32CubeIDE\workspace_1.12.1\Ruthless\ RFID\STM32F401CBUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\rhett\STM32CubeIDE\workspace_1.12.1\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Ruthless\ RFID.elf Ruthless\ RFID.map: $(OBJS) $(USER_OBJS) C:\Users\rhett\OneDrive\Documents\Ruthless\ RFID\Firmware\Ruthless\ RFID\STM32F401CBUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
