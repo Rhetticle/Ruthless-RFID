@@ -1,0 +1,20 @@
+Removed Pin From Net: NetName=GND Pin=C13-2
+Removed Pin From Net: NetName=GND Pin=C14-2
+Change Component Footprint: Designator=C13 Old Footprint=FP-C0603C-CF-MFG New Footprint=CAPC2013X88X50LL20T25
+Change Component Footprint: Designator=C14 Old Footprint=FP-C0603C-CF-MFG New Footprint=CAPC2013X88X50LL20T25
+Change Managed Component Library Link : Designator=C13 Old VaultGUID=B7D15EC3-160A-466F-A46C-7801FE6295A7 New VaultGUID=B7D15EC3-160A-466F-A46C-7801FE6295A7 Old ItemGUID=F80B3148-3272-480B-A8B1-3C3CFF5B2F34 New ItemGUID=69FA6185-5953-4A4A-90E2-A39648F2400F Old RevisionGUID=F5F640B1-C94D-4CA9-A28B-62B017663A3B New RevisionGUID=DF1E8E9E-92EE-4671-B48E-76E4EC78D3ED
+Change Managed Component Library Link : Designator=C14 Old VaultGUID=B7D15EC3-160A-466F-A46C-7801FE6295A7 New VaultGUID=B7D15EC3-160A-466F-A46C-7801FE6295A7 Old ItemGUID=F80B3148-3272-480B-A8B1-3C3CFF5B2F34 New ItemGUID=69FA6185-5953-4A4A-90E2-A39648F2400F Old RevisionGUID=F5F640B1-C94D-4CA9-A28B-62B017663A3B New RevisionGUID=DF1E8E9E-92EE-4671-B48E-76E4EC78D3ED
+Change component parameters: Designator = "C13" ("C13"); Footprint = "FP-C0603C-CF-MFG"; UniqueID = "\DOIXVKFN" ("\DOIXVKFN")
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "Kemet"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Part Number"; Value = "C0805C103K5RACTU"; VariantName = "[No Variations]"
+Change component parameters: Designator = "C14" ("C14"); Footprint = "FP-C0603C-CF-MFG"; UniqueID = "\GRXBMCEX" ("\GRXBMCEX")
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "Kemet"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Part Number"; Value = "C0805C103K5RACTU"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=C13-1
+Added Pin To Net: NetName=GND Pin=C14-1
+Added Pin To Net: NetName=NetC13_2 Pin=C13-2
+Added Pin To Net: NetName=NetC13_2 Pin=J2-14
+Added Net: Name=NetC13_2
+Added Pin To Net: NetName=NetC14_2 Pin=C14-2
+Added Pin To Net: NetName=NetC14_2 Pin=J2-15
+Added Net: Name=NetC14_2

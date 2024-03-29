@@ -1,0 +1,8 @@
+Change Footprint: Footprint Not Found CONN16_046809616210846+_AVX
+Change Component Comment : Designator=J2 Old Comment=OLED New Comment=046809616210846+
+Change component parameters: Designator = "J2" ("J2"); Footprint = "16pin 0.5P FPC"; UniqueID = "\GQRVNYHX" ("\GQRVNYHX")
+Change component parameters (AddParameter): Name = "Copyright"; Value = "Copyright (C) 2024 Ultra Librarian. All rights reserved."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer_Part_Number"; Value = "046809616210846+"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Mfr_Name"; Value = "KYOCERA AVX"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "RefDes"; Value = "RefDes"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Type"; Value = "DEV"; VariantName = "[No Variations]"

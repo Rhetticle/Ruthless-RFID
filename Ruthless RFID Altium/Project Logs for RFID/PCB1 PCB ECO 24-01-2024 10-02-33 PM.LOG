@@ -1,0 +1,3 @@
+Removed Pin From Net: NetName=GND Pin=C36-1
+Removed Pin From Net: NetName=3V3 Pin=C36-2
+Removed Member From Class: ClassName=RFID Sheet2 Member=C36

@@ -1,0 +1,13 @@
+Removed Pin From Net: NetName=3V3 Pin=P1-1
+Removed Pin From Net: NetName=SWCLK Pin=P1-2
+Removed Pin From Net: NetName=GND Pin=P1-3
+Removed Pin From Net: NetName=SWDIO Pin=P1-4
+Removed Member From Class: ClassName=RFID Sheet 1 Member=P1
+Added Component: Designator=J?(FP-PH1RB-04-UA-MFG)
+Add component (AddParameter): Name = "NexarPartId"; Value = "12075420"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "RoHS"; Value = "Non-Compliant"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=3V3 Pin=J?-1
+Added Pin To Net: NetName=SWCLK Pin=J?-2
+Added Pin To Net: NetName=GND Pin=J?-3
+Added Pin To Net: NetName=SWDIO Pin=J?-4
+Added Member To Class: ClassName=RFID Sheet 1 Member=Component J? PH1RB-04-UA

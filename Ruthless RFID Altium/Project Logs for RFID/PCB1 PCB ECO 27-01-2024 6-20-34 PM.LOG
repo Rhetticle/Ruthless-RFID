@@ -1,0 +1,2 @@
+Removed Pin From Net: NetName=CS_MEM Pin=U1-26
+Added Pin To Net: NetName=CS_MEM Pin=U1-29
