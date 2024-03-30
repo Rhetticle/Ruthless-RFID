@@ -167,6 +167,8 @@ static const uint8_t CARD_FOUNDSEL[2][2]={{7,START_COL},{7,END_COL-36}};
 static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
 static const uint8_t WRITE_SEL[3][2]={{2,START_COL},{4,START_COL},{6,START_COL}};
 
+
+
 /*STRUCT INFO
  *
  * Screen struct is used to define a set of strings to display to the OLED display as well as locations for the select

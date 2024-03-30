@@ -247,7 +247,7 @@ void OLED_InvChar(char character,uint8_t* result){
 	uint8_t* temp=malloc(5);
 
 	for(int i=0;i<6;i++){
-			temp[i]= ~(ASCII[(uint8_t)character-0x20][i]);
+			temp[i]=~(ASCII[(uint8_t)character-0x20][i]);
 	}
 	memcpy(result,temp,5);
 }
@@ -293,7 +293,10 @@ void OLED_drawChar(uint8_t page,uint8_t col, char character, uint8_t invert){
 
 void OLED_Printlin(uint8_t page,uint8_t col,char* string,uint8_t invert){
 	for(int i=0;i<strlen(string);i++){
-		OLED_drawChar(page, col+(i*6), string[i],invert);
+
+			OLED_drawChar(page, col+(i*6), string[i],invert);
+
+
 	}
 }
 
@@ -431,12 +434,9 @@ void OLED_FREESCREEN(Screen* screen){
 		free(screen->data[i]);
 		free(screen->dataloc[i]);
 	}
-	free(screen->data);
-	free(screen->dataloc);
 	for(int j=0;j<screen->selsize;j++){
 		free(screen->seldata[j]);
 	}
-	free(screen);
 
 }
 

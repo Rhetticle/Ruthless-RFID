@@ -26,6 +26,7 @@
 #include "usbd_cdc_if.h"
 #include "MFRC.h"
 #include "OLED.h"
+#include "queue.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,7 +57,7 @@ TIM_HandleTypeDef htim3;
 osThreadId_t PERIPHINITHandle;
 const osThreadAttr_t PERIPHINIT_attributes = {
   .name = "PERIPHINIT",
-  .stack_size = 256 * 4,
+  .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityHigh,
 };
 /* Definitions for ReadCard */
@@ -80,11 +81,26 @@ const osThreadAttr_t Home_attributes = {
   .stack_size = 256 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for UpdateDisplay */
+osThreadId_t UpdateDisplayHandle;
+const osThreadAttr_t UpdateDisplay_attributes = {
+  .name = "UpdateDisplay",
+  .stack_size = 256 * 4,
+  .priority = (osPriority_t) osPriorityAboveNormal,
+};
+/* Definitions for DisplayData */
+osMessageQueueId_t DisplayDataHandle;
+const osMessageQueueAttr_t DisplayData_attributes = {
+  .name = "DisplayData"
+};
 /* USER CODE BEGIN PV */
 char TC[]="HVE strongly condemns malicious use of it's products.The Ruthless RFID is sold as an educational device. HVE is not liable for damages caused by misuse.";
 char Standby[]="    RUTHLESS RFID                         STANDARD: ISO 14443-3                     STATE: READ                               STATUS: NO CARD                              ";
-Screen HOME,Read,Found;
-int count=0;
+
+typedef struct {
+	int id;
+	char name[100];
+}message;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -99,6 +115,7 @@ void Start_Init(void *argument);
 void StartReadCard(void *argument);
 void StartWriteCard(void *argument);
 void StartHome(void *argument);
+void StartUpdateDisplay(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -193,6 +210,10 @@ int main(void)
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
 
+  /* Create the queue(s) */
+  /* creation of DisplayData */
+  DisplayDataHandle = osMessageQueueNew (1, sizeof(Screen), &DisplayData_attributes);
+
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
@@ -209,6 +230,9 @@ int main(void)
 
   /* creation of Home */
   HomeHandle = osThreadNew(StartHome, NULL, &Home_attributes);
+
+  /* creation of UpdateDisplay */
+  UpdateDisplayHandle = osThreadNew(StartUpdateDisplay, NULL, &UpdateDisplay_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -559,18 +583,19 @@ void Start_Init(void *argument)
   /* Infinite loop */
   for(;;)
   {
+	Screen HOME;
+	SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+	Screen* tosend = &HOME;
 	vTaskSuspend(ReadCardHandle);
     vTaskSuspend(WriteCardHandle);
+    vTaskSuspend(UpdateDisplayHandle);
     vTaskSuspend(HomeHandle);
     MFRC_INIT();
     MFRC_ANTOFF();
     OLED_INIT();
-    OLED_Print(TC);
-    SCREEN_INIT(&Read, 3, 2,(char**)READ_SCREEN,READ_DATLOC ,READ_SEL);
-    SCREEN_INIT(&Found,5,2,(char**)CARD_FOUNDSCREEN,CARD_FOUNDATLOC,CARD_FOUNDSEL);
-    SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
-    while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)!=0);
-    vTaskResume(HomeHandle);
+    xQueueSend(DisplayDataHandle,&tosend,0);
+    osDelay(100);
+    vTaskResume(UpdateDisplayHandle);
     vTaskSuspend(NULL);
   }
   /* USER CODE END 5 */
@@ -586,49 +611,35 @@ void Start_Init(void *argument)
 void StartReadCard(void *argument)
 {
   /* USER CODE BEGIN StartReadCard */
-	uint8_t uid[8];
-	uint8_t cardinf[16];
-	MFRC_ANTON();
-	OLED_SCREEN(&Read, NORMAL);
+
   /* Infinite loop */
   for(;;)
   {
+	uint8_t cardinf[18];
+	char uid[16];
+	int count = 0;
+
     if(DumpINFO(cardinf)==PCD_OK){
-    	OLED_SCREEN(&Found, NORMAL);
-    	OLED_SELECT(&Found, count,OLED_NORESTORE);
     	sprintf(uid,"%X%X%X%X%X%X%X",cardinf[0],cardinf[1],cardinf[2],cardinf[3],cardinf[4],cardinf[5],cardinf[6]);
-    	OLED_SCRNREF(&Found, 1, uid);
-    	OLED_SCRNREF(&Found,2," MIFARE ULTRALIGHT");
     	BUZZ();
     	MFRC_ANTOFF();
-
     	while(1){
     		if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
-    				  __HAL_TIM_SET_COUNTER(&htim3,0);
-    				  while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
-    					  HAL_TIM_Base_Start(&htim3);
-    					  if((__HAL_TIM_GET_COUNTER(&htim3)==999)&&(count==1)){
-    						  HAL_TIM_Base_Stop(&htim3);
-    						  OLED_SCREEN(&HOME, NORMAL);
-    						  vTaskResume(HomeHandle);
-    						  vTaskSuspend(NULL);
-
-    						  }
-    					  }
-    				  HAL_TIM_Base_Stop(&htim3);
-    				  count++;
-    				  if(count==2){
-    				      	count=0;
-    				  }
-    				  OLED_SELECT(&Found, count,OLED_NORESTORE);
-    				  }
+    			__HAL_TIM_SET_COUNTER(&htim3,0);
+    			while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
+    				HAL_TIM_Base_Start(&htim3);
+    				if((__HAL_TIM_GET_COUNTER(&htim3)==999)&&(count==1)){
+    					HAL_TIM_Base_Stop(&htim3);
+    					vTaskResume(HomeHandle);
+    					vTaskSuspend(NULL);
+    					}
+    			}
+    		HAL_TIM_Base_Stop(&htim3);
     	}
-
-
-
 
     }
 
+  }
   }
   /* USER CODE END StartReadCard */
 }
@@ -646,7 +657,6 @@ void StartWriteCard(void *argument)
   /* Infinite loop */
   for(;;)
   {
-	OLED_Clear();
     osDelay(1);
   }
   /* USER CODE END StartWriteCard */
@@ -662,12 +672,11 @@ void StartWriteCard(void *argument)
 void StartHome(void *argument)
 {
   /* USER CODE BEGIN StartHome */
-	OLED_SCREEN(&HOME, NORMAL);
   /* Infinite loop */
   for(;;)
   {
 
-	  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
+	 if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
 		  __HAL_TIM_SET_COUNTER(&htim3,0);
 		  while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
 			  HAL_TIM_Base_Start(&htim3);
@@ -678,24 +687,30 @@ void StartHome(void *argument)
 				  }
 			  }
 		  HAL_TIM_Base_Stop(&htim3);
-		  count++;
-		  if(count==6){
-		  		count=0;
 		  }
-
-		  OLED_SELECT(&HOME, count,OLED_RESTORE);
-		  }
-
-
-
-
-
-
-
-
-
   }
   /* USER CODE END StartHome */
+}
+
+/* USER CODE BEGIN Header_StartUpdateDisplay */
+/**
+* @brief Function implementing the UpdateDisplay thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartUpdateDisplay */
+void StartUpdateDisplay(void *argument)
+{
+  /* USER CODE BEGIN StartUpdateDisplay */
+	/* Infinite loop */
+  for(;;)
+  {
+	Screen* toDisplay;
+	xQueueReceive(DisplayDataHandle, &toDisplay, 0);
+	OLED_SCREEN(toDisplay, NORMAL);
+	osDelay(1);
+  }
+  /* USER CODE END StartUpdateDisplay */
 }
 
 /**
