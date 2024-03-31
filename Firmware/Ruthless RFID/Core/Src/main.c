@@ -93,6 +93,11 @@ osMessageQueueId_t DisplayDataHandle;
 const osMessageQueueAttr_t DisplayData_attributes = {
   .name = "DisplayData"
 };
+/* Definitions for DisplayCount */
+osMessageQueueId_t DisplayCountHandle;
+const osMessageQueueAttr_t DisplayCount_attributes = {
+  .name = "DisplayCount"
+};
 /* USER CODE BEGIN PV */
 char TC[]="HVE strongly condemns malicious use of it's products.The Ruthless RFID is sold as an educational device. HVE is not liable for damages caused by misuse.";
 char Standby[]="    RUTHLESS RFID                         STANDARD: ISO 14443-3                     STATE: READ                               STATUS: NO CARD                              ";
@@ -212,7 +217,10 @@ int main(void)
 
   /* Create the queue(s) */
   /* creation of DisplayData */
-  DisplayDataHandle = osMessageQueueNew (1, sizeof(Screen), &DisplayData_attributes);
+  DisplayDataHandle = osMessageQueueNew (1, sizeof(Screen*), &DisplayData_attributes);
+
+  /* creation of DisplayCount */
+  DisplayCountHandle = osMessageQueueNew (1, sizeof(uint32_t), &DisplayCount_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -586,6 +594,7 @@ void Start_Init(void *argument)
 	Screen HOME;
 	SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
 	Screen* tosend = &HOME;
+	uint32_t count = 0;
 	vTaskSuspend(ReadCardHandle);
     vTaskSuspend(WriteCardHandle);
     vTaskSuspend(UpdateDisplayHandle);
@@ -594,9 +603,9 @@ void Start_Init(void *argument)
     MFRC_ANTOFF();
     OLED_INIT();
     xQueueSend(DisplayDataHandle,&tosend,0);
+    xQueueSend(DisplayCountHandle,&count,0);
     vTaskResume(UpdateDisplayHandle);
-    osDelay(1000);
-    OLED_FREESCREEN(&HOME);
+    osDelay(100);
     vTaskSuspend(NULL);
   }
   /* USER CODE END 5 */
@@ -706,11 +715,12 @@ void StartUpdateDisplay(void *argument)
 	/* Infinite loop */
   for(;;)
   {
-	Screen toDisplay;
-	Screen* rec;
-	xQueueReceive(DisplayDataHandle, &rec, 0);
-	memcpy(&toDisplay,rec,sizeof(*rec));
-	OLED_SCREEN(&toDisplay, NORMAL);
+	Screen* toDisplay;
+	uint32_t count = 0;
+	xQueueReceive(DisplayDataHandle, &toDisplay, 0);
+	xQueueReceive(DisplayCountHandle, &count, 0);
+	OLED_SCREEN(toDisplay, NORMAL);
+	OLED_SELECT(toDisplay, count, OLED_RESTORE);
 	while(1){
 	osDelay(1);
 	}

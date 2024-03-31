@@ -1,28 +1,24 @@
-22:53:38 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+23:49:35 **** Incremental Build of configuration Debug for project Ruthless RFID ****
 make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 ../Core/Src/main.c: In function 'Start_Init':
-../Core/Src/main.c:587:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
-  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+../Core/Src/main.c:595:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  595 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
       |                                            ^~~~~~~~~~~
 In file included from ../Core/Src/main.c:28:
 ../Core/Inc/OLED.h:198:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
   198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
       |                                                                      ~~~~~~~~~~^~~~~~~~~~~
-../Core/Src/main.c:587:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
-  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+../Core/Src/main.c:595:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  595 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
       |                                                        ^~~~~~~~
 In file included from ../Core/Src/main.c:28:
 ../Core/Inc/OLED.h:198:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
   198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
       |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
-../Core/Src/main.c:599:5: warning: implicit declaration of function 'OLED_FREESCREEN'; did you mean 'OLED_SCREEN'? [-Wimplicit-function-declaration]
-  599 |     OLED_FREESCREEN(&HOME);
-      |     ^~~~~~~~~~~~~~~
-      |     OLED_SCREEN
 ../Core/Src/main.c: In function 'StartReadCard':
-../Core/Src/main.c:623:8: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
-  623 |     if(DumpINFO(cardinf)==PCD_OK){
+../Core/Src/main.c:632:8: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  632 |     if(DumpINFO(cardinf)==PCD_OK){
       |        ^~~~~~~~
 In file included from ../Core/Src/main.c:28:
 At top level:
@@ -41,11 +37,11 @@ Finished building target: Ruthless RFID.elf
 arm-none-eabi-size   Ruthless\ RFID.elf 
 arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
    text	   data	    bss	    dec	    hex	filename
-  60360	   1416	  27560	  89336	  15cf8	Ruthless RFID.elf
+  60608	   1416	  27568	  89592	  15df8	Ruthless RFID.elf
 Finished building: default.size.stdout
  
 Finished building: Ruthless RFID.list
  
 
-22:53:42 Build Finished. 0 errors, 7 warnings. (took 4s.578ms)
+23:49:37 Build Finished. 0 errors, 6 warnings. (took 2s.268ms)
 
