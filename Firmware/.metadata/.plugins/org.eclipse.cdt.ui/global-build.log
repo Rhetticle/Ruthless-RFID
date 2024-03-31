@@ -2589,3 +2589,639 @@ Finished building: default.size.stdout
  
 Finished building: Ruthless RFID.list
  
+22:25:34 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'Start_Init':
+../Core/Src/main.c:587:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:587:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:622:8: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  622 |     if(DumpINFO(cardinf)==PCD_OK){
+      |        ^~~~~~~~
+../Core/Src/main.c: In function 'StartUpdateDisplay':
+../Core/Src/main.c:712:14: error: incompatible type for argument 1 of 'OLED_SCREEN'
+  712 |  OLED_SCREEN(toDisplay, NORMAL);
+      |              ^~~~~~~~~
+      |              |
+      |              Screen
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:205:26: note: expected 'Screen *' but argument is of type 'Screen'
+  205 | void OLED_SCREEN(Screen* screen,uint8_t invert);
+      |                  ~~~~~~~~^~~~~~
+At top level:
+../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
+  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~~
+../Core/Inc/OLED.h:163:20: warning: 'CARD_FOUNDSCREEN' defined but not used [-Wunused-variable]
+  163 | static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID:","IC:","SAVE","EXIT"};
+      |                    ^~~~~~~~~~~~~~~~
+../Core/Inc/OLED.h:159:20: warning: 'READ_SCREEN' defined but not used [-Wunused-variable]
+  159 | static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443-3","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:49: Core/Src/main.o] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+22:25:48 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'Start_Init':
+../Core/Src/main.c:587:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:587:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:622:8: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  622 |     if(DumpINFO(cardinf)==PCD_OK){
+      |        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+At top level:
+../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
+  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~~
+../Core/Inc/OLED.h:163:20: warning: 'CARD_FOUNDSCREEN' defined but not used [-Wunused-variable]
+  163 | static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID:","IC:","SAVE","EXIT"};
+      |                    ^~~~~~~~~~~~~~~~
+../Core/Inc/OLED.h:159:20: warning: 'READ_SCREEN' defined but not used [-Wunused-variable]
+  159 | static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443-3","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  60216	   1416	  27560	  89192	  15c68	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+22:26:20 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+   text	   data	    bss	    dec	    hex	filename
+  60216	   1416	  27560	  89192	  15c68	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+22:29:13 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'Start_Init':
+../Core/Src/main.c:587:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:587:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:598:5: warning: implicit declaration of function 'OLED_FREESCREEN'; did you mean 'OLED_SCREEN'? [-Wimplicit-function-declaration]
+  598 |     OLED_FREESCREEN(&HOME);
+      |     ^~~~~~~~~~~~~~~
+      |     OLED_SCREEN
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:623:8: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  623 |     if(DumpINFO(cardinf)==PCD_OK){
+      |        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+At top level:
+../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
+  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~~
+../Core/Inc/OLED.h:163:20: warning: 'CARD_FOUNDSCREEN' defined but not used [-Wunused-variable]
+  163 | static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID:","IC:","SAVE","EXIT"};
+      |                    ^~~~~~~~~~~~~~~~
+../Core/Inc/OLED.h:159:20: warning: 'READ_SCREEN' defined but not used [-Wunused-variable]
+  159 | static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443-3","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  60360	   1416	  27560	  89336	  15cf8	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+22:32:36 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'Start_Init':
+../Core/Src/main.c:587:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:587:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:598:5: warning: implicit declaration of function 'OLED_FREESCREEN'; did you mean 'OLED_SCREEN'? [-Wimplicit-function-declaration]
+  598 |     OLED_FREESCREEN(&HOME);
+      |     ^~~~~~~~~~~~~~~
+      |     OLED_SCREEN
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:623:8: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  623 |     if(DumpINFO(cardinf)==PCD_OK){
+      |        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+At top level:
+../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
+  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~~
+../Core/Inc/OLED.h:163:20: warning: 'CARD_FOUNDSCREEN' defined but not used [-Wunused-variable]
+  163 | static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID:","IC:","SAVE","EXIT"};
+      |                    ^~~~~~~~~~~~~~~~
+../Core/Inc/OLED.h:159:20: warning: 'READ_SCREEN' defined but not used [-Wunused-variable]
+  159 | static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443-3","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  60360	   1416	  27560	  89336	  15cf8	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+22:33:15 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'Start_Init':
+../Core/Src/main.c:587:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:587:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:622:8: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  622 |     if(DumpINFO(cardinf)==PCD_OK){
+      |        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+At top level:
+../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
+  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~~
+../Core/Inc/OLED.h:163:20: warning: 'CARD_FOUNDSCREEN' defined but not used [-Wunused-variable]
+  163 | static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID:","IC:","SAVE","EXIT"};
+      |                    ^~~~~~~~~~~~~~~~
+../Core/Inc/OLED.h:159:20: warning: 'READ_SCREEN' defined but not used [-Wunused-variable]
+  159 | static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443-3","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  60216	   1416	  27560	  89192	  15c68	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+22:34:26 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'Start_Init':
+../Core/Src/main.c:587:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:587:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:622:8: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  622 |     if(DumpINFO(cardinf)==PCD_OK){
+      |        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+At top level:
+../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
+  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~~
+../Core/Inc/OLED.h:163:20: warning: 'CARD_FOUNDSCREEN' defined but not used [-Wunused-variable]
+  163 | static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID:","IC:","SAVE","EXIT"};
+      |                    ^~~~~~~~~~~~~~~~
+../Core/Inc/OLED.h:159:20: warning: 'READ_SCREEN' defined but not used [-Wunused-variable]
+  159 | static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443-3","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  60216	   1416	  27560	  89192	  15c68	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+22:35:15 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'Start_Init':
+../Core/Src/main.c:587:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:587:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:598:5: warning: implicit declaration of function 'OLED_FREESCREEN'; did you mean 'OLED_SCREEN'? [-Wimplicit-function-declaration]
+  598 |     OLED_FREESCREEN(&HOME);
+      |     ^~~~~~~~~~~~~~~
+      |     OLED_SCREEN
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:623:8: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  623 |     if(DumpINFO(cardinf)==PCD_OK){
+      |        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+At top level:
+../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
+  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~~
+../Core/Inc/OLED.h:163:20: warning: 'CARD_FOUNDSCREEN' defined but not used [-Wunused-variable]
+  163 | static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID:","IC:","SAVE","EXIT"};
+      |                    ^~~~~~~~~~~~~~~~
+../Core/Inc/OLED.h:159:20: warning: 'READ_SCREEN' defined but not used [-Wunused-variable]
+  159 | static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443-3","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  60360	   1416	  27560	  89336	  15cf8	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+22:35:40 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+   text	   data	    bss	    dec	    hex	filename
+  60360	   1416	  27560	  89336	  15cf8	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+22:36:43 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'Start_Init':
+../Core/Src/main.c:587:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:587:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:599:5: warning: implicit declaration of function 'OLED_FREESCREEN'; did you mean 'OLED_SCREEN'? [-Wimplicit-function-declaration]
+  599 |     OLED_FREESCREEN(&HOME);
+      |     ^~~~~~~~~~~~~~~
+      |     OLED_SCREEN
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:623:8: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  623 |     if(DumpINFO(cardinf)==PCD_OK){
+      |        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+At top level:
+../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
+  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~~
+../Core/Inc/OLED.h:163:20: warning: 'CARD_FOUNDSCREEN' defined but not used [-Wunused-variable]
+  163 | static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID:","IC:","SAVE","EXIT"};
+      |                    ^~~~~~~~~~~~~~~~
+../Core/Inc/OLED.h:159:20: warning: 'READ_SCREEN' defined but not used [-Wunused-variable]
+  159 | static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443-3","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  60360	   1416	  27560	  89336	  15cf8	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+22:45:58 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'Start_Init':
+../Core/Src/main.c:587:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:587:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:599:5: warning: implicit declaration of function 'OLED_FREESCREEN'; did you mean 'OLED_SCREEN'? [-Wimplicit-function-declaration]
+  599 |     OLED_FREESCREEN(&HOME);
+      |     ^~~~~~~~~~~~~~~
+      |     OLED_SCREEN
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:623:8: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  623 |     if(DumpINFO(cardinf)==PCD_OK){
+      |        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+At top level:
+../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
+  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~~
+../Core/Inc/OLED.h:163:20: warning: 'CARD_FOUNDSCREEN' defined but not used [-Wunused-variable]
+  163 | static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID:","IC:","SAVE","EXIT"};
+      |                    ^~~~~~~~~~~~~~~~
+../Core/Inc/OLED.h:159:20: warning: 'READ_SCREEN' defined but not used [-Wunused-variable]
+  159 | static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443-3","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  60360	   1416	  27560	  89336	  15cf8	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+22:46:57 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+   text	   data	    bss	    dec	    hex	filename
+  60360	   1416	  27560	  89336	  15cf8	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+22:47:57 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'Start_Init':
+../Core/Src/main.c:587:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:587:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:599:5: warning: implicit declaration of function 'OLED_FREESCREEN'; did you mean 'OLED_SCREEN'? [-Wimplicit-function-declaration]
+  599 |     OLED_FREESCREEN(&HOME);
+      |     ^~~~~~~~~~~~~~~
+      |     OLED_SCREEN
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:622:8: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  622 |     if(DumpINFO(cardinf)==PCD_OK){
+      |        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+At top level:
+../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
+  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~~
+../Core/Inc/OLED.h:163:20: warning: 'CARD_FOUNDSCREEN' defined but not used [-Wunused-variable]
+  163 | static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID:","IC:","SAVE","EXIT"};
+      |                    ^~~~~~~~~~~~~~~~
+../Core/Inc/OLED.h:159:20: warning: 'READ_SCREEN' defined but not used [-Wunused-variable]
+  159 | static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443-3","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  60360	   1416	  27560	  89336	  15cf8	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+22:52:05 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+   text	   data	    bss	    dec	    hex	filename
+  60360	   1416	  27560	  89336	  15cf8	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+22:52:38 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'Start_Init':
+../Core/Src/main.c:587:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:587:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:599:5: warning: implicit declaration of function 'OLED_FREESCREEN'; did you mean 'OLED_SCREEN'? [-Wimplicit-function-declaration]
+  599 |     OLED_FREESCREEN(&HOME);
+      |     ^~~~~~~~~~~~~~~
+      |     OLED_SCREEN
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:623:8: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  623 |     if(DumpINFO(cardinf)==PCD_OK){
+      |        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+At top level:
+../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
+  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~~
+../Core/Inc/OLED.h:163:20: warning: 'CARD_FOUNDSCREEN' defined but not used [-Wunused-variable]
+  163 | static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID:","IC:","SAVE","EXIT"};
+      |                    ^~~~~~~~~~~~~~~~
+../Core/Inc/OLED.h:159:20: warning: 'READ_SCREEN' defined but not used [-Wunused-variable]
+  159 | static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443-3","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  60360	   1416	  27560	  89336	  15cf8	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+22:53:04 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'Start_Init':
+../Core/Src/main.c:587:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:587:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:599:5: warning: implicit declaration of function 'OLED_FREESCREEN'; did you mean 'OLED_SCREEN'? [-Wimplicit-function-declaration]
+  599 |     OLED_FREESCREEN(&HOME);
+      |     ^~~~~~~~~~~~~~~
+      |     OLED_SCREEN
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:623:8: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  623 |     if(DumpINFO(cardinf)==PCD_OK){
+      |        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+At top level:
+../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
+  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~~
+../Core/Inc/OLED.h:163:20: warning: 'CARD_FOUNDSCREEN' defined but not used [-Wunused-variable]
+  163 | static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID:","IC:","SAVE","EXIT"};
+      |                    ^~~~~~~~~~~~~~~~
+../Core/Inc/OLED.h:159:20: warning: 'READ_SCREEN' defined but not used [-Wunused-variable]
+  159 | static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443-3","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  60360	   1416	  27560	  89336	  15cf8	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+22:53:38 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'Start_Init':
+../Core/Src/main.c:587:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:587:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  587 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:599:5: warning: implicit declaration of function 'OLED_FREESCREEN'; did you mean 'OLED_SCREEN'? [-Wimplicit-function-declaration]
+  599 |     OLED_FREESCREEN(&HOME);
+      |     ^~~~~~~~~~~~~~~
+      |     OLED_SCREEN
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:623:8: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  623 |     if(DumpINFO(cardinf)==PCD_OK){
+      |        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+At top level:
+../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
+  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~~
+../Core/Inc/OLED.h:163:20: warning: 'CARD_FOUNDSCREEN' defined but not used [-Wunused-variable]
+  163 | static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID:","IC:","SAVE","EXIT"};
+      |                    ^~~~~~~~~~~~~~~~
+../Core/Inc/OLED.h:159:20: warning: 'READ_SCREEN' defined but not used [-Wunused-variable]
+  159 | static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443-3","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  60360	   1416	  27560	  89336	  15cf8	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 

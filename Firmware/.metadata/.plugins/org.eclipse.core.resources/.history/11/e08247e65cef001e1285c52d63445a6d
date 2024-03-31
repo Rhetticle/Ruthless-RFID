@@ -595,7 +595,7 @@ void Start_Init(void *argument)
     OLED_INIT();
     xQueueSend(DisplayDataHandle,&tosend,0);
     vTaskResume(UpdateDisplayHandle);
-    osDelay(1000);
+    osDelay(100);
     OLED_FREESCREEN(&HOME);
     vTaskSuspend(NULL);
   }

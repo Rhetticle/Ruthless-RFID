@@ -594,9 +594,8 @@ void Start_Init(void *argument)
     MFRC_ANTOFF();
     OLED_INIT();
     xQueueSend(DisplayDataHandle,&tosend,0);
+    osDelay(100);
     vTaskResume(UpdateDisplayHandle);
-    osDelay(1000);
-    OLED_FREESCREEN(&HOME);
     vTaskSuspend(NULL);
   }
   /* USER CODE END 5 */

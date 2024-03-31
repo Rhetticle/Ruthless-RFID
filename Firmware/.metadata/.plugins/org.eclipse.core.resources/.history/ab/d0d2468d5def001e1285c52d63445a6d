@@ -597,7 +597,6 @@ void Start_Init(void *argument)
     vTaskResume(UpdateDisplayHandle);
     osDelay(1000);
     OLED_FREESCREEN(&HOME);
-    vTaskSuspend(NULL);
   }
   /* USER CODE END 5 */
 }

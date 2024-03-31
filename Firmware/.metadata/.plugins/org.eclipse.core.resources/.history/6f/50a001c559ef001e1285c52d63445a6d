@@ -594,9 +594,8 @@ void Start_Init(void *argument)
     MFRC_ANTOFF();
     OLED_INIT();
     xQueueSend(DisplayDataHandle,&tosend,0);
+    osDelay(100);
     vTaskResume(UpdateDisplayHandle);
-    osDelay(1000);
-    OLED_FREESCREEN(&HOME);
     vTaskSuspend(NULL);
   }
   /* USER CODE END 5 */
@@ -706,14 +705,10 @@ void StartUpdateDisplay(void *argument)
 	/* Infinite loop */
   for(;;)
   {
-	Screen toDisplay;
-	Screen* rec;
-	xQueueReceive(DisplayDataHandle, &rec, 0);
-	memcpy(&toDisplay,rec,sizeof(*rec));
-	OLED_SCREEN(&toDisplay, NORMAL);
-	while(1){
+	Screen* toDisplay;
+	xQueueReceive(DisplayDataHandle, &toDisplay, 0);
+	OLED_SCREEN(toDisplay, NORMAL);
 	osDelay(1);
-	}
   }
   /* USER CODE END StartUpdateDisplay */
 }
