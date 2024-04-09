@@ -1,0 +1,6 @@
+Change Component Footprint: Designator=U5 Old Footprint=32QFN P0.5 New Footprint=MFRC522
+Change Component Footprint: Designator=J2 Old Footprint=CONN16_046809616210846+_AVX New Footprint=16pin 0.5P FPC
+Change Component Footprint: Designator=U1 Old Footprint=QFN48 New Footprint=STM32F401CBU6
+Change Component Footprint: Designator=U6 Old Footprint=SON40P200X80_HS-11N New Footprint=BQ24040DSQR
+Change Component Footprint: Designator=U4 Old Footprint=WSON 8mmx6mm 1.27P New Footprint=W25N01GVZEIG
+Added Member To Class: ClassName=RFID Sheet2 Member=Component R? 10k

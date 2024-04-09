@@ -1,0 +1,2 @@
+Change Component Footprint: Designator=U1 Old Footprint=UQFN48 P0.5mm New Footprint=QFN48
+Added Member To Class: ClassName=RFID Sheet2 Member=Component R? 10k

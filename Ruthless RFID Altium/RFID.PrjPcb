@@ -100,7 +100,7 @@ GenerateClassCluster=0
 DocumentUniqueId=TIDWUROF
 
 [Document4]
-DocumentPath=..\..\..\..\..\Public\Documents\Altium\Libraries\Master.PcbLib
+DocumentPath=..\..\..\..\..\Public\Documents\Altium\Libraries\Master\Master.PcbLib
 AnnotationEnabled=1
 AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
@@ -114,7 +114,7 @@ ClassGenCCAutoRoomEnabled=0
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
-DocumentUniqueId=
+DocumentUniqueId=OTXUVLGX
 
 [Document5]
 DocumentPath=..\..\..\..\rhett\Downloads\ul_22057035\AltiumDesigner\22057035.SchLib
@@ -151,7 +151,7 @@ GenerateClassCluster=0
 DocumentUniqueId=NRPFCKCL
 
 [Document7]
-DocumentPath=..\..\..\..\..\Public\Documents\Altium\Libraries\Master.SchLib
+DocumentPath=..\..\..\..\..\Public\Documents\Altium\Libraries\Master\Master.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
@@ -165,7 +165,7 @@ ClassGenCCAutoRoomEnabled=0
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
-DocumentUniqueId=
+DocumentUniqueId=KGJJACNQ
 
 [Document8]
 DocumentPath=..\..\..\..\..\Public\Documents\Altium\Libraries\STM32F401CBU6TR.SCHLIB
