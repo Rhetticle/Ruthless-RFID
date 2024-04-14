@@ -609,27 +609,24 @@ void Start_Init(void *argument)
 void StartReadCard(void *argument)
 {
   /* USER CODE BEGIN StartReadCard */
-
-  /* Infinite loop */
-  for(;;)
-  {
 	Screen read;
 	SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
 	OLED_SCREEN(&read, NORMAL);
 	MFRC_ANTON();
 	uint8_t cardinf[18];
 	char* toSend = malloc(26*sizeof(char));
+  /* Infinite loop */
+  for(;;)
+  {
 
-	while(1){
-		if(DumpINFO(cardinf)==PCD_OK){
+	if(DumpINFO(cardinf)==PCD_OK){
 			BUZZ();
 			MFRC_ANTOFF();
 			sprintf(toSend,"%X%X%X%X%X%X%X", cardinf[0],cardinf[1],cardinf[2],cardinf[3],cardinf[4],cardinf[5],cardinf[6]);
 			xQueueSend(UidtoFoundHandle,&toSend,0);
-			vTaskResume(CardFoundHandle);
-			vTaskSuspend(NULL);
-    	}
-	}
+			CardFoundHandle = osThreadNew(CardFoundStart, NULL, &CardFound_attributes);
+			vTaskDelete(NULL);
+		}
 	}
   /* USER CODE END StartReadCard */
 }
@@ -662,23 +659,21 @@ void StartWriteCard(void *argument)
 void StartHome(void *argument)
 {
   /* USER CODE BEGIN StartHome */
-  /* Infinite loop */
-  for(;;)
-  {
 	Screen HOME;
 	uint32_t count = 0;
 	SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
 	OLED_SCREEN(&HOME, NORMAL);
-
-	while(1) {
+  /* Infinite loop */
+  for(;;)
+  {
 		if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
 		  __HAL_TIM_SET_COUNTER(&htim3,0);
 		  while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
 			  HAL_TIM_Base_Start(&htim3);
 			  if(__HAL_TIM_GET_COUNTER(&htim3)==999){
 				  HAL_TIM_Base_Stop(&htim3);
-				  vTaskResume(ReadCardHandle);
-				  vTaskSuspend(NULL);
+				  ReadCardHandle = osThreadNew(StartReadCard, NULL, &ReadCard_attributes);
+				  vTaskDelete(NULL);
 				  }
 			  }
 		  HAL_TIM_Base_Stop(&htim3);
@@ -688,7 +683,8 @@ void StartHome(void *argument)
 		  	 }
 		  OLED_SELECT(&HOME, count, OLED_RESTORE);
 	 	 }
-	}
+
+
   }
   /* USER CODE END StartHome */
 }
@@ -703,29 +699,28 @@ void StartHome(void *argument)
 void CardFoundStart(void *argument)
 {
   /* USER CODE BEGIN CardFoundStart */
-  /* Infinite loop */
-  for(;;)
-  {
 	 Screen found;
 	 uint32_t count = 0;
 	 char* cardinf;
 	 char type[]="MIFARE ULTRALIGHT";
 	 SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
- 	 OLED_SCREEN(&found, NORMAL);
+	 OLED_SCREEN(&found, NORMAL);
+	 while(xQueueReceive(UidtoFoundHandle, &cardinf, 0)!=pdTRUE);
+	 OLED_SCRNREF(&found, 1, cardinf);
+	 OLED_SCRNREF(&found, 2, type);
+  /* Infinite loop */
+  for(;;)
+  {
 
- 	while(xQueueReceive(UidtoFoundHandle, &cardinf, 0)!=pdTRUE);
- 	osDelay(100);
- 	OLED_SCRNREF(&found, 1, cardinf);
- 	OLED_SCRNREF(&found, 2, type);
- 	while(1){
  	if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
  	    __HAL_TIM_SET_COUNTER(&htim3,0);
  	    while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
  	    	HAL_TIM_Base_Start(&htim3);
  	    	if((__HAL_TIM_GET_COUNTER(&htim3)==999)&&(count==1)){
  	    		HAL_TIM_Base_Stop(&htim3);
- 	    		vTaskResume(HomeHandle);
- 	    		vTaskSuspend(NULL);
+ 	    		HomeHandle = osThreadNew(StartHome, NULL, &Home_attributes);
+ 	    		vTaskDelete(NULL);
+
  	    		}
  	    	}
  	    count++;
@@ -734,8 +729,8 @@ void CardFoundStart(void *argument)
  	    }
  	    OLED_SELECT(&found, count, OLED_NORESTORE);
  	    HAL_TIM_Base_Stop(&htim3);
- 	   }
  	}
+
   }
   /* USER CODE END CardFoundStart */
 }
