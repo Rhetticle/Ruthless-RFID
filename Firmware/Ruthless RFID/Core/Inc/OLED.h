@@ -160,7 +160,7 @@ static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443-3","STATUS: 
 static const uint8_t READ_DATLOC[3][2]={{0,0},{2,START_COL},{4,START_COL}};
 static const uint8_t READ_SEL[1][2]={{0,0}};
 
-static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID:","IC:","SAVE","EXIT"};
+static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID: ","IC: ","SAVE","EXIT"};
 static const uint8_t CARD_FOUNDATLOC[5][2]={{0,0},{2,START_COL},{4,START_COL},{7,START_COL+12},{7,END_COL-24}};
 static const uint8_t CARD_FOUNDSEL[2][2]={{7,START_COL},{7,END_COL-36}};
 

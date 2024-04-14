@@ -9,10 +9,10 @@ main.c:384:13:MX_SPI2_Init	2
 main.c:422:13:MX_TIM2_Init	6
 main.c:481:13:MX_TIM3_Init	4
 main.c:526:13:MX_GPIO_Init	1
-main.c:578:6:Start_Init	1
+main.c:578:6:Start_Init	2
 main.c:609:6:StartReadCard	2
-main.c:638:6:StartWriteCard	1
-main.c:656:6:StartHome	5
-main.c:697:6:CardFoundStart	7
-main.c:743:6:HAL_TIM_PeriodElapsedCallback	2
-main.c:760:6:Error_Handler	1
+main.c:644:6:StartWriteCard	1
+main.c:662:6:StartHome	5
+main.c:703:6:CardFoundStart	7
+main.c:751:6:HAL_TIM_PeriodElapsedCallback	2
+main.c:768:6:Error_Handler	1
