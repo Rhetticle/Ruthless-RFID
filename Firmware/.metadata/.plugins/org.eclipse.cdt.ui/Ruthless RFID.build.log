@@ -1,47 +1,78 @@
-23:49:35 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+14:35:55 **** Incremental Build of configuration Debug for project Ruthless RFID ****
 make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'Start_Init':
-../Core/Src/main.c:595:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
-  595 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:617:48: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  617 |  SCREEN_INIT(&read, 3, 1, (char**)READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:617:61: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  617 |  SCREEN_INIT(&read, 3, 1, (char**)READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                             ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:621:8: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  621 |     if(DumpINFO(cardinf)==PCD_OK){
+      |        ^~~~~~~~
+../Core/Src/main.c: In function 'StartHome':
+../Core/Src/main.c:664:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  664 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
       |                                            ^~~~~~~~~~~
 In file included from ../Core/Src/main.c:28:
 ../Core/Inc/OLED.h:198:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
   198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
       |                                                                      ~~~~~~~~~~^~~~~~~~~~~
-../Core/Src/main.c:595:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
-  595 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+../Core/Src/main.c:664:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  664 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
       |                                                        ^~~~~~~~
 In file included from ../Core/Src/main.c:28:
 ../Core/Inc/OLED.h:198:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
   198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
       |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
-../Core/Src/main.c: In function 'StartReadCard':
-../Core/Src/main.c:632:8: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
-  632 |     if(DumpINFO(cardinf)==PCD_OK){
-      |        ^~~~~~~~
+../Core/Src/main.c: In function 'CardFoundStart':
+../Core/Src/main.c:706:55: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  706 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                       ^~~~~~~~~~~~~~~
 In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:706:72: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  706 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                                        ^~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:198:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:711:27: warning: pointer targets in passing argument 3 of 'OLED_SCRNREF' differ in signedness [-Wpointer-sign]
+  711 |   OLED_SCRNREF(&found, 1, cardinf);
+      |                           ^~~~~~~
+      |                           |
+      |                           uint8_t * {aka unsigned char *}
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:206:57: note: expected 'char *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+  206 | void OLED_SCRNREF(Screen* screen,uint8_t dataindx,char* data);
+      |                                                   ~~~~~~^~~~
 At top level:
 ../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
   167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
       |                    ^~~~~~~~~~~~
-../Core/Inc/OLED.h:163:20: warning: 'CARD_FOUNDSCREEN' defined but not used [-Wunused-variable]
-  163 | static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID:","IC:","SAVE","EXIT"};
-      |                    ^~~~~~~~~~~~~~~~
-../Core/Inc/OLED.h:159:20: warning: 'READ_SCREEN' defined but not used [-Wunused-variable]
-  159 | static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443-3","STATUS: NO CARD"};
-      |                    ^~~~~~~~~~~
 arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: Ruthless RFID.elf
  
 arm-none-eabi-size   Ruthless\ RFID.elf 
 arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
    text	   data	    bss	    dec	    hex	filename
-  60608	   1416	  27568	  89592	  15df8	Ruthless RFID.elf
+  60704	   1448	  27560	  89712	  15e70	Ruthless RFID.elf
 Finished building: default.size.stdout
  
 Finished building: Ruthless RFID.list
  
 
-23:49:37 Build Finished. 0 errors, 6 warnings. (took 2s.268ms)
+14:35:58 Build Finished. 0 errors, 9 warnings. (took 2s.548ms)
 

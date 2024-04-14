@@ -81,22 +81,17 @@ const osThreadAttr_t Home_attributes = {
   .stack_size = 256 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
-/* Definitions for UpdateDisplay */
-osThreadId_t UpdateDisplayHandle;
-const osThreadAttr_t UpdateDisplay_attributes = {
-  .name = "UpdateDisplay",
+/* Definitions for CardFound */
+osThreadId_t CardFoundHandle;
+const osThreadAttr_t CardFound_attributes = {
+  .name = "CardFound",
   .stack_size = 256 * 4,
-  .priority = (osPriority_t) osPriorityAboveNormal,
+  .priority = (osPriority_t) osPriorityNormal,
 };
-/* Definitions for DisplayData */
-osMessageQueueId_t DisplayDataHandle;
-const osMessageQueueAttr_t DisplayData_attributes = {
-  .name = "DisplayData"
-};
-/* Definitions for DisplayCount */
-osMessageQueueId_t DisplayCountHandle;
-const osMessageQueueAttr_t DisplayCount_attributes = {
-  .name = "DisplayCount"
+/* Definitions for UidtoFound */
+osMessageQueueId_t UidtoFoundHandle;
+const osMessageQueueAttr_t UidtoFound_attributes = {
+  .name = "UidtoFound"
 };
 /* USER CODE BEGIN PV */
 char TC[]="HVE strongly condemns malicious use of it's products.The Ruthless RFID is sold as an educational device. HVE is not liable for damages caused by misuse.";
@@ -120,7 +115,7 @@ void Start_Init(void *argument);
 void StartReadCard(void *argument);
 void StartWriteCard(void *argument);
 void StartHome(void *argument);
-void StartUpdateDisplay(void *argument);
+void CardFoundStart(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -216,11 +211,8 @@ int main(void)
   /* USER CODE END RTOS_TIMERS */
 
   /* Create the queue(s) */
-  /* creation of DisplayData */
-  DisplayDataHandle = osMessageQueueNew (1, sizeof(Screen*), &DisplayData_attributes);
-
-  /* creation of DisplayCount */
-  DisplayCountHandle = osMessageQueueNew (1, sizeof(uint32_t), &DisplayCount_attributes);
+  /* creation of UidtoFound */
+  UidtoFoundHandle = osMessageQueueNew (1, sizeof(uint8_t*), &UidtoFound_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -239,8 +231,8 @@ int main(void)
   /* creation of Home */
   HomeHandle = osThreadNew(StartHome, NULL, &Home_attributes);
 
-  /* creation of UpdateDisplay */
-  UpdateDisplayHandle = osThreadNew(StartUpdateDisplay, NULL, &UpdateDisplay_attributes);
+  /* creation of CardFound */
+  CardFoundHandle = osThreadNew(CardFoundStart, NULL, &CardFound_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -591,20 +583,16 @@ void Start_Init(void *argument)
   /* Infinite loop */
   for(;;)
   {
-	Screen HOME;
-	SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
-	Screen* tosend = &HOME;
-	uint32_t count = 0;
 	vTaskSuspend(ReadCardHandle);
     vTaskSuspend(WriteCardHandle);
-    vTaskSuspend(UpdateDisplayHandle);
     vTaskSuspend(HomeHandle);
+    vTaskSuspend(CardFoundHandle);
     MFRC_INIT();
     MFRC_ANTOFF();
     OLED_INIT();
-    xQueueSend(DisplayDataHandle,&tosend,0);
-    xQueueSend(DisplayCountHandle,&count,0);
-    vTaskResume(UpdateDisplayHandle);
+    //OLED_Print(TC);
+    //while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)!=0);
+    vTaskResume(HomeHandle);
     osDelay(100);
     vTaskSuspend(NULL);
   }
@@ -625,32 +613,18 @@ void StartReadCard(void *argument)
   /* Infinite loop */
   for(;;)
   {
+	Screen read;
+	SCREEN_INIT(&read, 3, 1, (char**)READ_SCREEN, READ_DATLOC, READ_SEL);
+	OLED_SCREEN(&read, NORMAL);
 	uint8_t cardinf[18];
-	char uid[16];
-	int count = 0;
 
     if(DumpINFO(cardinf)==PCD_OK){
-    	sprintf(uid,"%X%X%X%X%X%X%X",cardinf[0],cardinf[1],cardinf[2],cardinf[3],cardinf[4],cardinf[5],cardinf[6]);
     	BUZZ();
     	MFRC_ANTOFF();
-    	while(1){
-    		if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
-    			__HAL_TIM_SET_COUNTER(&htim3,0);
-    			while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
-    				HAL_TIM_Base_Start(&htim3);
-    				if((__HAL_TIM_GET_COUNTER(&htim3)==999)&&(count==1)){
-    					HAL_TIM_Base_Stop(&htim3);
-    					vTaskResume(HomeHandle);
-    					vTaskSuspend(NULL);
-    					}
-    			}
-    		HAL_TIM_Base_Stop(&htim3);
+    	xQueueSend(UidtoFoundHandle,cardinf,0);
     	}
 
-    }
-
-  }
-  }
+	}
   /* USER CODE END StartReadCard */
 }
 
@@ -685,8 +659,13 @@ void StartHome(void *argument)
   /* Infinite loop */
   for(;;)
   {
+	Screen HOME;
+	uint32_t count = 0;
+	SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+	OLED_SCREEN(&HOME, NORMAL);
 
-	 if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
+	while(1) {
+		if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
 		  __HAL_TIM_SET_COUNTER(&htim3,0);
 		  while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
 			  HAL_TIM_Base_Start(&htim3);
@@ -697,35 +676,60 @@ void StartHome(void *argument)
 				  }
 			  }
 		  HAL_TIM_Base_Stop(&htim3);
-		  }
+		  count++;
+		  if(count == 6) {
+			  count = 0;
+		  	 }
+		  OLED_SELECT(&HOME, count, OLED_RESTORE);
+	 	 }
+	}
   }
   /* USER CODE END StartHome */
 }
 
-/* USER CODE BEGIN Header_StartUpdateDisplay */
+/* USER CODE BEGIN Header_CardFoundStart */
 /**
-* @brief Function implementing the UpdateDisplay thread.
+* @brief Function implementing the CardFound thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_StartUpdateDisplay */
-void StartUpdateDisplay(void *argument)
+/* USER CODE END Header_CardFoundStart */
+void CardFoundStart(void *argument)
 {
-  /* USER CODE BEGIN StartUpdateDisplay */
-	/* Infinite loop */
+  /* USER CODE BEGIN CardFoundStart */
+  /* Infinite loop */
   for(;;)
   {
-	Screen* toDisplay;
-	uint32_t count = 0;
-	xQueueReceive(DisplayDataHandle, &toDisplay, 0);
-	xQueueReceive(DisplayCountHandle, &count, 0);
-	OLED_SCREEN(toDisplay, NORMAL);
-	OLED_SELECT(toDisplay, count, OLED_RESTORE);
-	while(1){
-	osDelay(1);
-	}
+	 Screen found;
+	 int count = 0;
+	 uint8_t* cardinf;
+	 SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+ 	 OLED_SCREEN(&found, NORMAL);
+
+ 	while(xQueueReceive(UidtoFoundHandle, &cardinf, 0)!=pdTRUE);
+
+ 	OLED_SCRNREF(&found, 1, cardinf);
+ 	while(1){
+ 	if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
+ 	    __HAL_TIM_SET_COUNTER(&htim3,0);
+ 	    while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
+ 	    	HAL_TIM_Base_Start(&htim3);
+ 	    	if((__HAL_TIM_GET_COUNTER(&htim3)==999)&&(count==1)){
+ 	    		HAL_TIM_Base_Stop(&htim3);
+ 	    		vTaskResume(HomeHandle);
+ 	    		vTaskSuspend(NULL);
+ 	    		}
+ 	    	}
+ 	    count++;
+ 	    if (count == 2) {
+ 	    	count = 0;
+ 	    }
+ 	    OLED_SELECT(&found, count, OLED_RESTORE);
+ 	    HAL_TIM_Base_Stop(&htim3);
+ 	   }
+ 	}
   }
-  /* USER CODE END StartUpdateDisplay */
+  /* USER CODE END CardFoundStart */
 }
 
 /**
