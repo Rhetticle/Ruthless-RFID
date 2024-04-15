@@ -151,7 +151,7 @@ int choose (Screen* screen,int* flag, int* count, int max, int restopt) {
 	 	    	if(__HAL_TIM_GET_COUNTER(&htim3)==999){
 	 	    		HAL_TIM_Base_Stop(&htim3);
 	 	    		*flag = 1;
-	 	    		return(*count);
+	 	    		return(count);
 	 	    		}
 	 	    	}
 	 	    (*count)++;

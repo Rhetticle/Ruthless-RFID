@@ -143,15 +143,15 @@ void BUZZ(void){
 	HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_3);
 }
 
-int choose (Screen* screen,int* flag, int* count, int max, int restopt) {
+void choose (Screen* screen,int* flag, int* count, int max, int restopt) {
 	if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
 	 	    __HAL_TIM_SET_COUNTER(&htim3,0);
 	 	    while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
 	 	    	HAL_TIM_Base_Start(&htim3);
-	 	    	if(__HAL_TIM_GET_COUNTER(&htim3)==999){
+	 	    	if((__HAL_TIM_GET_COUNTER(&htim3)==999)&&(*count==1)){
 	 	    		HAL_TIM_Base_Stop(&htim3);
 	 	    		*flag = 1;
-	 	    		return(*count);
+	 	    		break;
 	 	    		}
 	 	    	}
 	 	    (*count)++;
