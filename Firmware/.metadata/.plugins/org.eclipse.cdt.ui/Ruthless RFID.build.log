@@ -1,4 +1,4 @@
-16:17:10 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+16:20:29 **** Incremental Build of configuration Debug for project Ruthless RFID ****
 make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 ../Core/Src/main.c: In function 'StartReadCard':
@@ -44,15 +44,15 @@ In file included from ../Core/Src/main.c:28:
   198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
       |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
 ../Core/Src/main.c: In function 'CardFoundStart':
-../Core/Src/main.c:725:55: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
-  725 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+../Core/Src/main.c:726:55: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  726 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
       |                                                       ^~~~~~~~~~~~~~~
 In file included from ../Core/Src/main.c:28:
 ../Core/Inc/OLED.h:198:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
   198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
       |                                                                      ~~~~~~~~~~^~~~~~~~~~~
-../Core/Src/main.c:725:72: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
-  725 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+../Core/Src/main.c:726:72: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  726 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
       |                                                                        ^~~~~~~~~~~~~
 In file included from ../Core/Src/main.c:28:
 ../Core/Inc/OLED.h:198:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
@@ -68,11 +68,11 @@ Finished building target: Ruthless RFID.elf
 arm-none-eabi-size   Ruthless\ RFID.elf 
 arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
    text	   data	    bss	    dec	    hex	filename
-  61256	   1604	  27564	  90424	  16138	Ruthless RFID.elf
+  61304	   1604	  27564	  90472	  16168	Ruthless RFID.elf
 Finished building: default.size.stdout
  
 Finished building: Ruthless RFID.list
  
 
-16:17:13 Build Finished. 0 errors, 9 warnings. (took 3s.666ms)
+16:20:31 Build Finished. 0 errors, 9 warnings. (took 1s.741ms)
 

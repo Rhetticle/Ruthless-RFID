@@ -12,7 +12,7 @@ main.c:526:13:MX_GPIO_Init	1
 main.c:578:6:Start_Init	2
 main.c:609:6:StartReadCard	4
 main.c:650:6:StartWriteCard	1
-main.c:668:6:StartHome	7
-main.c:717:6:CardFoundStart	9
-main.c:771:6:HAL_TIM_PeriodElapsedCallback	2
-main.c:788:6:Error_Handler	1
+main.c:668:6:StartHome	8
+main.c:718:6:CardFoundStart	9
+main.c:773:6:HAL_TIM_PeriodElapsedCallback	2
+main.c:790:6:Error_Handler	1

@@ -678,14 +678,13 @@ void StartHome(void *argument)
 	  int suspend = 0;
 	  if (ranonce == 0) {
 		  OLED_SCREEN(&HOME, NORMAL);
-		  OLED_SELECT(&HOME, count, OLED_RESTORE);
 		  ranonce++;
 	  }
 		if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
 		  __HAL_TIM_SET_COUNTER(&htim3,0);
 		  while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
 			  HAL_TIM_Base_Start(&htim3);
-			  if((__HAL_TIM_GET_COUNTER(&htim3)==999)&&(count==0)){
+			  if(__HAL_TIM_GET_COUNTER(&htim3)==999){
  				  HAL_TIM_Base_Stop(&htim3);
  				  suspend=1;
 				  }
@@ -733,7 +732,6 @@ void CardFoundStart(void *argument)
 		OLED_SCREEN(&found, NORMAL);
 		OLED_SCRNREF(&found, 1, cardinf);
 		OLED_SCRNREF(&found, 2, type);
-		OLED_SELECT(&found, count, OLED_NORESTORE);
 		ranonce++;
 	}
  	if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
