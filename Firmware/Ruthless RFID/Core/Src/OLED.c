@@ -184,17 +184,11 @@ void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*d
 
     screen->datsize=datasize;
     screen->selsize=selsize;
-    screen->data=(char**)malloc((screen->datsize)*sizeof(char*));
-    screen->dataloc=(uint8_t (*)[2])malloc(screen->datsize*sizeof(uint8_t*));
-    screen->seldata=(uint8_t (*)[2])malloc(screen->selsize*sizeof(uint8_t*));
+    screen->data=data;
+    screen->dataloc=dataloc;
+    screen->seldata=seldata;
 
-    for(int j=0;j<screen->datsize;j++){
-        screen->data[j]=malloc((strlen(data[j])+1)*sizeof(char));
-        strcpy(screen->data[j],data[j]);
-    }
 
-    memcpy(screen->dataloc,dataloc,datasize*2);
-    memcpy(screen->seldata,seldata,selsize*2);
 
 }
 
