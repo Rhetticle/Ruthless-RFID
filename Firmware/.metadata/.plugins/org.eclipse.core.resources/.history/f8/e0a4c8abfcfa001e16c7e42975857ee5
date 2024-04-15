@@ -271,7 +271,7 @@ void OLED_drawChar(uint8_t page,uint8_t col, char character, uint8_t invert){
 
 	*(data+5)=0x00;
 	OLED_data(data, 6);
-	free(data);
+
 	}
 
 /*Function to write string on a certain line of display
