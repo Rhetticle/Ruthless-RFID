@@ -6,3 +6,4 @@
 ../Core/Src/W25N01GVZEIG.c:112:19:MEM_WRITE	40	static
 ../Core/Src/W25N01GVZEIG.c:154:19:MEM_READPAGE	96	dynamic
 ../Core/Src/W25N01GVZEIG.c:196:19:MEM_SCAN	32	static
+../Core/Src/W25N01GVZEIG.c:220:6:findfreeaddr	32	static

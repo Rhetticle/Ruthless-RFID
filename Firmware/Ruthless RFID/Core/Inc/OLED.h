@@ -156,7 +156,7 @@ static const char* HOME_SCREEN[7]={"Ruthless RFID","1.READ CARD","2.WRITE CARD",
 static const uint8_t HOME_DATLOC[7][2]={{0,0},{2,START_COL},{4,START_COL},{6,START_COL},{2,MID_COL+15},{4,MID_COL+15},{6,MID_COL+15}};
 static const uint8_t HOME_SEL[6][2]={{2,START_COL},{4,START_COL},{6,START_COL},{2,MID_COL+15},{4,MID_COL+15},{6,MID_COL+15}}; //Select arrow info for HOME screen format {Page,column,replacesize}}
 
-static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443-3","STATUS: NO CARD"};
+static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443","STATUS: NO CARD"};
 static const uint8_t READ_DATLOC[3][2]={{0,0},{2,START_COL},{4,START_COL}};
 static const uint8_t READ_SEL[1][2]={{0,0}};
 
@@ -164,8 +164,9 @@ static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID: ","IC: ","SAVE","EXIT
 static const uint8_t CARD_FOUNDATLOC[5][2]={{0,0},{2,START_COL},{4,START_COL},{7,START_COL+12},{7,END_COL-24}};
 static const uint8_t CARD_FOUNDSEL[2][2]={{7,START_COL},{7,END_COL-36}};
 
-static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
-static const uint8_t WRITE_SEL[3][2]={{2,START_COL},{4,START_COL},{6,START_COL}};
+static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443","SRC FILE: NONE","STATUS: NO CARD"};
+static const uint8_t WRITE_DATLOC[4][2]={{0,0},{2,START_COL},{4,START_COL},{6,START_COL}};
+static const uint8_t WRITE_SEL[1][2] = {{0,0}};
 
 
 

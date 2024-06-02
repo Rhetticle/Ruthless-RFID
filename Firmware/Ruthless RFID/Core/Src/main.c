@@ -27,6 +27,7 @@
 #include "MFRC.h"
 #include "OLED.h"
 #include "queue.h"
+#include "W25N01GVZEIG.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -71,14 +72,14 @@ const osThreadAttr_t ReadCard_attributes = {
 osThreadId_t WriteCardHandle;
 const osThreadAttr_t WriteCard_attributes = {
   .name = "WriteCard",
-  .stack_size = 256 * 4,
+  .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for Home */
 osThreadId_t HomeHandle;
 const osThreadAttr_t Home_attributes = {
   .name = "Home",
-  .stack_size = 256 * 4,
+  .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for CardFound */
@@ -163,6 +164,11 @@ int choose (Screen* screen,int* flag, int* count, int max, int restopt) {
 	 	}
 }
 
+HAL_StatusTypeDef writecard (uint8_t* carddump) {
+	uint32_t* address[2];
+	findfreeaddr(address);
+
+}
 /* USER CODE END 0 */
 
 /**
@@ -657,10 +663,17 @@ void StartReadCard(void *argument)
 void StartWriteCard(void *argument)
 {
   /* USER CODE BEGIN StartWriteCard */
+  Screen write;
+  SCREEN_INIT(&write, 4, 1, WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+  int ranonce = 0;
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+	  if (ranonce == 0){
+	  	OLED_SCREEN(&write, NORMAL);
+	  	ranonce++;
+	  }
+	  osDelay(1);
   }
   /* USER CODE END StartWriteCard */
 }
@@ -690,7 +703,14 @@ void StartHome(void *argument)
 	  }
 	  choose(&HOME,&suspend,&count,6,OLED_RESTORE);
 	  if (suspend == 1) {
-		vTaskResume(ReadCardHandle);
+		switch(count) {
+			case 0:
+				vTaskResume(ReadCardHandle);
+				break;
+			case 1:
+				vTaskResume(WriteCardHandle);
+				break;
+		}
 		ranonce = 0;
 		vTaskSuspend(NULL);
 	  }

@@ -1,74 +1,442 @@
-17:35:14 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+16:41:00 **** Incremental Build of configuration Debug for project Ruthless RFID ****
 make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:169:2: warning: implicit declaration of function 'findfreeaddr' [-Wimplicit-function-declaration]
+  169 |  findfreeaddr(address);
+      |  ^~~~~~~~~~~~
 ../Core/Src/main.c: In function 'StartReadCard':
-../Core/Src/main.c:620:27: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
-  620 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+../Core/Src/main.c:626:27: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
       |                           ^~~~~~~~~~~
       |                           |
       |                           const char **
 In file included from ../Core/Src/main.c:28:
-../Core/Inc/OLED.h:198:65: note: expected 'char **' but argument is of type 'const char **'
-  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
       |                                                          ~~~~~~~^~~~
-../Core/Src/main.c:620:40: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
-  620 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+../Core/Src/main.c:626:40: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
       |                                        ^~~~~~~~~~~
 In file included from ../Core/Src/main.c:28:
-../Core/Inc/OLED.h:198:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
-  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
       |                                                                      ~~~~~~~~~~^~~~~~~~~~~
-../Core/Src/main.c:620:53: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
-  620 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+../Core/Src/main.c:626:53: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
       |                                                     ^~~~~~~~
 In file included from ../Core/Src/main.c:28:
-../Core/Inc/OLED.h:198:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
-  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
       |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
-../Core/Src/main.c:633:5: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
-  633 |  if(DumpINFO(cardinf)==PCD_OK){
+../Core/Src/main.c:639:5: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  639 |  if(DumpINFO(cardinf)==PCD_OK){
       |     ^~~~~~~~
+../Core/Src/main.c: In function 'StartWriteCard':
+../Core/Src/main.c:667:29: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  667 |   SCREEN_INIT(&write, 4, 1, WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:667:43: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                           ^~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:667:57: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                                         ^~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
 ../Core/Src/main.c: In function 'StartHome':
-../Core/Src/main.c:680:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
-  680 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+../Core/Src/main.c:693:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
       |                                            ^~~~~~~~~~~
 In file included from ../Core/Src/main.c:28:
-../Core/Inc/OLED.h:198:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
-  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
       |                                                                      ~~~~~~~~~~^~~~~~~~~~~
-../Core/Src/main.c:680:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
-  680 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+../Core/Src/main.c:693:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
       |                                                        ^~~~~~~~
 In file included from ../Core/Src/main.c:28:
-../Core/Inc/OLED.h:198:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
-  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
       |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
-../Core/Src/main.c:691:26: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
-  691 |    choose(&HOME,&suspend,&count,6,OLED_RESTORE);
+../Core/Src/main.c:704:26: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  704 |    choose(&HOME,&suspend,&count,6,OLED_RESTORE);
       |                          ^~~~~~
       |                          |
       |                          uint32_t * {aka long unsigned int *}
-../Core/Src/main.c:146:44: note: expected 'int *' but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
-  146 | int choose (Screen* screen,int* flag, int* count, int max, int restopt) {
+../Core/Src/main.c:147:44: note: expected 'int *' but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+  147 | int choose (Screen* screen,int* flag, int* count, int max, int restopt) {
       |                                       ~~~~~^~~~~
 ../Core/Src/main.c: In function 'CardFoundStart':
-../Core/Src/main.c:718:55: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
-  718 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+../Core/Src/main.c:731:55: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  731 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
       |                                                       ^~~~~~~~~~~~~~~
 In file included from ../Core/Src/main.c:28:
-../Core/Inc/OLED.h:198:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
-  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
       |                                                                      ~~~~~~~~~~^~~~~~~~~~~
-../Core/Src/main.c:718:72: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
-  718 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+../Core/Src/main.c:731:72: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  731 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
       |                                                                        ^~~~~~~~~~~~~
 In file included from ../Core/Src/main.c:28:
-../Core/Inc/OLED.h:198:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
-  198 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
       |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
 ../Core/Src/main.c: In function 'choose':
-../Core/Src/main.c:164:1: warning: control reaches end of non-void function [-Wreturn-type]
-  164 | }
+../Core/Src/main.c:165:1: warning: control reaches end of non-void function [-Wreturn-type]
+  165 | }
+      | ^
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:171:1: warning: control reaches end of non-void function [-Wreturn-type]
+  171 | }
+      | ^
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  61364	   1620	  27564	  90548	  161b4	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+22:41:42 **** Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:169:2: warning: implicit declaration of function 'findfreeaddr' [-Wimplicit-function-declaration]
+  169 |  findfreeaddr(address);
+      |  ^~~~~~~~~~~~
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:626:27: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                           ^~~~~~~~~~~
+      |                           |
+      |                           const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:626:40: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                        ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:626:53: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                     ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:639:5: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  639 |  if(DumpINFO(cardinf)==PCD_OK){
+      |     ^~~~~~~~
+../Core/Src/main.c: In function 'StartWriteCard':
+../Core/Src/main.c:667:29: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  667 |   SCREEN_INIT(&write, 4, 1, WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:667:43: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                           ^~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:667:57: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                                         ^~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'StartHome':
+../Core/Src/main.c:693:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:693:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:704:26: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  704 |    choose(&HOME,&suspend,&count,6,OLED_RESTORE);
+      |                          ^~~~~~
+      |                          |
+      |                          uint32_t * {aka long unsigned int *}
+../Core/Src/main.c:147:44: note: expected 'int *' but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+  147 | int choose (Screen* screen,int* flag, int* count, int max, int restopt) {
+      |                                       ~~~~~^~~~~
+../Core/Src/main.c: In function 'CardFoundStart':
+../Core/Src/main.c:735:55: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  735 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                       ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:735:72: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  735 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                                        ^~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'choose':
+../Core/Src/main.c:165:1: warning: control reaches end of non-void function [-Wreturn-type]
+  165 | }
+      | ^
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:171:1: warning: control reaches end of non-void function [-Wreturn-type]
+  171 | }
+      | ^
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  61396	   1620	  27564	  90580	  161d4	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+22:46:48 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:169:2: warning: implicit declaration of function 'findfreeaddr' [-Wimplicit-function-declaration]
+  169 |  findfreeaddr(address);
+      |  ^~~~~~~~~~~~
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:626:27: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                           ^~~~~~~~~~~
+      |                           |
+      |                           const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:626:40: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                        ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:626:53: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                     ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:639:5: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  639 |  if(DumpINFO(cardinf)==PCD_OK){
+      |     ^~~~~~~~
+../Core/Src/main.c: In function 'StartWriteCard':
+../Core/Src/main.c:667:51: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, (char**)WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                                   ^~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:667:65: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, (char**)WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                                                 ^~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'StartHome':
+../Core/Src/main.c:693:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:693:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:704:26: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  704 |    choose(&HOME,&suspend,&count,6,OLED_RESTORE);
+      |                          ^~~~~~
+      |                          |
+      |                          uint32_t * {aka long unsigned int *}
+../Core/Src/main.c:147:44: note: expected 'int *' but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+  147 | int choose (Screen* screen,int* flag, int* count, int max, int restopt) {
+      |                                       ~~~~~^~~~~
+../Core/Src/main.c: In function 'CardFoundStart':
+../Core/Src/main.c:739:55: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  739 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                       ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:739:72: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  739 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                                        ^~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'choose':
+../Core/Src/main.c:165:1: warning: control reaches end of non-void function [-Wreturn-type]
+  165 | }
+      | ^
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:171:1: warning: control reaches end of non-void function [-Wreturn-type]
+  171 | }
+      | ^
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  61412	   1620	  27564	  90596	  161e4	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+22:51:43 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:169:2: warning: implicit declaration of function 'findfreeaddr' [-Wimplicit-function-declaration]
+  169 |  findfreeaddr(address);
+      |  ^~~~~~~~~~~~
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:626:27: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                           ^~~~~~~~~~~
+      |                           |
+      |                           const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:626:40: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                        ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:626:53: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                     ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:639:5: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  639 |  if(DumpINFO(cardinf)==PCD_OK){
+      |     ^~~~~~~~
+../Core/Src/main.c: In function 'StartWriteCard':
+../Core/Src/main.c:667:29: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  667 |   SCREEN_INIT(&write, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                             ^~~~~~~~~~~
+      |                             |
+      |                             const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:667:42: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                          ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:667:55: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                       ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'StartHome':
+../Core/Src/main.c:693:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:693:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:704:26: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  704 |    choose(&HOME,&suspend,&count,6,OLED_RESTORE);
+      |                          ^~~~~~
+      |                          |
+      |                          uint32_t * {aka long unsigned int *}
+../Core/Src/main.c:147:44: note: expected 'int *' but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+  147 | int choose (Screen* screen,int* flag, int* count, int max, int restopt) {
+      |                                       ~~~~~^~~~~
+../Core/Src/main.c: In function 'CardFoundStart':
+../Core/Src/main.c:740:55: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  740 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                       ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:740:72: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  740 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                                        ^~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'choose':
+../Core/Src/main.c:165:1: warning: control reaches end of non-void function [-Wreturn-type]
+  165 | }
+      | ^
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:171:1: warning: control reaches end of non-void function [-Wreturn-type]
+  171 | }
       | ^
 In file included from ../Core/Src/main.c:28:
 At top level:
@@ -81,14 +449,1195 @@ Finished building target: Ruthless RFID.elf
 arm-none-eabi-size   Ruthless\ RFID.elf 
 arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
    text	   data	    bss	    dec	    hex	filename
-  61256	   1604	  27564	  90424	  16138	Ruthless RFID.elf
+  61400	   1604	  27564	  90568	  161c8	Ruthless RFID.elf
 Finished building: default.size.stdout
  
 Finished building: Ruthless RFID.list
  
-17:49:21 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+22:53:25 **** Incremental Build of configuration Debug for project Ruthless RFID ****
 make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:169:2: warning: implicit declaration of function 'findfreeaddr' [-Wimplicit-function-declaration]
+  169 |  findfreeaddr(address);
+      |  ^~~~~~~~~~~~
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:626:27: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                           ^~~~~~~~~~~
+      |                           |
+      |                           const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:626:40: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                        ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:626:53: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                     ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:639:5: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  639 |  if(DumpINFO(cardinf)==PCD_OK){
+      |     ^~~~~~~~
+../Core/Src/main.c: In function 'StartWriteCard':
+../Core/Src/main.c:667:51: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, (char**)WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                                   ^~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:667:65: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, (char**)WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                                                 ^~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'StartHome':
+../Core/Src/main.c:693:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:693:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:704:26: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  704 |    choose(&HOME,&suspend,&count,6,OLED_RESTORE);
+      |                          ^~~~~~
+      |                          |
+      |                          uint32_t * {aka long unsigned int *}
+../Core/Src/main.c:147:44: note: expected 'int *' but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+  147 | int choose (Screen* screen,int* flag, int* count, int max, int restopt) {
+      |                                       ~~~~~^~~~~
+../Core/Src/main.c: In function 'CardFoundStart':
+../Core/Src/main.c:738:55: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  738 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                       ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:738:72: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  738 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                                        ^~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'choose':
+../Core/Src/main.c:165:1: warning: control reaches end of non-void function [-Wreturn-type]
+  165 | }
+      | ^
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:171:1: warning: control reaches end of non-void function [-Wreturn-type]
+  171 | }
+      | ^
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  61396	   1620	  27564	  90580	  161d4	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+22:54:52 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:169:2: warning: implicit declaration of function 'findfreeaddr' [-Wimplicit-function-declaration]
+  169 |  findfreeaddr(address);
+      |  ^~~~~~~~~~~~
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:626:27: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                           ^~~~~~~~~~~
+      |                           |
+      |                           const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:626:40: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                        ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:626:53: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                     ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:639:5: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  639 |  if(DumpINFO(cardinf)==PCD_OK){
+      |     ^~~~~~~~
+../Core/Src/main.c: In function 'StartWriteCard':
+../Core/Src/main.c:667:51: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, (char**)WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                                   ^~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:667:65: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, (char**)WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                                                 ^~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'StartHome':
+../Core/Src/main.c:694:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  694 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:694:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  694 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:705:26: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  705 |    choose(&HOME,&suspend,&count,6,OLED_RESTORE);
+      |                          ^~~~~~
+      |                          |
+      |                          uint32_t * {aka long unsigned int *}
+../Core/Src/main.c:147:44: note: expected 'int *' but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+  147 | int choose (Screen* screen,int* flag, int* count, int max, int restopt) {
+      |                                       ~~~~~^~~~~
+../Core/Src/main.c: In function 'CardFoundStart':
+../Core/Src/main.c:739:55: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  739 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                       ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:739:72: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  739 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                                        ^~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'choose':
+../Core/Src/main.c:165:1: warning: control reaches end of non-void function [-Wreturn-type]
+  165 | }
+      | ^
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:171:1: warning: control reaches end of non-void function [-Wreturn-type]
+  171 | }
+      | ^
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  61412	   1620	  27564	  90596	  161e4	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+22:55:18 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+   text	   data	    bss	    dec	    hex	filename
+  61412	   1620	  27564	  90596	  161e4	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+22:58:27 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:169:2: warning: implicit declaration of function 'findfreeaddr' [-Wimplicit-function-declaration]
+  169 |  findfreeaddr(address);
+      |  ^~~~~~~~~~~~
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:626:27: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                           ^~~~~~~~~~~
+      |                           |
+      |                           const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:626:40: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                        ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:626:53: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                     ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:639:5: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  639 |  if(DumpINFO(cardinf)==PCD_OK){
+      |     ^~~~~~~~
+../Core/Src/main.c: In function 'StartWriteCard':
+../Core/Src/main.c:667:51: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, (char**)WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                                   ^~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:667:65: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, (char**)WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                                                 ^~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'StartHome':
+../Core/Src/main.c:694:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  694 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:694:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  694 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:705:26: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  705 |    choose(&HOME,&suspend,&count,6,OLED_RESTORE);
+      |                          ^~~~~~
+      |                          |
+      |                          uint32_t * {aka long unsigned int *}
+../Core/Src/main.c:147:44: note: expected 'int *' but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+  147 | int choose (Screen* screen,int* flag, int* count, int max, int restopt) {
+      |                                       ~~~~~^~~~~
+../Core/Src/main.c: In function 'CardFoundStart':
+../Core/Src/main.c:739:55: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  739 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                       ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:739:72: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  739 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                                        ^~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'choose':
+../Core/Src/main.c:165:1: warning: control reaches end of non-void function [-Wreturn-type]
+  165 | }
+      | ^
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:171:1: warning: control reaches end of non-void function [-Wreturn-type]
+  171 | }
+      | ^
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  61412	   1620	  27564	  90596	  161e4	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+23:03:59 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:169:2: warning: implicit declaration of function 'findfreeaddr' [-Wimplicit-function-declaration]
+  169 |  findfreeaddr(address);
+      |  ^~~~~~~~~~~~
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:626:27: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                           ^~~~~~~~~~~
+      |                           |
+      |                           const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:626:40: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                        ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:626:53: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                     ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:639:5: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  639 |  if(DumpINFO(cardinf)==PCD_OK){
+      |     ^~~~~~~~
+../Core/Src/main.c: In function 'StartWriteCard':
+../Core/Src/main.c:667:51: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, (char**)WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                                   ^~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:667:65: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, (char**)WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                                                 ^~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'StartHome':
+../Core/Src/main.c:693:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:693:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:704:26: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  704 |    choose(&HOME,&suspend,&count,6,OLED_RESTORE);
+      |                          ^~~~~~
+      |                          |
+      |                          uint32_t * {aka long unsigned int *}
+../Core/Src/main.c:147:44: note: expected 'int *' but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+  147 | int choose (Screen* screen,int* flag, int* count, int max, int restopt) {
+      |                                       ~~~~~^~~~~
+../Core/Src/main.c: In function 'CardFoundStart':
+../Core/Src/main.c:738:55: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  738 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                       ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:738:72: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  738 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                                        ^~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'choose':
+../Core/Src/main.c:165:1: warning: control reaches end of non-void function [-Wreturn-type]
+  165 | }
+      | ^
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:171:1: warning: control reaches end of non-void function [-Wreturn-type]
+  171 | }
+      | ^
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  61396	   1620	  27564	  90580	  161d4	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+23:07:55 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:169:2: warning: implicit declaration of function 'findfreeaddr' [-Wimplicit-function-declaration]
+  169 |  findfreeaddr(address);
+      |  ^~~~~~~~~~~~
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:626:27: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                           ^~~~~~~~~~~
+      |                           |
+      |                           const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:626:40: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                        ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:626:53: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                     ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:639:5: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  639 |  if(DumpINFO(cardinf)==PCD_OK){
+      |     ^~~~~~~~
+../Core/Src/main.c: In function 'StartWriteCard':
+../Core/Src/main.c:667:51: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, (char**)WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                                   ^~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:667:65: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, (char**)WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                                                 ^~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'StartHome':
+../Core/Src/main.c:693:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:693:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:704:26: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  704 |    choose(&HOME,&suspend,&count,6,OLED_RESTORE);
+      |                          ^~~~~~
+      |                          |
+      |                          uint32_t * {aka long unsigned int *}
+../Core/Src/main.c:147:44: note: expected 'int *' but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+  147 | int choose (Screen* screen,int* flag, int* count, int max, int restopt) {
+      |                                       ~~~~~^~~~~
+../Core/Src/main.c: In function 'CardFoundStart':
+../Core/Src/main.c:738:55: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  738 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                       ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:738:72: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  738 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                                        ^~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'choose':
+../Core/Src/main.c:165:1: warning: control reaches end of non-void function [-Wreturn-type]
+  165 | }
+      | ^
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:171:1: warning: control reaches end of non-void function [-Wreturn-type]
+  171 | }
+      | ^
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  61396	   1620	  27564	  90580	  161d4	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+23:11:02 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:169:2: warning: implicit declaration of function 'findfreeaddr' [-Wimplicit-function-declaration]
+  169 |  findfreeaddr(address);
+      |  ^~~~~~~~~~~~
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:626:27: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                           ^~~~~~~~~~~
+      |                           |
+      |                           const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:626:40: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                        ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:626:53: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                     ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:639:5: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  639 |  if(DumpINFO(cardinf)==PCD_OK){
+      |     ^~~~~~~~
+../Core/Src/main.c: In function 'StartWriteCard':
+../Core/Src/main.c:667:28: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  667 |  SCREEN_INIT(&write, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                            ^~~~~~~~~~~
+      |                            |
+      |                            const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:667:41: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |  SCREEN_INIT(&write, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                         ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:667:54: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |  SCREEN_INIT(&write, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                      ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'StartHome':
+../Core/Src/main.c:693:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:693:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:704:26: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  704 |    choose(&HOME,&suspend,&count,6,OLED_RESTORE);
+      |                          ^~~~~~
+      |                          |
+      |                          uint32_t * {aka long unsigned int *}
+../Core/Src/main.c:147:44: note: expected 'int *' but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+  147 | int choose (Screen* screen,int* flag, int* count, int max, int restopt) {
+      |                                       ~~~~~^~~~~
+../Core/Src/main.c: In function 'CardFoundStart':
+../Core/Src/main.c:738:55: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  738 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                       ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:738:72: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  738 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                                        ^~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'choose':
+../Core/Src/main.c:165:1: warning: control reaches end of non-void function [-Wreturn-type]
+  165 | }
+      | ^
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:171:1: warning: control reaches end of non-void function [-Wreturn-type]
+  171 | }
+      | ^
+In file included from ../Core/Src/main.c:28:
+At top level:
+../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
+  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  61384	   1604	  27564	  90552	  161b8	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+23:11:56 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:169:2: warning: implicit declaration of function 'findfreeaddr' [-Wimplicit-function-declaration]
+  169 |  findfreeaddr(address);
+      |  ^~~~~~~~~~~~
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:626:27: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                           ^~~~~~~~~~~
+      |                           |
+      |                           const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:626:40: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                        ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:626:53: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                     ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:639:5: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  639 |  if(DumpINFO(cardinf)==PCD_OK){
+      |     ^~~~~~~~
+../Core/Src/main.c: In function 'StartWriteCard':
+../Core/Src/main.c:667:28: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  667 |  SCREEN_INIT(&write, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                            ^~~~~~~~~~~
+      |                            |
+      |                            const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:667:41: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |  SCREEN_INIT(&write, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                         ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:667:54: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |  SCREEN_INIT(&write, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                      ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'StartHome':
+../Core/Src/main.c:693:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:693:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:704:26: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  704 |    choose(&HOME,&suspend,&count,6,OLED_RESTORE);
+      |                          ^~~~~~
+      |                          |
+      |                          uint32_t * {aka long unsigned int *}
+../Core/Src/main.c:147:44: note: expected 'int *' but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+  147 | int choose (Screen* screen,int* flag, int* count, int max, int restopt) {
+      |                                       ~~~~~^~~~~
+../Core/Src/main.c: In function 'CardFoundStart':
+../Core/Src/main.c:738:55: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  738 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                       ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:738:72: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  738 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                                        ^~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'choose':
+../Core/Src/main.c:165:1: warning: control reaches end of non-void function [-Wreturn-type]
+  165 | }
+      | ^
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:171:1: warning: control reaches end of non-void function [-Wreturn-type]
+  171 | }
+      | ^
+In file included from ../Core/Src/main.c:28:
+At top level:
+../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
+  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  61384	   1604	  27564	  90552	  161b8	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+23:15:31 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:169:2: warning: implicit declaration of function 'findfreeaddr' [-Wimplicit-function-declaration]
+  169 |  findfreeaddr(address);
+      |  ^~~~~~~~~~~~
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:626:27: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                           ^~~~~~~~~~~
+      |                           |
+      |                           const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:626:40: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                        ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:626:53: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                     ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:639:5: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  639 |  if(DumpINFO(cardinf)==PCD_OK){
+      |     ^~~~~~~~
+../Core/Src/main.c: In function 'StartWriteCard':
+../Core/Src/main.c:667:28: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  667 |  SCREEN_INIT(&write, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                            ^~~~~~~~~~~
+      |                            |
+      |                            const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:667:41: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |  SCREEN_INIT(&write, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                         ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:667:54: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |  SCREEN_INIT(&write, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                      ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'StartHome':
+../Core/Src/main.c:693:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:693:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:704:26: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  704 |    choose(&HOME,&suspend,&count,6,OLED_RESTORE);
+      |                          ^~~~~~
+      |                          |
+      |                          uint32_t * {aka long unsigned int *}
+../Core/Src/main.c:147:44: note: expected 'int *' but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+  147 | int choose (Screen* screen,int* flag, int* count, int max, int restopt) {
+      |                                       ~~~~~^~~~~
+../Core/Src/main.c: In function 'CardFoundStart':
+../Core/Src/main.c:738:55: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  738 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                       ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:738:72: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  738 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                                        ^~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'choose':
+../Core/Src/main.c:165:1: warning: control reaches end of non-void function [-Wreturn-type]
+  165 | }
+      | ^
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:171:1: warning: control reaches end of non-void function [-Wreturn-type]
+  171 | }
+      | ^
+In file included from ../Core/Src/main.c:28:
+At top level:
+../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
+  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  61384	   1604	  27564	  90552	  161b8	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+23:15:56 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:169:2: warning: implicit declaration of function 'findfreeaddr' [-Wimplicit-function-declaration]
+  169 |  findfreeaddr(address);
+      |  ^~~~~~~~~~~~
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:626:27: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                           ^~~~~~~~~~~
+      |                           |
+      |                           const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:626:40: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                        ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:626:53: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                     ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:639:5: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  639 |  if(DumpINFO(cardinf)==PCD_OK){
+      |     ^~~~~~~~
+../Core/Src/main.c: In function 'StartWriteCard':
+../Core/Src/main.c:667:28: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  667 |  SCREEN_INIT(&write, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                            ^~~~~~~~~~~
+      |                            |
+      |                            const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:667:41: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |  SCREEN_INIT(&write, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                         ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:667:54: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |  SCREEN_INIT(&write, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                      ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'StartHome':
+../Core/Src/main.c:693:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:693:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:704:26: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  704 |    choose(&HOME,&suspend,&count,6,OLED_RESTORE);
+      |                          ^~~~~~
+      |                          |
+      |                          uint32_t * {aka long unsigned int *}
+../Core/Src/main.c:147:44: note: expected 'int *' but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+  147 | int choose (Screen* screen,int* flag, int* count, int max, int restopt) {
+      |                                       ~~~~~^~~~~
+../Core/Src/main.c: In function 'CardFoundStart':
+../Core/Src/main.c:738:55: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  738 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                       ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:738:72: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  738 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                                        ^~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'choose':
+../Core/Src/main.c:165:1: warning: control reaches end of non-void function [-Wreturn-type]
+  165 | }
+      | ^
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:171:1: warning: control reaches end of non-void function [-Wreturn-type]
+  171 | }
+      | ^
+In file included from ../Core/Src/main.c:28:
+At top level:
+../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
+  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  61384	   1604	  27564	  90552	  161b8	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+23:16:53 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:169:2: warning: implicit declaration of function 'findfreeaddr' [-Wimplicit-function-declaration]
+  169 |  findfreeaddr(address);
+      |  ^~~~~~~~~~~~
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:626:27: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                           ^~~~~~~~~~~
+      |                           |
+      |                           const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:626:40: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                        ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:626:53: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                     ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:639:5: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  639 |  if(DumpINFO(cardinf)==PCD_OK){
+      |     ^~~~~~~~
+../Core/Src/main.c: In function 'StartWriteCard':
+../Core/Src/main.c:667:29: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  667 |   SCREEN_INIT(&write, 4, 1, WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:667:43: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                           ^~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:667:57: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                                         ^~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'StartHome':
+../Core/Src/main.c:693:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:693:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:704:26: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  704 |    choose(&HOME,&suspend,&count,6,OLED_RESTORE);
+      |                          ^~~~~~
+      |                          |
+      |                          uint32_t * {aka long unsigned int *}
+../Core/Src/main.c:147:44: note: expected 'int *' but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+  147 | int choose (Screen* screen,int* flag, int* count, int max, int restopt) {
+      |                                       ~~~~~^~~~~
+../Core/Src/main.c: In function 'CardFoundStart':
+../Core/Src/main.c:738:55: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  738 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                       ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:738:72: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  738 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                                        ^~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'choose':
+../Core/Src/main.c:165:1: warning: control reaches end of non-void function [-Wreturn-type]
+  165 | }
+      | ^
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:171:1: warning: control reaches end of non-void function [-Wreturn-type]
+  171 | }
+      | ^
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  61396	   1620	  27564	  90580	  161d4	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+23:17:51 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/MFRC.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/MFRC.d" -MT"Core/Src/MFRC.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/MFRC.o"
 arm-none-eabi-gcc "../Core/Src/OLED.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/OLED.d" -MT"Core/Src/OLED.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/OLED.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/MFRC.c: In function 'MFRC_TRANSCEIVE':
+../Core/Src/MFRC.c:205:14: warning: suggest parentheses around comparison in operand of '&' [-Wparentheses]
+  205 |  while(IRQval&0x30!=0x30){ //Hang here until RXIRQ and IDLEIRQ bits are set
+      |              ^
+../Core/Src/MFRC.c: In function 'Print':
+../Core/Src/MFRC.c:469:18: warning: pointer targets in passing argument 1 of 'CDC_Transmit_FS' differ in signedness [-Wpointer-sign]
+  469 |  CDC_Transmit_FS(send, strlen(mess));
+      |                  ^~~~
+      |                  |
+      |                  char *
+In file included from ../Core/Src/MFRC.c:11:
+../USB_DEVICE/App/usbd_cdc_if.h:108:34: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
+  108 | uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);
+      |                         ~~~~~~~~~^~~
+../Core/Src/MFRC.c: In function 'DumpINFO':
+../Core/Src/MFRC.c:541:1: warning: control reaches end of non-void function [-Wreturn-type]
+  541 | }
+      | ^
+../Core/Src/MFRC.c:526:35: warning: '
+   ' directive writing 2 bytes into a region of size 0 [-Wformat-overflow=]
+  526 |       sprintf(mess,"%X, %X, %X, %X\r\n",data[j],data[j+1],data[j+2],data[j+3]);
+      |                                   ^~~~
+../Core/Src/MFRC.c:526:7: note: 'sprintf' output between 13 and 17 bytes into a destination of size 10
+  526 |       sprintf(mess,"%X, %X, %X, %X\r\n",data[j],data[j+1],data[j+2],data[j+3]);
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/MFRC.c:496:35: warning: '
+   ' directive writing 2 bytes into a region of size 0 [-Wformat-overflow=]
+  496 |       sprintf(mess,"%X, %X, %X, %X\r\n",data[j],data[j+1],data[j+2],data[j+3]);
+      |                                   ^~~~
+../Core/Src/MFRC.c:496:7: note: 'sprintf' output between 13 and 17 bytes into a destination of size 10
+  496 |       sprintf(mess,"%X, %X, %X, %X\r\n",data[j],data[j+1],data[j+2],data[j+3]);
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/MFRC.c:12:
+At top level:
+../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
+  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443","SRC FILE: NONE","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~~
+../Core/Inc/OLED.h:163:20: warning: 'CARD_FOUNDSCREEN' defined but not used [-Wunused-variable]
+  163 | static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID: ","IC: ","SAVE","EXIT"};
+      |                    ^~~~~~~~~~~~~~~~
+../Core/Inc/OLED.h:159:20: warning: 'READ_SCREEN' defined but not used [-Wunused-variable]
+  159 | static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~
+In file included from ../Core/Src/MFRC.c:12:
+../Core/Inc/OLED.h:155:20: warning: 'HOME_SCREEN' defined but not used [-Wunused-variable]
+  155 | static const char* HOME_SCREEN[7]={"Ruthless RFID","1.READ CARD","2.WRITE CARD","3.SHOW FILES","4.DISP","5.STATS","6.EXIT"};
+      |                    ^~~~~~~~~~~
 ../Core/Src/OLED.c: In function 'OLED_INIT':
 ../Core/Src/OLED.c:231:1: warning: control reaches end of non-void function [-Wreturn-type]
   231 | }
@@ -96,25 +1645,309 @@ arm-none-eabi-gcc "../Core/Src/OLED.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -D
 In file included from ../Core/Src/OLED.c:8:
 At top level:
 ../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
-  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
+  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443","SRC FILE: NONE","STATUS: NO CARD"};
       |                    ^~~~~~~~~~~~
 ../Core/Inc/OLED.h:163:20: warning: 'CARD_FOUNDSCREEN' defined but not used [-Wunused-variable]
   163 | static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID: ","IC: ","SAVE","EXIT"};
       |                    ^~~~~~~~~~~~~~~~
 ../Core/Inc/OLED.h:159:20: warning: 'READ_SCREEN' defined but not used [-Wunused-variable]
-  159 | static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443-3","STATUS: NO CARD"};
+  159 | static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443","STATUS: NO CARD"};
       |                    ^~~~~~~~~~~
 In file included from ../Core/Src/OLED.c:8:
 ../Core/Inc/OLED.h:155:20: warning: 'HOME_SCREEN' defined but not used [-Wunused-variable]
   155 | static const char* HOME_SCREEN[7]={"Ruthless RFID","1.READ CARD","2.WRITE CARD","3.SHOW FILES","4.DISP","5.STATS","6.EXIT"};
       |                    ^~~~~~~~~~~
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:169:2: warning: implicit declaration of function 'findfreeaddr' [-Wimplicit-function-declaration]
+  169 |  findfreeaddr(address);
+      |  ^~~~~~~~~~~~
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:626:27: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                           ^~~~~~~~~~~
+      |                           |
+      |                           const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:626:40: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                        ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:626:53: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                     ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:639:5: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  639 |  if(DumpINFO(cardinf)==PCD_OK){
+      |     ^~~~~~~~
+../Core/Src/main.c: In function 'StartWriteCard':
+../Core/Src/main.c:667:29: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  667 |   SCREEN_INIT(&write, 4, 1, WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:667:43: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                           ^~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:667:57: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                                         ^~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'StartHome':
+../Core/Src/main.c:693:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:693:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:704:26: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  704 |    choose(&HOME,&suspend,&count,6,OLED_RESTORE);
+      |                          ^~~~~~
+      |                          |
+      |                          uint32_t * {aka long unsigned int *}
+../Core/Src/main.c:147:44: note: expected 'int *' but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+  147 | int choose (Screen* screen,int* flag, int* count, int max, int restopt) {
+      |                                       ~~~~~^~~~~
+../Core/Src/main.c: In function 'CardFoundStart':
+../Core/Src/main.c:738:55: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  738 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                       ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:738:72: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  738 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                                        ^~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'choose':
+../Core/Src/main.c:165:1: warning: control reaches end of non-void function [-Wreturn-type]
+  165 | }
+      | ^
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:171:1: warning: control reaches end of non-void function [-Wreturn-type]
+  171 | }
+      | ^
 arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: Ruthless RFID.elf
  
 arm-none-eabi-size   Ruthless\ RFID.elf 
 arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
    text	   data	    bss	    dec	    hex	filename
-  61288	   1604	  27564	  90456	  16158	Ruthless RFID.elf
+  61384	   1620	  27564	  90568	  161c8	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+23:18:39 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/MFRC.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/MFRC.d" -MT"Core/Src/MFRC.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/MFRC.o"
+arm-none-eabi-gcc "../Core/Src/OLED.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/OLED.d" -MT"Core/Src/OLED.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/OLED.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/MFRC.c: In function 'MFRC_TRANSCEIVE':
+../Core/Src/MFRC.c:205:14: warning: suggest parentheses around comparison in operand of '&' [-Wparentheses]
+  205 |  while(IRQval&0x30!=0x30){ //Hang here until RXIRQ and IDLEIRQ bits are set
+      |              ^
+../Core/Src/MFRC.c: In function 'Print':
+../Core/Src/MFRC.c:469:18: warning: pointer targets in passing argument 1 of 'CDC_Transmit_FS' differ in signedness [-Wpointer-sign]
+  469 |  CDC_Transmit_FS(send, strlen(mess));
+      |                  ^~~~
+      |                  |
+      |                  char *
+In file included from ../Core/Src/MFRC.c:11:
+../USB_DEVICE/App/usbd_cdc_if.h:108:34: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
+  108 | uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);
+      |                         ~~~~~~~~~^~~
+../Core/Src/OLED.c: In function 'OLED_INIT':
+../Core/Src/OLED.c:231:1: warning: control reaches end of non-void function [-Wreturn-type]
+  231 | }
+      | ^
+In file included from ../Core/Src/OLED.c:8:
+At top level:
+../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
+  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443","SRC FILE: NONE","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~~
+../Core/Inc/OLED.h:163:20: warning: 'CARD_FOUNDSCREEN' defined but not used [-Wunused-variable]
+  163 | static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID: ","IC: ","SAVE","EXIT"};
+      |                    ^~~~~~~~~~~~~~~~
+../Core/Inc/OLED.h:159:20: warning: 'READ_SCREEN' defined but not used [-Wunused-variable]
+  159 | static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~
+In file included from ../Core/Src/OLED.c:8:
+../Core/Inc/OLED.h:155:20: warning: 'HOME_SCREEN' defined but not used [-Wunused-variable]
+  155 | static const char* HOME_SCREEN[7]={"Ruthless RFID","1.READ CARD","2.WRITE CARD","3.SHOW FILES","4.DISP","5.STATS","6.EXIT"};
+      |                    ^~~~~~~~~~~
+../Core/Src/MFRC.c: In function 'DumpINFO':
+../Core/Src/MFRC.c:541:1: warning: control reaches end of non-void function [-Wreturn-type]
+  541 | }
+      | ^
+../Core/Src/MFRC.c:526:35: warning: '
+   ' directive writing 2 bytes into a region of size 0 [-Wformat-overflow=]
+  526 |       sprintf(mess,"%X, %X, %X, %X\r\n",data[j],data[j+1],data[j+2],data[j+3]);
+      |                                   ^~~~
+../Core/Src/MFRC.c:526:7: note: 'sprintf' output between 13 and 17 bytes into a destination of size 10
+  526 |       sprintf(mess,"%X, %X, %X, %X\r\n",data[j],data[j+1],data[j+2],data[j+3]);
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/MFRC.c:496:35: warning: '
+   ' directive writing 2 bytes into a region of size 0 [-Wformat-overflow=]
+  496 |       sprintf(mess,"%X, %X, %X, %X\r\n",data[j],data[j+1],data[j+2],data[j+3]);
+      |                                   ^~~~
+../Core/Src/MFRC.c:496:7: note: 'sprintf' output between 13 and 17 bytes into a destination of size 10
+  496 |       sprintf(mess,"%X, %X, %X, %X\r\n",data[j],data[j+1],data[j+2],data[j+3]);
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/MFRC.c:12:
+At top level:
+../Core/Inc/OLED.h:167:20: warning: 'WRITE_SCREEN' defined but not used [-Wunused-variable]
+  167 | static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443","SRC FILE: NONE","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~~
+../Core/Inc/OLED.h:163:20: warning: 'CARD_FOUNDSCREEN' defined but not used [-Wunused-variable]
+  163 | static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID: ","IC: ","SAVE","EXIT"};
+      |                    ^~~~~~~~~~~~~~~~
+../Core/Inc/OLED.h:159:20: warning: 'READ_SCREEN' defined but not used [-Wunused-variable]
+  159 | static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443","STATUS: NO CARD"};
+      |                    ^~~~~~~~~~~
+In file included from ../Core/Src/MFRC.c:12:
+../Core/Inc/OLED.h:155:20: warning: 'HOME_SCREEN' defined but not used [-Wunused-variable]
+  155 | static const char* HOME_SCREEN[7]={"Ruthless RFID","1.READ CARD","2.WRITE CARD","3.SHOW FILES","4.DISP","5.STATS","6.EXIT"};
+      |                    ^~~~~~~~~~~
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:169:2: warning: implicit declaration of function 'findfreeaddr' [-Wimplicit-function-declaration]
+  169 |  findfreeaddr(address);
+      |  ^~~~~~~~~~~~
+../Core/Src/main.c: In function 'StartReadCard':
+../Core/Src/main.c:626:27: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                           ^~~~~~~~~~~
+      |                           |
+      |                           const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:626:40: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                        ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:626:53: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  626 |  SCREEN_INIT(&read, 3, 1, READ_SCREEN, READ_DATLOC, READ_SEL);
+      |                                                     ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:639:5: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  639 |  if(DumpINFO(cardinf)==PCD_OK){
+      |     ^~~~~~~~
+../Core/Src/main.c: In function 'StartWriteCard':
+../Core/Src/main.c:667:29: warning: passing argument 4 of 'SCREEN_INIT' from incompatible pointer type [-Wincompatible-pointer-types]
+  667 |   SCREEN_INIT(&write, 4, 1, WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             const char **
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:65: note: expected 'char **' but argument is of type 'const char **'
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                          ~~~~~~~^~~~
+../Core/Src/main.c:667:43: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                           ^~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:667:57: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  667 |   SCREEN_INIT(&write, 4, 1, WRITE_SCREEN, WRITE_DATLOC, WRITE_SEL);
+      |                                                         ^~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'StartHome':
+../Core/Src/main.c:693:44: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                            ^~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:693:56: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  693 |  SCREEN_INIT(&HOME,7,6,(char**)HOME_SCREEN,HOME_DATLOC,HOME_SEL);
+      |                                                        ^~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:704:26: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  704 |    choose(&HOME,&suspend,&count,6,OLED_RESTORE);
+      |                          ^~~~~~
+      |                          |
+      |                          uint32_t * {aka long unsigned int *}
+../Core/Src/main.c:147:44: note: expected 'int *' but argument is of type 'uint32_t *' {aka 'long unsigned int *'}
+  147 | int choose (Screen* screen,int* flag, int* count, int max, int restopt) {
+      |                                       ~~~~~^~~~~
+../Core/Src/main.c: In function 'CardFoundStart':
+../Core/Src/main.c:738:55: warning: passing argument 5 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  738 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                       ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:80: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                      ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c:738:72: warning: passing argument 6 of 'SCREEN_INIT' discards 'const' qualifier from pointer target type [-Wdiscarded-array-qualifiers]
+  738 |   SCREEN_INIT(&found, 5, 2, (char**)CARD_FOUNDSCREEN, CARD_FOUNDATLOC, CARD_FOUNDSEL);
+      |                                                                        ^~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Inc/OLED.h:199:102: note: expected 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'} but argument is of type 'const uint8_t (*)[2]' {aka 'const unsigned char (*)[2]'}
+  199 | void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
+      |                                                                                            ~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/main.c: In function 'choose':
+../Core/Src/main.c:165:1: warning: control reaches end of non-void function [-Wreturn-type]
+  165 | }
+      | ^
+../Core/Src/main.c: In function 'writecard':
+../Core/Src/main.c:171:1: warning: control reaches end of non-void function [-Wreturn-type]
+  171 | }
+      | ^
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  61384	   1620	  27564	  90568	  161c8	Ruthless RFID.elf
 Finished building: default.size.stdout
  
 Finished building: Ruthless RFID.list

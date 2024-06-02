@@ -217,3 +217,23 @@ HAL_StatusTypeDef MEM_SCAN(uint16_t* defect){
 	return(HAL_OK);
 }
 
+void findfreeaddr (uint32_t* result) {
+	uint32_t startaddr = 0x00;
+	uint8_t read = 0x00;
+	uint32_t pageaddr = 0x00;
+	uint32_t coladdr = 0x00;
+
+	while(read != 0xFF) {
+		MEM_READPAGE(pageaddr, coladdr, &read, 1);
+		coladdr++;
+		if (coladdr == 2047) {
+			pageaddr++;
+			coladdr = 0;
+		}
+	}
+
+	*result = pageaddr;
+	*(result+1) = coladdr;
+}
+
+
