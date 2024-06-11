@@ -45,6 +45,6 @@ HAL_StatusTypeDef MEM_INIT(void);
 HAL_StatusTypeDef MEM_WRITE(uint16_t col_addr,uint16_t page_addr,uint8_t* data,uint16_t bytes);
 HAL_StatusTypeDef MEM_READPAGE(uint16_t addr,uint16_t col_addr,uint8_t* data,uint16_t bytes);
 HAL_StatusTypeDef MEM_SCAN(uint16_t* defect);
-
+void findfreeaddr (uint32_t* result);
 
 #endif /* INC_W25N01GVZEIG_H_ */

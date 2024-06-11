@@ -11,7 +11,8 @@
 
 
 #include "W25N01GVZEIG.h"
-
+#include <stdlib.h>
+#include <string.h>
 
 extern SPI_HandleTypeDef hspi2;
 
@@ -75,7 +76,7 @@ HAL_StatusTypeDef STAT_WRITE(uint8_t addr,uint8_t value){
 void WRIT_EN(void){ //Write enable instruction must pre-ceed the following: Page program, block erase, bad block manage
 	uint8_t WRIT_EN=0x06;
 
-	while(STAT_READ(STAT_REG3&0x02!=0x02)){ //Check that second to last bit (Write Enable bit) of status register is 1
+	while((STAT_READ(STAT_REG3&0x02)!=0x02)){ //Check that second to last bit (Write Enable bit) of status register is 1
 		HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
 		HAL_SPI_Transmit(&hspi2, &WRIT_EN, 1, 100); //load data to internal buffer
 		HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
@@ -95,6 +96,10 @@ void WRIT_EN(void){ //Write enable instruction must pre-ceed the following: Page
 HAL_StatusTypeDef MEM_INIT(void){
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
 	STAT_WRITE(STAT_REG1, 0x02); //remove protection of entire memory array
+	if (STAT_READ(STAT_REG1) != 0x02) {
+		return HAL_ERROR;
+	}
+	return HAL_OK;
 }
 
 /*
@@ -124,7 +129,7 @@ HAL_StatusTypeDef MEM_WRITE(uint16_t col_addr,uint16_t page_addr,uint8_t* data,u
 		return(HAL_ERROR);
 	}
 
-	while(STAT_READ(STAT_REG3)&0x02!=0x02); //Wait here until busy bit is clear
+	while((STAT_READ(STAT_REG3)&0x02)!=0x02); //Wait here until busy bit is clear
 	WRIT_EN();
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
 	if(HAL_SPI_Transmit(&hspi2, execute, 3, 100)!=HAL_OK){ //Send command to dump internal buffer data to memory array
@@ -167,7 +172,7 @@ HAL_StatusTypeDef MEM_READPAGE(uint16_t page_addr,uint16_t col_addr,uint8_t* dat
 		return(HAL_ERROR);
 	}
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
-	while(STAT_READ(STAT_REG3)&0x01!=0x01); //Wait here until BUSY bit is cleared
+	while((STAT_READ(STAT_REG3)&0x01)!=0x01); //Wait here until BUSY bit is cleared
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
 	if(HAL_SPI_TransmitReceive(&hspi2, read_data, rec_data, bytes+5, 100)!=HAL_OK){ //Ignore remaining 64 bytes so 2048 instead of 2112
 		HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
@@ -218,7 +223,6 @@ HAL_StatusTypeDef MEM_SCAN(uint16_t* defect){
 }
 
 void findfreeaddr (uint32_t* result) {
-	uint32_t startaddr = 0x00;
 	uint8_t read = 0x00;
 	uint32_t pageaddr = 0x00;
 	uint32_t coladdr = 0x00;

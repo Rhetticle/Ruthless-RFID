@@ -52,7 +52,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h \
  ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h \
  ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h \
- ../Core/Inc/MFRC.h ../Core/Inc/OLED.h \
+ ../Core/Inc/MFRC.h ../Core/Inc/OLED.h ../Core/Inc/screen.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
  ../Core/Inc/W25N01GVZEIG.h
@@ -113,6 +113,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h:
 ../Core/Inc/MFRC.h:
 ../Core/Inc/OLED.h:
+../Core/Inc/screen.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
 ../Core/Inc/W25N01GVZEIG.h:

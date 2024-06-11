@@ -197,7 +197,7 @@ PCD_StatusTypeDef MFRC_TRANSCEIVE(uint8_t* sendData,uint8_t sendsize,uint8_t* re
 	MFRC_REGW(CMD_REG,TRANSCEIVE); //Send FIFO data and receive PICC response
 	MFRC_REGR(BITFRAME,&BIT_val);
 	MFRC_REGW(BITFRAME,(BIT_val|0x80)); //Start send bit
-	while(IRQval&0x30!=0x30){ //Hang here until RXIRQ and IDLEIRQ bits are set
+	while((IRQval&0x30)!=0x30){ //Hang here until RXIRQ and IDLEIRQ bits are set
 		MFRC_REGR(IRQ_REG,&IRQval);
 
 
@@ -461,7 +461,7 @@ PCD_StatusTypeDef UL_WRITE(uint8_t addr,uint8_t* data){
 void Print(char* mess){
 	char send[strlen(mess)];
 	memcpy(send,mess,strlen(mess));
-	CDC_Transmit_FS(send, strlen(mess));
+	CDC_Transmit_FS((uint8_t*)send, strlen(mess));
 	HAL_Delay(10);
 }
 
@@ -487,7 +487,7 @@ PCD_StatusTypeDef DumpINFO(uint8_t* data){
 				for(int i=0;i<13;i+=4){
 					UL_READ(i, data);
 					for(int j=0;j<13;j+=4){
-						char mess[10];
+						char mess[20];
 						sprintf(mess,"%X, %X, %X, %X\r\n",data[j],data[j+1],data[j+2],data[j+3]);
 						Print(mess);
 						return(PCD_OK);
@@ -517,7 +517,7 @@ PCD_StatusTypeDef DumpINFO(uint8_t* data){
 				for(int i=0;i<13;i+=4){
 					UL_READ(i, data);
 					for(int j=0;j<13;j+=4){
-						char mess[10];
+						char mess[20];
 						sprintf(mess,"%X, %X, %X, %X\r\n",data[j],data[j+1],data[j+2],data[j+3]);
 						Print(mess);
 						return(PCD_OK);
@@ -529,7 +529,7 @@ PCD_StatusTypeDef DumpINFO(uint8_t* data){
 			  WUPA=1;
 		  }
 	  }
-
+	  return (PCD_COMM_ERR);
 
 
 

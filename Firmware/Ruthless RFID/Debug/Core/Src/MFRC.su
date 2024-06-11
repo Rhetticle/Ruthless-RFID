@@ -22,4 +22,4 @@
 ../Core/Src/MFRC.c:414:19:UL_READ	32	static
 ../Core/Src/MFRC.c:442:19:UL_WRITE	32	static
 ../Core/Src/MFRC.c:461:6:Print	48	dynamic
-../Core/Src/MFRC.c:474:19:DumpINFO	80	static
+../Core/Src/MFRC.c:474:19:DumpINFO	96	static

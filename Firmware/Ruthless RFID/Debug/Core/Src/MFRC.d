@@ -40,7 +40,7 @@ Core/Src/MFRC.o: ../Core/Src/MFRC.c ../Core/Inc/MFRC.h \
  ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h \
  ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h \
  ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h \
- ../Core/Inc/OLED.h
+ ../Core/Inc/OLED.h ../Core/Inc/screen.h
 ../Core/Inc/MFRC.h:
 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h:
 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xc.h:
@@ -85,3 +85,4 @@ Core/Src/MFRC.o: ../Core/Src/MFRC.c ../Core/Inc/MFRC.h \
 ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h:
 ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h:
 ../Core/Inc/OLED.h:
+../Core/Inc/screen.h:

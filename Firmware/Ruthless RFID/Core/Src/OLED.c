@@ -82,47 +82,6 @@ uint8_t HVE[] = {
 // Array of all bitmaps for convenience. (Total bytes used to store images in PROGMEM = 1040)
 
 
-/**
- * Screens
- *
- * */
-
-const Screen home = {
-		.datsize = sizeof(HOME_SCREEN)/sizeof(HOME_SCREEN[0]),
-		.selsize = sizeof(HOME_SEL)/sizeof(HOME_SEL[0]),
-		.data = HOME_SCREEN,
-		.dataloc = HOME_DATLOC,
-		.seldata = HOME_SEL,
-
-};
-
-const Screen read_card = {
-		.datsize = sizeof(READ_SCREEN)/sizeof(READ_SCREEN[0]),
-		.selsize = sizeof(READ_SEL)/sizeof(READ_SEL[0]),
-		.data = READ_SCREEN,
-		.dataloc = READ_DATLOC,
-		.seldata = READ_SEL,
-
-};
-
-const Screen card_found = {
-		.datsize = sizeof(CARD_FOUNDSCREEN)/sizeof(CARD_FOUNDSCREEN[0]),
-		.selsize = sizeof(CARD_FOUNDSEL)/sizeof(CARD_FOUNDSEL[0]),
-		.data = CARD_FOUNDSCREEN,
-		.dataloc = CARD_FOUNDATLOC,
-		.seldata = CARD_FOUNDSEL,
-
-};
-
-const Screen write_card = {
-		.datsize = sizeof(WRITE_SCREEN)/sizeof(WRITE_SCREEN[0]),
-		.selsize = sizeof(WRITE_SEL)/sizeof(WRITE_SEL[0]),
-		.data = WRITE_SCREEN,
-		.dataloc = WRITE_DATLOC,
-		.seldata = WRITE_SEL,
-
-};
-
 
 /* Function to turn off OLED (sends 0xAE)
  *
@@ -203,31 +162,6 @@ void OLED_FLUSH(uint8_t* mem){
 
 
 	}
-}
-
-/*Function to initialise a Screen struct member
- *
- * @param screen: Pointer to screen we want to initialise
- *
- * @param datasize: Number of strings in data variable
- *
- * @param selsize: Number of inner arrays in seldata variable
- *
- * @param data: Array of strings that form the basis of the screen
- *
- * @param seldata: Array of data on where to place select arrow "->"
- * */
-
-void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]){
-
-    screen->datsize=datasize;
-    screen->selsize=selsize;
-    screen->data=data;
-    screen->dataloc=dataloc;
-    screen->seldata=seldata;
-
-
-
 }
 
 
@@ -453,7 +387,7 @@ void OLED_Print(char* string){
  * @param invert: Option to invert entire screen
  * */
 
-void OLED_SCREEN(Screen* screen,uint8_t invert){
+void OLED_SCREEN(const Screen* screen,uint8_t invert){
 	OLED_Clear();
 	OLED_PrintCent(0, screen->data[0], invert);
 
@@ -482,7 +416,7 @@ void OLED_FREESCREEN(Screen* screen){
  * @param data: Data to add to the screen
  * */
 
-void OLED_SCRNREF(Screen* screen,uint8_t dataindx,char* data){
+void OLED_SCRNREF(const Screen* screen,uint8_t dataindx,char* data){
 	int len=strlen(screen->data[dataindx]);
 	int start_col=START_COL+((len)*6);
 
@@ -517,7 +451,7 @@ void OLED_FILL(uint8_t* data,uint8_t page,uint8_t start_col, uint8_t length){
  * @param col: Column to place arrow
  * */
 
-void OLED_SELECT(Screen* screen,uint8_t selopt, int restore){
+void OLED_SELECT(const Screen* screen,uint8_t selopt, int restore){
 
 	char arrow[]="->";
 

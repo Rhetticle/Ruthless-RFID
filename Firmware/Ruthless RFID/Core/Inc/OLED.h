@@ -9,6 +9,7 @@
 #define INC_OLED_H_
 
 #include <stm32f4xx.h>
+#include "screen.h"
 
 #define OLED_CS GPIO_PIN_4
 #define OLED_RST GPIO_PIN_3
@@ -16,9 +17,6 @@
 
 #define NORMAL 0
 #define INVERT 1
-#define START_COL 2
-#define MID_COL 64
-#define END_COL 128
 #define OLED_LEFT 0
 #define OLED_RIGHT 1
 #define OLED_NORESTORE 0
@@ -153,40 +151,8 @@ static const char ASCII[96][5] = {
 }; // end char ASCII[96][5]
 
 
-static const char* HOME_SCREEN[7]={"Ruthless RFID","1.READ CARD","2.WRITE CARD","3.SHOW FILES","4.DISP","5.STATS","6.EXIT"};
-static const uint8_t HOME_DATLOC[7][2]={{0,0},{2,START_COL},{4,START_COL},{6,START_COL},{2,MID_COL+15},{4,MID_COL+15},{6,MID_COL+15}};
-static const uint8_t HOME_SEL[6][2]={{2,START_COL},{4,START_COL},{6,START_COL},{2,MID_COL+15},{4,MID_COL+15},{6,MID_COL+15}}; //Select arrow info for HOME screen format {Page,column,replacesize}}
-
-static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443","STATUS: NO CARD"};
-static const uint8_t READ_DATLOC[3][2]={{0,0},{2,START_COL},{4,START_COL}};
-static const uint8_t READ_SEL[1][2]={{0,0}};
-
-static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID: ","IC: ","SAVE","EXIT"};
-static const uint8_t CARD_FOUNDATLOC[5][2]={{0,0},{2,START_COL},{4,START_COL},{7,START_COL+12},{7,END_COL-24}};
-static const uint8_t CARD_FOUNDSEL[2][2]={{7,START_COL},{7,END_COL-36}};
-
-static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443","SRC FILE: NONE","STATUS: NO CARD"};
-static const uint8_t WRITE_DATLOC[4][2]={{0,0},{2,START_COL},{4,START_COL},{6,START_COL}};
-static const uint8_t WRITE_SEL[1][2] = {{0,0}};
-
-/*STRUCT INFO
- *
- * Screen struct is used to define a set of strings to display to the OLED display as well as locations for the select
- * arrow "->" to be placed. The first string in data must always be a header. If a screen has no select options on it
- * the seldata must still be defined in order to know where each string in data should go.
- * */
-
-typedef struct{
-    int datsize;
-    int selsize;
-    const char** data;
-    const uint8_t (*dataloc)[2];
-    const uint8_t (*seldata)[2];
-}Screen;
-
 
 extern SPI_HandleTypeDef hspi1; //Our SPI bus connected to OLED
-extern const Screen home,read_card, card_found, write_card; //Screens
 
 void OLED_OFF(void);
 HAL_StatusTypeDef OLED_cmd(uint8_t data);
@@ -195,16 +161,15 @@ HAL_StatusTypeDef OLED_data(uint8_t* data,uint8_t size);
 void OLED_PWRDWN(void);
 void OLED_Test(void);
 void OLED_FLUSH(uint8_t* mem);
-void SCREEN_INIT(Screen* screen,int datasize,int selsize,char** data,uint8_t (*dataloc)[2],uint8_t (*seldata)[2]);
 void OLED_InvChar(char character,uint8_t* result);
 void OLED_drawChar(uint8_t page,uint8_t col, char character,uint8_t invert);
 void OLED_Printlin(uint8_t page,uint8_t col,char* string,uint8_t invert);
 void OLED_Shift(uint8_t page,uint8_t start_col,uint8_t spaces, uint8_t dir, char* string);
 void OLED_PrintCent(uint8_t page, char* string, uint8_t invert);
 void OLED_Print(char* string);
-void OLED_SCREEN(Screen* screen,uint8_t invert);
-void OLED_SCRNREF(Screen* screen,uint8_t dataindx,char* data);
+void OLED_SCREEN(const Screen* screen,uint8_t invert);
+void OLED_SCRNREF(const Screen* screen,uint8_t dataindx,char* data);
 void OLED_FILL(uint8_t* data,uint8_t page,uint8_t start_col, uint8_t length);
-void OLED_SELECT(Screen* screen,uint8_t selopt,int restore);
+void OLED_SELECT(const Screen* screen,uint8_t selopt,int restore);
 
 #endif /* INC_OLED_H_ */
