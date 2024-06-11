@@ -8,7 +8,7 @@
 #ifndef INC_OLED_H_
 #define INC_OLED_H_
 
-#include "stm32f4xx.h"
+#include <stm32f4xx.h>
 
 #define OLED_CS GPIO_PIN_4
 #define OLED_RST GPIO_PIN_3
@@ -152,6 +152,7 @@ static const char ASCII[96][5] = {
 ,{0x00, 0x06, 0x09, 0x09, 0x06} // 7f ?
 }; // end char ASCII[96][5]
 
+
 static const char* HOME_SCREEN[7]={"Ruthless RFID","1.READ CARD","2.WRITE CARD","3.SHOW FILES","4.DISP","5.STATS","6.EXIT"};
 static const uint8_t HOME_DATLOC[7][2]={{0,0},{2,START_COL},{4,START_COL},{6,START_COL},{2,MID_COL+15},{4,MID_COL+15},{6,MID_COL+15}};
 static const uint8_t HOME_SEL[6][2]={{2,START_COL},{4,START_COL},{6,START_COL},{2,MID_COL+15},{4,MID_COL+15},{6,MID_COL+15}}; //Select arrow info for HOME screen format {Page,column,replacesize}}
@@ -168,8 +169,6 @@ static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443","SRC FILE
 static const uint8_t WRITE_DATLOC[4][2]={{0,0},{2,START_COL},{4,START_COL},{6,START_COL}};
 static const uint8_t WRITE_SEL[1][2] = {{0,0}};
 
-
-
 /*STRUCT INFO
  *
  * Screen struct is used to define a set of strings to display to the OLED display as well as locations for the select
@@ -180,14 +179,14 @@ static const uint8_t WRITE_SEL[1][2] = {{0,0}};
 typedef struct{
     int datsize;
     int selsize;
-    char** data;
-    uint8_t (*dataloc)[2];
-    uint8_t (*seldata)[2];
+    const char** data;
+    const uint8_t (*dataloc)[2];
+    const uint8_t (*seldata)[2];
 }Screen;
 
 
-
-
+extern SPI_HandleTypeDef hspi1; //Our SPI bus connected to OLED
+extern const Screen home,read_card, card_found, write_card; //Screens
 
 void OLED_OFF(void);
 HAL_StatusTypeDef OLED_cmd(uint8_t data);

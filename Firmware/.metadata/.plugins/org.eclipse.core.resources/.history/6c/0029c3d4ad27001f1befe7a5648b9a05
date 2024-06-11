@@ -8,7 +8,7 @@
 #ifndef INC_OLED_H_
 #define INC_OLED_H_
 
-#include "stm32f4xx.h"
+#include <stm32f4xx.h>
 
 #define OLED_CS GPIO_PIN_4
 #define OLED_RST GPIO_PIN_3
@@ -152,23 +152,22 @@ static const char ASCII[96][5] = {
 ,{0x00, 0x06, 0x09, 0x09, 0x06} // 7f ?
 }; // end char ASCII[96][5]
 
-static const char* HOME_SCREEN[7]={"Ruthless RFID","1.READ CARD","2.WRITE CARD","3.SHOW FILES","4.DISP","5.STATS","6.EXIT"};
-static const uint8_t HOME_DATLOC[7][2]={{0,0},{2,START_COL},{4,START_COL},{6,START_COL},{2,MID_COL+15},{4,MID_COL+15},{6,MID_COL+15}};
-static const uint8_t HOME_SEL[6][2]={{2,START_COL},{4,START_COL},{6,START_COL},{2,MID_COL+15},{4,MID_COL+15},{6,MID_COL+15}}; //Select arrow info for HOME screen format {Page,column,replacesize}}
 
-static const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443-3","STATUS: NO CARD"};
-static const uint8_t READ_DATLOC[3][2]={{0,0},{2,START_COL},{4,START_COL}};
-static const uint8_t READ_SEL[1][2]={{0,0}};
+const char* HOME_SCREEN[7]={"Ruthless RFID","1.READ CARD","2.WRITE CARD","3.SHOW FILES","4.DISP","5.STATS","6.EXIT"};
+const uint8_t HOME_DATLOC[7][2]={{0,0},{2,START_COL},{4,START_COL},{6,START_COL},{2,MID_COL+15},{4,MID_COL+15},{6,MID_COL+15}};
+const uint8_t HOME_SEL[6][2]={{2,START_COL},{4,START_COL},{6,START_COL},{2,MID_COL+15},{4,MID_COL+15},{6,MID_COL+15}}; //Select arrow info for HOME screen format {Page,column,replacesize}}
 
-static const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID: ","IC: ","SAVE","EXIT"};
-static const uint8_t CARD_FOUNDATLOC[5][2]={{0,0},{2,START_COL},{4,START_COL},{7,START_COL+12},{7,END_COL-24}};
-static const uint8_t CARD_FOUNDSEL[2][2]={{7,START_COL},{7,END_COL-36}};
+const char* READ_SCREEN[3]={"READ CARD","STANDARD: ISO 14443","STATUS: NO CARD"};
+const uint8_t READ_DATLOC[3][2]={{0,0},{2,START_COL},{4,START_COL}};
+const uint8_t READ_SEL[1][2]={{0,0}};
 
-static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443-3","SRC FILE: NONE","STATUS: NO CARD"};
-static const uint8_t WRITE_DATLOC[3][2]={{2,START_COL},{4,START_COL},{6,START_COL}};
-static const uint8_t WRITE_SEL[1][2] = {{0,0}};
+const char* CARD_FOUNDSCREEN[5]={"CARD FOUND","UID: ","IC: ","SAVE","EXIT"};
+const uint8_t CARD_FOUNDATLOC[5][2]={{0,0},{2,START_COL},{4,START_COL},{7,START_COL+12},{7,END_COL-24}};
+const uint8_t CARD_FOUNDSEL[2][2]={{7,START_COL},{7,END_COL-36}};
 
-
+const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443","SRC FILE: NONE","STATUS: NO CARD"};
+const uint8_t WRITE_DATLOC[4][2]={{0,0},{2,START_COL},{4,START_COL},{6,START_COL}};
+const uint8_t WRITE_SEL[1][2] = {{0,0}};
 
 /*STRUCT INFO
  *
@@ -180,14 +179,14 @@ static const uint8_t WRITE_SEL[1][2] = {{0,0}};
 typedef struct{
     int datsize;
     int selsize;
-    char** data;
-    uint8_t (*dataloc)[2];
-    uint8_t (*seldata)[2];
+    const char** data;
+    const uint8_t (*dataloc)[2];
+    const uint8_t (*seldata)[2];
 }Screen;
 
 
-
-
+extern SPI_HandleTypeDef hspi1; //Our SPI bus connected to OLED
+const extern Screen home,read_card, card_found, write_card;
 
 void OLED_OFF(void);
 HAL_StatusTypeDef OLED_cmd(uint8_t data);

@@ -135,11 +135,11 @@ PCD_StatusTypeDef CALC_CRC(uint8_t* data,uint8_t size,uint8_t* result){
 	HAL_Delay(100);
 	MFRC_REGR(DIVIRQ,&CRCIRQ);
 	if((CRCIRQ&0x04)!=0x04){
-		return(CRC_ERR);
+		return(CRC_ERR); //CRC calculation took too long
 	}
 	MFRC_REGW(CMD_REG,IDLE);
 	MFRC_REGR(CRCL, &result[0]);
-	MFRC_REGR(CRCH,&result[1]);
+	MFRC_REGR(CRCH, &result[1]); //Store the 16-bit CRC in result
 	return(PCD_OK);
 
 }
@@ -157,12 +157,7 @@ PCD_StatusTypeDef MFRC_INIT(void){
 	HAL_Delay(50);
 	MFRC_REGW(TX_REG,0x00);
 	MFRC_REGW(RX_REG,0x00);
-	//SET_ANTGAIN();
 	MFRC_REGW(MODWIDTH,0x26);
-	//MFRC_REGW(TModeReg,0x80); //timer starts automatically after every transmission
-	//MFRC_REGW(TPrescalerRegLO,0xA9); //Set prescaler to 169 => f_timer=40kHz, use this for timeouts
-	//MFRC_REGW(TReloadHI,0x03); //Set reload counter to 4000 => 100ms timeout
-	//MFRC_REGW(TReloadLO,0xE8);
 	MFRC_REGW(TXASK,0x40); //Force 100% ASK modulation regardless of ModGsPrereg
 	MFRC_REGW(MODE_REG,0x3D);
 	MFRC_ANTON();

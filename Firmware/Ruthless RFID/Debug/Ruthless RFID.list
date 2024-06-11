@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  0002064c  2**0
                   CONTENTS, READONLY
- 12 .debug_info   00025d63  00000000  00000000  0002067c  2**0
+ 12 .debug_info   00025e12  00000000  00000000  0002067c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 000052ef  00000000  00000000  000463df  2**0
+ 13 .debug_abbrev 00005320  00000000  00000000  0004648e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00001f78  00000000  00000000  0004b6d0  2**3
+ 14 .debug_aranges 00001f78  00000000  00000000  0004b7b0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_ranges 00001d80  00000000  00000000  0004d648  2**3
+ 15 .debug_ranges 00001d80  00000000  00000000  0004d728  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  0001c447  00000000  00000000  0004f3c8  2**0
+ 16 .debug_macro  0001c447  00000000  00000000  0004f4a8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00024a86  00000000  00000000  0006b80f  2**0
+ 17 .debug_line   00024a86  00000000  00000000  0006b8ef  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0009e69b  00000000  00000000  00090295  2**0
+ 18 .debug_str    0009e6ba  00000000  00000000  00090375  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000050  00000000  00000000  0012e930  2**0
+ 19 .comment      00000050  00000000  00000000  0012ea2f  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00008970  00000000  00000000  0012e980  2**2
+ 20 .debug_frame  00008970  00000000  00000000  0012ea80  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -776,7 +776,7 @@ PCD_StatusTypeDef CALC_CRC(uint8_t* data,uint8_t size,uint8_t* result){
  80007a4:	f003 0304 	and.w	r3, r3, #4
  80007a8:	2b00      	cmp	r3, #0
  80007aa:	d101      	bne.n	80007b0 <CALC_CRC+0x58>
-		return(CRC_ERR);
+		return(CRC_ERR); //CRC calculation took too long
  80007ac:	23ee      	movs	r3, #238	; 0xee
  80007ae:	e00e      	b.n	80007ce <CALC_CRC+0x76>
 	}
@@ -788,7 +788,7 @@ PCD_StatusTypeDef CALC_CRC(uint8_t* data,uint8_t size,uint8_t* result){
  80007b8:	6879      	ldr	r1, [r7, #4]
  80007ba:	2022      	movs	r0, #34	; 0x22
  80007bc:	f7ff ff0e 	bl	80005dc <MFRC_REGR>
-	MFRC_REGR(CRCH,&result[1]);
+	MFRC_REGR(CRCH, &result[1]); //Store the 16-bit CRC in result
  80007c0:	687b      	ldr	r3, [r7, #4]
  80007c2:	3301      	adds	r3, #1
  80007c4:	4619      	mov	r1, r3
@@ -842,15 +842,10 @@ PCD_StatusTypeDef MFRC_INIT(void){
  800080e:	2100      	movs	r1, #0
  8000810:	2013      	movs	r0, #19
  8000812:	f7ff febf 	bl	8000594 <MFRC_REGW>
-	//SET_ANTGAIN();
 	MFRC_REGW(MODWIDTH,0x26);
  8000816:	2126      	movs	r1, #38	; 0x26
  8000818:	2024      	movs	r0, #36	; 0x24
  800081a:	f7ff febb 	bl	8000594 <MFRC_REGW>
-	//MFRC_REGW(TModeReg,0x80); //timer starts automatically after every transmission
-	//MFRC_REGW(TPrescalerRegLO,0xA9); //Set prescaler to 169 => f_timer=40kHz, use this for timeouts
-	//MFRC_REGW(TReloadHI,0x03); //Set reload counter to 4000 => 100ms timeout
-	//MFRC_REGW(TReloadLO,0xE8);
 	MFRC_REGW(TXASK,0x40); //Force 100% ASK modulation regardless of ModGsPrereg
  800081e:	2140      	movs	r1, #64	; 0x40
  8000820:	2015      	movs	r0, #21
