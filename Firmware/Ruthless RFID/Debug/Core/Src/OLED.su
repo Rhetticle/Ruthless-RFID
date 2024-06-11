@@ -11,8 +11,7 @@
 ../Core/Src/OLED.c:302:6:OLED_PrintCent	24	static
 ../Core/Src/OLED.c:315:6:OLED_Print	88	static
 ../Core/Src/OLED.c:390:6:OLED_SCREEN	24	static
-../Core/Src/OLED.c:399:6:OLED_FREESCREEN	24	static
-../Core/Src/OLED.c:419:6:OLED_SCRNREF	32	static
-../Core/Src/OLED.c:437:6:OLED_FILL	24	static
-../Core/Src/OLED.c:454:6:OLED_SELECT	40	static
-../Core/Src/OLED.c:500:6:OLED_PWRDWN	16	static
+../Core/Src/OLED.c:408:6:OLED_SCRNREF	32	static
+../Core/Src/OLED.c:426:6:OLED_FILL	24	static
+../Core/Src/OLED.c:443:6:OLED_SELECT	40	static
+../Core/Src/OLED.c:489:6:OLED_PWRDWN	16	static

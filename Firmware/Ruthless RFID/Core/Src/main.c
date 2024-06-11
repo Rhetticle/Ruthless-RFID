@@ -631,14 +631,14 @@ void StartReadCard(void *argument)
 	int suspend = 0;
 	MFRC_ANTON();
 	if (ranonce == 0){
-		OLED_SCREEN(&read_card, NORMAL);
+		OLED_SCREEN(&SCRN_ReadCard, NORMAL);
 		ranonce++;
 	}
 	if(DumpINFO(cardinf)==PCD_OK){
 			BUZZ();
 			MFRC_ANTOFF();
 			sprintf(toSend,"%X%X%X%X%X%X%X", cardinf[0],cardinf[1],cardinf[2],cardinf[3],cardinf[4],cardinf[5],cardinf[6]);
-			xQueueSend(UidtoFoundHandle,&toSend,0);
+			xQueueSend(UidtoFoundHandle,&toSend,0); //Send a pointer to our string to the Card Found task to use
 			suspend = 1;
 		}
 	if (suspend == 1) {
@@ -666,7 +666,7 @@ void StartWriteCard(void *argument)
   for(;;)
   {
 	  if (ranonce == 0){
-	  	OLED_SCREEN(&write_card, NORMAL);
+	  	OLED_SCREEN(&SCRN_WriteCard, NORMAL);
 	  	ranonce++;
 	  }
 	  osDelay(1);
@@ -691,11 +691,11 @@ void StartHome(void *argument)
   {
 	  int suspend = 0;
 	  if (ranonce == 0) {
-		  OLED_SCREEN(&home, NORMAL);
-		  OLED_SELECT(&home, count, OLED_RESTORE);
+		  OLED_SCREEN(&SCRN_Home, NORMAL);
+		  OLED_SELECT(&SCRN_Home, count, OLED_RESTORE);
 		  ranonce++;
 	  }
-	  choose(&home,&suspend,&count,6,OLED_RESTORE);
+	  choose(&SCRN_Home,&suspend,&count,6,OLED_RESTORE);
 	  if (suspend == 1) {
 		switch(count) {
 			case 0:
@@ -734,13 +734,13 @@ void CardFoundStart(void *argument)
 	int suspend = 0;
 	if (ranonce == 0) {
 		while(xQueueReceive(UidtoFoundHandle, &cardinf, 0)!=pdTRUE);
-		OLED_SCREEN(&card_found, NORMAL);
-		OLED_SCRNREF(&card_found, 1, cardinf);
-		OLED_SCRNREF(&card_found, 2, type);
-		OLED_SELECT(&card_found, count, OLED_NORESTORE);
+		OLED_SCREEN(&SCRN_CardFound, NORMAL);
+		OLED_SCRNREF(&SCRN_CardFound, 1, cardinf);
+		OLED_SCRNREF(&SCRN_CardFound, 2, type);
+		OLED_SELECT(&SCRN_CardFound, count, OLED_NORESTORE);
 		ranonce++;
 	}
-	choose(&card_found,&suspend,&count,2,OLED_NORESTORE);
+	choose(&SCRN_CardFound,&suspend,&count,2,OLED_NORESTORE);
  	if(suspend==1){
  		vTaskResume(HomeHandle);
  		ranonce = 0;

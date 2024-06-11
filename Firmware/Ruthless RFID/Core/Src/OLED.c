@@ -198,7 +198,7 @@ HAL_StatusTypeDef OLED_INIT(void){
 	HAL_Delay(10);
 	OLED_cmd(DISP_ON);
 	OLED_Clear();
-
+	return HAL_OK;
 
 }
 
@@ -389,22 +389,11 @@ void OLED_Print(char* string){
 
 void OLED_SCREEN(const Screen* screen,uint8_t invert){
 	OLED_Clear();
-	OLED_PrintCent(0, screen->data[0], invert);
+	OLED_PrintCent(0, (char*)screen->data[0], invert);
 
 	for(int i=0;i<screen->datsize-1;i++){
-		OLED_Printlin(screen->dataloc[i+1][0], screen->dataloc[i+1][1], screen->data[i+1], invert);
+		OLED_Printlin((uint8_t)screen->dataloc[i+1][0],(uint8_t) screen->dataloc[i+1][1],(char*) screen->data[i+1], invert);
 	}
-}
-
-void OLED_FREESCREEN(Screen* screen){
-	for(int i=0;i<screen->datsize;i++){
-		free(screen->data[i]);
-		free(screen->dataloc[i]);
-	}
-	for(int j=0;j<screen->selsize;j++){
-		free(screen->seldata[j]);
-	}
-
 }
 
 /*Function to add dynamic data to base screen i.e. adding UID read from card to display
@@ -460,10 +449,10 @@ void OLED_SELECT(const Screen* screen,uint8_t selopt, int restore){
 
 		if(restore==OLED_RESTORE){
 			if(selopt==0){
-			rest=screen->data[screen->datsize-1]; //Here we may be wrapping around so we must restore the last select option
+			rest=(char*)screen->data[screen->datsize-1]; //Here we may be wrapping around so we must restore the last select option
 			}
 			else{
-				rest=screen->data[selopt];
+				rest=(char*)screen->data[selopt];
 			}
 		}
 		else{

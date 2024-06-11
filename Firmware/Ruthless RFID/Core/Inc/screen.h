@@ -29,7 +29,7 @@ typedef struct{
     const uint8_t (*seldata)[2];
 }Screen;
 
-extern const Screen home, read_card, card_found, write_card; //Screens
+extern const Screen SCRN_Home, SCRN_ReadCard, SCRN_CardFound, SCRN_WriteCard; //Screens
 
 
 #endif /* INC_SCREEN_H_ */
