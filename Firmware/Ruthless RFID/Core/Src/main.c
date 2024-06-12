@@ -606,9 +606,9 @@ void Start_Init(void *argument)
     OLED_Print(TC);
     MEM_INIT();
     while(1) {
-    	STAT_WRITE(STAT_REG1, 0x02);
-    	uint8_t stat1 = STAT_READ(STAT_REG1);
-    	CDC_Transmit_FS(&stat1, 1);
+    	uint8_t byte;
+    	MEM_READPAGE(0x0020, 0x00, &byte, 1);
+    	CDC_Transmit_FS(&byte, 1);
     	HAL_Delay(100);
     }
 

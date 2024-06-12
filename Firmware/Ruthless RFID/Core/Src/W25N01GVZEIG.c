@@ -170,7 +170,7 @@ HAL_StatusTypeDef MEM_READPAGE(uint16_t page_addr,uint16_t col_addr,uint8_t* dat
 		return(HAL_ERROR);
 	}
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
-	while((STAT_READ(STAT_REG3)&0x01)!=0x01); //Wait here until BUSY bit is cleared
+	while((STAT_READ(STAT_REG3)&0x01) == 0x01); //Wait here until BUSY bit is cleared
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
 	if(HAL_SPI_TransmitReceive(&hspi2, read_data, rec_data, bytes+5, 100)!=HAL_OK){ //Ignore remaining 64 bytes so 2048 instead of 2112
 		HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
