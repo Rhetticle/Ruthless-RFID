@@ -96,7 +96,6 @@ const osMessageQueueAttr_t UidtoFound_attributes = {
 };
 /* USER CODE BEGIN PV */
 char TC[]="HVE strongly condemns malicious use of it's products.The Ruthless RFID is sold as an educational device. HVE is not liable for damages caused by misuse.";
-char Standby[]="    RUTHLESS RFID                         STANDARD: ISO 14443-3                     STATE: READ                               STATUS: NO CARD                              ";
 
 typedef struct {
 	int id;
@@ -596,6 +595,7 @@ void Start_Init(void *argument)
   /* Infinite loop */
   for(;;)
   {
+	  uint8_t test = 0xBE;
 	vTaskSuspend(ReadCardHandle);
     vTaskSuspend(WriteCardHandle);
     vTaskSuspend(HomeHandle);
@@ -606,9 +606,13 @@ void Start_Init(void *argument)
     OLED_Print(TC);
     MEM_INIT();
     while(1) {
-    	uint8_t byte;
-    	MEM_READPAGE(0x0020, 0x00, &byte, 1);
-    	CDC_Transmit_FS(&byte, 1);
+
+    	block_erase(0x0000);
+    	uint8_t read;
+    	MEM_WRITE(0x0000, 0x0000, &test, 1);
+    	MEM_READPAGE(0x0000, 0x0000, &read, 1);
+
+    	CDC_Transmit_FS(&read, 1);
     	HAL_Delay(100);
     }
 

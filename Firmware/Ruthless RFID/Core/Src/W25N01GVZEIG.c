@@ -72,16 +72,44 @@ HAL_StatusTypeDef STAT_WRITE(uint8_t addr,uint8_t value){
  * The Write Enable bit in status register 3 will be reset to 0 after any of these instructions
  * */
 
-void WRIT_EN(void){ //Write enable instruction must pre-ceed the following: Page program, block erase, bad block manage
-	uint8_t WRIT_EN=0x06;
+void WRIT_EN(void){
+	uint8_t write_en=0x06;
+	WRITE_DIS();
 
-	while((STAT_READ(STAT_REG3&0x02)!=0x02)){ //Check that second to last bit (Write Enable bit) of status register is 1
+	while((STAT_READ(STAT_REG3)&0x02)!=0x02){ //Check that second to last bit (Write Enable bit) of status register is 1
 		HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
-		HAL_SPI_Transmit(&hspi2, &WRIT_EN, 1, 100); //load data to internal buffer
+		HAL_SPI_Transmit(&hspi2, &write_en, 1, 100);
 		HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
 	}
 
 
+}
+
+/**
+ * Disable write permissions (Sets WEL bit in STAT_REG3 to 0)
+ * */
+void WRITE_DIS(void) {
+	uint8_t write_dis = 0x04;
+
+	while((STAT_READ(STAT_REG3)&0x02)==0x02){
+			HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
+			HAL_SPI_Transmit(&hspi2, &write_dis, 1, 100);
+			HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
+		}
+}
+
+/**
+ * Erase a 128kB (64 pages) block to 0xFF
+ *
+ * @param page_addr - Page address to begin erasing from
+ * */
+void block_erase(uint16_t page_addr) {
+	uint8_t transaction [] = {BLOCK_ERS, 0x00, 0, 0};
+	WRIT_EN();
+	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
+	HAL_SPI_Transmit(&hspi2, transaction, 4, 100);
+	HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
+	while((STAT_READ(STAT_REG3)&0x01) == 0x01);
 }
 
 /*
@@ -94,15 +122,18 @@ void WRIT_EN(void){ //Write enable instruction must pre-ceed the following: Page
 
 HAL_StatusTypeDef MEM_INIT(void){
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
+
 	STAT_WRITE(STAT_REG1, 0x00); //remove protection of entire memory array
 	if (STAT_READ(STAT_REG1) != 0x00) {
 		return HAL_ERROR;
 	}
+
+	WRITE_DIS();
 	return HAL_OK;
 }
 
 /*
- * Function to write to 2KiB page in memory
+ * Function to write to 2KiB page in memory (Can program from 1 up to 2112 bytes)
  *
  * @param col_addr: Index of page to begin writing to (See datasheet)
  *
@@ -113,30 +144,33 @@ HAL_StatusTypeDef MEM_INIT(void){
  * @param bytes: Number of bytes to write to page
  * */
 
-HAL_StatusTypeDef MEM_WRITE(uint16_t col_addr,uint16_t page_addr,uint8_t* data,uint16_t bytes){ //Writing is done in pages of size 2KiB + 64 optional bytes
-	uint8_t setup[]={WRIT_LOAD,col_addr};
-	uint8_t* transaction=malloc(bytes+2);
-	uint8_t execute[]={WRIT_EXE,0x00,page_addr}; //0x00 is dummy (need 8 dummy clocks) Page
+HAL_StatusTypeDef MEM_WRITE(uint16_t col_addr,uint16_t page_addr,uint8_t* data,uint16_t bytes){
+	uint8_t setup[bytes+3]; //Extra 3 bytes for write opcode and column address
+	uint8_t execute[]={WRIT_EXE,0x00,(uint8_t)page_addr>>8, (uint8_t)page_addr}; //0x00 is dummy (need 8 dummy clocks) between opcode and page address
 
-	memcpy(transaction,setup,2);
-	memcpy(transaction,data,bytes);
+	setup[0] = WRIT_LOAD;
+	setup[1] = (uint8_t)col_addr>>8;
+	setup[2] = (uint8_t)col_addr;
+	memcpy(&setup[3], data, bytes);
 
 	WRIT_EN();
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
-	if(HAL_SPI_Transmit(&hspi2, transaction, bytes+2, 100)!=HAL_OK){ //load data to internal buffer
-		HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
-		return(HAL_ERROR);
-	}
-
-	while((STAT_READ(STAT_REG3)&0x02)!=0x02); //Wait here until busy bit is clear
-	WRIT_EN();
-	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
-	if(HAL_SPI_Transmit(&hspi2, execute, 3, 100)!=HAL_OK){ //Send command to dump internal buffer data to memory array
+	if(HAL_SPI_Transmit(&hspi2, setup, bytes+3, 100)!=HAL_OK){ //load data to internal buffer
 		HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
 		return(HAL_ERROR);
 	}
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
-	HAL_Delay(1);
+
+	while((STAT_READ(STAT_REG3)&0x01) == 0x01); //Wait here until busy bit is cleared
+
+	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
+	if(HAL_SPI_Transmit(&hspi2, execute, 4, 100)!=HAL_OK){ //Send command to dump internal buffer data to memory array
+		HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
+		return(HAL_ERROR);
+	}
+	HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
+
+	while((STAT_READ(STAT_REG3)&0x01) == 0x01);
 	return(HAL_OK);
 
 }
@@ -158,11 +192,14 @@ HAL_StatusTypeDef MEM_WRITE(uint16_t col_addr,uint16_t page_addr,uint8_t* data,u
 HAL_StatusTypeDef MEM_READPAGE(uint16_t page_addr,uint16_t col_addr,uint8_t* data,uint16_t bytes){ //Read one 2KiB page. Data will be put into internal buffer which can then be read. Wait at least tDR or until busy bit is clear
 	uint8_t transaction[]={READ_PAGE,0x00,(uint8_t)page_addr>>8,(uint8_t)page_addr};
 	uint8_t transaction_size = sizeof(transaction)/sizeof(transaction[0]);
-	uint8_t read_data[bytes+transaction_size];
-	uint8_t rec_data[bytes+transaction_size];
+	uint8_t read_data[bytes+4];
+	uint8_t rec_data[bytes+4];
 
+	memset(read_data, 0, bytes+4);
 	read_data[0]=READ_BUF;
-	read_data[1]=col_addr;
+	read_data[1]= (uint8_t) col_addr>>8;
+	read_data[2] = (uint8_t) col_addr;
+	read_data[3] = 0x00; //dummy
 
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
 	if(HAL_SPI_Transmit(&hspi2, transaction, 4, 100)!=HAL_OK){ //load data to internal buffer
@@ -170,16 +207,20 @@ HAL_StatusTypeDef MEM_READPAGE(uint16_t page_addr,uint16_t col_addr,uint8_t* dat
 		return(HAL_ERROR);
 	}
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
+
 	while((STAT_READ(STAT_REG3)&0x01) == 0x01); //Wait here until BUSY bit is cleared
+
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
-	if(HAL_SPI_TransmitReceive(&hspi2, read_data, rec_data, bytes+5, 100)!=HAL_OK){ //Ignore remaining 64 bytes so 2048 instead of 2112
+	if(HAL_SPI_TransmitReceive(&hspi2, read_data, rec_data, bytes+4, 100)!=HAL_OK){ //Ignore remaining 64 bytes so 2048 instead of 2112
 		HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
 		return(HAL_ERROR);
 	}
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
 
-	for(int i=0;i<bytes;i++){
-		data[i]=rec_data[i+4]; //+4 as first four elements of rec_data are meaningless
+	while((STAT_READ(STAT_REG3)&0x01) == 0x01);
+
+	for(int i = 0; i < bytes; i++){
+		data[i] = rec_data[i+4]; //+4 as first four elements of rec_data are meaningless
 	}
 	return(HAL_OK);
 

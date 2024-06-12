@@ -2,8 +2,10 @@
 ../Core/Src/W25N01GVZEIG.c:38:9:STAT_READ	32	static
 ../Core/Src/W25N01GVZEIG.c:55:19:STAT_WRITE	24	static
 ../Core/Src/W25N01GVZEIG.c:75:6:WRIT_EN	16	static
-../Core/Src/W25N01GVZEIG.c:95:19:MEM_INIT	8	static
-../Core/Src/W25N01GVZEIG.c:116:19:MEM_WRITE	40	static
-../Core/Src/W25N01GVZEIG.c:158:19:MEM_READPAGE	104	dynamic
-../Core/Src/W25N01GVZEIG.c:199:19:MEM_SCAN	32	static
-../Core/Src/W25N01GVZEIG.c:226:6:findfreeaddr	32	static
+../Core/Src/W25N01GVZEIG.c:91:6:WRITE_DIS	16	static
+../Core/Src/W25N01GVZEIG.c:106:6:block_erase	24	static
+../Core/Src/W25N01GVZEIG.c:123:19:MEM_INIT	8	static
+../Core/Src/W25N01GVZEIG.c:147:19:MEM_WRITE	64	dynamic
+../Core/Src/W25N01GVZEIG.c:192:19:MEM_READPAGE	104	dynamic
+../Core/Src/W25N01GVZEIG.c:240:19:MEM_SCAN	32	static
+../Core/Src/W25N01GVZEIG.c:267:6:findfreeaddr	32	static
