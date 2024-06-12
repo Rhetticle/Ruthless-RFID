@@ -604,12 +604,10 @@ void Start_Init(void *argument)
     MFRC_ANTOFF();
     OLED_INIT();
     OLED_Print(TC);
-    MEM_INIT();
     while(1) {
-    	STAT_WRITE(STAT_REG1, 0x02);
-    	uint8_t stat1 = STAT_READ(STAT_REG1);
-    	CDC_Transmit_FS(&stat1, 1);
-    	HAL_Delay(100);
+    	uint8_t stat_reg = STAT_READ(STAT_REG1);
+    	CDC_Transmit_FS(&stat_reg, 1);
+    	HAL_Delay(1000);
     }
 
     while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)!=0);

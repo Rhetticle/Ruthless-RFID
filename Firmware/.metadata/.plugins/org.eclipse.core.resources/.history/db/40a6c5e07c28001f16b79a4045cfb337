@@ -596,6 +596,7 @@ void Start_Init(void *argument)
   /* Infinite loop */
   for(;;)
   {
+	uint8_t id[5] = {0xFF};
 	vTaskSuspend(ReadCardHandle);
     vTaskSuspend(WriteCardHandle);
     vTaskSuspend(HomeHandle);
@@ -604,14 +605,7 @@ void Start_Init(void *argument)
     MFRC_ANTOFF();
     OLED_INIT();
     OLED_Print(TC);
-    MEM_INIT();
-    while(1) {
-    	STAT_WRITE(STAT_REG1, 0x02);
-    	uint8_t stat1 = STAT_READ(STAT_REG1);
-    	CDC_Transmit_FS(&stat1, 1);
-    	HAL_Delay(100);
-    }
-
+    STAT_READ(STAT_REG1);
     while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)!=0);
     vTaskResume(HomeHandle);
     osDelay(100);

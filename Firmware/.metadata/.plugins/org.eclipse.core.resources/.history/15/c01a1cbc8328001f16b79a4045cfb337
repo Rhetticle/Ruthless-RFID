@@ -16,9 +16,9 @@
 
 //Register Addresses
 
-#define STAT_REG1 0xA0 //Protection settings
-#define STAT_REG2 0xB0 //Configuration settings
-#define STAT_REG3 0xC0 //Status
+#define STAT_REG1 0x0A //Protection settings
+#define STAT_REG2 0x0B //Configuration settings
+#define STAT_REG3 0x0C //Status
 
 //OPCODES
 

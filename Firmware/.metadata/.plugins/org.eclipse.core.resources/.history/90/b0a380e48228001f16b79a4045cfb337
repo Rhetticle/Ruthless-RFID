@@ -54,10 +54,11 @@ uint8_t STAT_READ(uint8_t addr){
 
 HAL_StatusTypeDef STAT_WRITE(uint8_t addr,uint8_t value){
 	uint8_t transaction[]={WRIT_STAT,addr,value};
+	while(STAT_READ(addr)!=value){ //Loop here until we read the correct value in the register
 		HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
 		HAL_SPI_Transmit(&hspi2, transaction, 3, 100);
 		HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
-
+	}
 	return(HAL_OK);
 }
 
