@@ -33,7 +33,7 @@
 #define READ_BUF 0x03
 #define WRIT_LOAD 0x02 //Loads data we wish to write into an internal buffer
 #define WRIT_EXE 0x10 //Takes internal buffer data and writes to memory array
-#define BBM 0xA1
+#define BBM 0xA1 //Bad Block Management
 
 //Functions
 

@@ -72,14 +72,14 @@ const osThreadAttr_t ReadCard_attributes = {
 osThreadId_t WriteCardHandle;
 const osThreadAttr_t WriteCard_attributes = {
   .name = "WriteCard",
-  .stack_size = 512 * 4,
+  .stack_size = 256 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for Home */
 osThreadId_t HomeHandle;
 const osThreadAttr_t Home_attributes = {
   .name = "Home",
-  .stack_size = 512 * 4,
+  .stack_size = 256 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for CardFound */
@@ -596,6 +596,7 @@ void Start_Init(void *argument)
   /* Infinite loop */
   for(;;)
   {
+	uint8_t id[5] = {0xFF};
 	vTaskSuspend(ReadCardHandle);
     vTaskSuspend(WriteCardHandle);
     vTaskSuspend(HomeHandle);
@@ -604,6 +605,7 @@ void Start_Init(void *argument)
     MFRC_ANTOFF();
     OLED_INIT();
     OLED_Print(TC);
+    STAT_READ(STAT_REG1);
     while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)!=0);
     vTaskResume(HomeHandle);
     osDelay(100);
@@ -741,9 +743,10 @@ void CardFoundStart(void *argument)
 		ranonce++;
 	}
 	choose(&SCRN_CardFound,&suspend,&count,2,OLED_NORESTORE);
- 	if(suspend==1){
+ 	if((suspend == 1) && (count == 1)){
  		vTaskResume(HomeHandle);
  		ranonce = 0;
+ 		count = 0;
  		vTaskSuspend(NULL);
  	}
 

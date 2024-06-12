@@ -197,10 +197,8 @@ PCD_StatusTypeDef MFRC_TRANSCEIVE(uint8_t* sendData,uint8_t sendsize,uint8_t* re
 	MFRC_REGW(CMD_REG,TRANSCEIVE); //Send FIFO data and receive PICC response
 	MFRC_REGR(BITFRAME,&BIT_val);
 	MFRC_REGW(BITFRAME,(BIT_val|0x80)); //Start send bit
-	while((IRQval&0x30)!=0x30){ //Hang here until RXIRQ and IDLEIRQ bits are set
+	while(IRQval&0x30!=0x30){ //Hang here until RXIRQ and IDLEIRQ bits are set
 		MFRC_REGR(IRQ_REG,&IRQval);
-
-
 	}
 	HAL_Delay(1);
 	MFRC_FIFOR(recdata,recsize); //Read and store received data
@@ -529,7 +527,7 @@ PCD_StatusTypeDef DumpINFO(uint8_t* data){
 			  WUPA=1;
 		  }
 	  }
-	  return (PCD_COMM_ERR);
+
 
 
 

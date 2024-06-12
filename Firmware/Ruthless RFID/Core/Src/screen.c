@@ -34,7 +34,6 @@ const Screen SCRN_Home = {
 		.data = HOME_SCREEN,
 		.dataloc = HOME_DATLOC,
 		.seldata = HOME_SEL,
-
 };
 
 const Screen SCRN_ReadCard = {
@@ -43,7 +42,6 @@ const Screen SCRN_ReadCard = {
 		.data = READ_SCREEN,
 		.dataloc = READ_DATLOC,
 		.seldata = READ_SEL,
-
 };
 
 const Screen SCRN_CardFound = {
@@ -52,7 +50,6 @@ const Screen SCRN_CardFound = {
 		.data = CARD_FOUNDSCREEN,
 		.dataloc = CARD_FOUNDATLOC,
 		.seldata = CARD_FOUNDSEL,
-
 };
 
 const Screen SCRN_WriteCard = {
@@ -61,5 +58,4 @@ const Screen SCRN_WriteCard = {
 		.data = WRITE_SCREEN,
 		.dataloc = WRITE_DATLOC,
 		.seldata = WRITE_SEL,
-
 };
