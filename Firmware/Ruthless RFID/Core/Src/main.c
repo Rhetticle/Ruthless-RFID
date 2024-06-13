@@ -79,7 +79,7 @@ const osThreadAttr_t WriteCard_attributes = {
 osThreadId_t HomeHandle;
 const osThreadAttr_t Home_attributes = {
   .name = "Home",
-  .stack_size = 256 * 4,
+  .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for CardFound */
@@ -595,30 +595,24 @@ void Start_Init(void *argument)
   /* Infinite loop */
   for(;;)
   {
-	  uint8_t test = 0xBE;
+	uint16_t defective[2];
 	vTaskSuspend(ReadCardHandle);
     vTaskSuspend(WriteCardHandle);
     vTaskSuspend(HomeHandle);
     vTaskSuspend(CardFoundHandle);
+
     MFRC_INIT();
     MFRC_ANTOFF();
     OLED_INIT();
     OLED_Print(TC);
     MEM_INIT();
-    while(1) {
-
-    	block_erase(0x0000);
-    	uint8_t read;
-    	MEM_WRITE(0x0000, 0x0000, &test, 1);
-    	MEM_READPAGE(0x0000, 0x0000, &read, 1);
-
-    	CDC_Transmit_FS(&read, 1);
-    	HAL_Delay(100);
-    }
-
-    while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)!=0);
+    HAL_Delay(10);
+    block_erase(0xAAAA);
+    HAL_Delay(1000);
+    MEM_SCAN(defective);
+    while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) != 0);
     vTaskResume(HomeHandle);
-    osDelay(100);
+    osDelay(10);
     vTaskSuspend(NULL);
   }
   /* USER CODE END 5 */

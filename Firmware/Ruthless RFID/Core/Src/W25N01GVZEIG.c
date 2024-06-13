@@ -73,7 +73,7 @@ HAL_StatusTypeDef STAT_WRITE(uint8_t addr,uint8_t value){
  * */
 
 void WRIT_EN(void){
-	uint8_t write_en=0x06;
+	uint8_t write_en=W_EN;
 	WRITE_DIS();
 
 	while((STAT_READ(STAT_REG3)&0x02)!=0x02){ //Check that second to last bit (Write Enable bit) of status register is 1
@@ -89,7 +89,7 @@ void WRIT_EN(void){
  * Disable write permissions (Sets WEL bit in STAT_REG3 to 0)
  * */
 void WRITE_DIS(void) {
-	uint8_t write_dis = 0x04;
+	uint8_t write_dis = W_DIS;
 
 	while((STAT_READ(STAT_REG3)&0x02)==0x02){
 			HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
@@ -104,7 +104,7 @@ void WRITE_DIS(void) {
  * @param page_addr - Page address to begin erasing from
  * */
 void block_erase(uint16_t page_addr) {
-	uint8_t transaction [] = {BLOCK_ERS, 0x00, 0, 0};
+	uint8_t transaction [] = {BLOCK_ERS, 0x00, page_addr>>8, page_addr};
 	WRIT_EN();
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
 	HAL_SPI_Transmit(&hspi2, transaction, 4, 100);
@@ -146,11 +146,11 @@ HAL_StatusTypeDef MEM_INIT(void){
 
 HAL_StatusTypeDef MEM_WRITE(uint16_t col_addr,uint16_t page_addr,uint8_t* data,uint16_t bytes){
 	uint8_t setup[bytes+3]; //Extra 3 bytes for write opcode and column address
-	uint8_t execute[]={WRIT_EXE,0x00,(uint8_t)page_addr>>8, (uint8_t)page_addr}; //0x00 is dummy (need 8 dummy clocks) between opcode and page address
+	uint8_t execute[]={WRIT_EXE,0x00,page_addr>>8, page_addr}; //0x00 is dummy (need 8 dummy clocks) between opcode and page address
 
 	setup[0] = WRIT_LOAD;
-	setup[1] = (uint8_t)col_addr>>8;
-	setup[2] = (uint8_t)col_addr;
+	setup[1] = col_addr>>8;
+	setup[2] = col_addr;
 	memcpy(&setup[3], data, bytes);
 
 	WRIT_EN();
@@ -176,13 +176,13 @@ HAL_StatusTypeDef MEM_WRITE(uint16_t col_addr,uint16_t page_addr,uint8_t* data,u
 }
 
 /*
- * Function to read a single 2KiB page from memory
+ * Function to read a single 2KiB page from memory (Note total size is 2KiB data + 64B ECC)
  *
  * @param page_addr: Page address
  *
  * @param col_addr: Index of page to begin reading (0x00 to start from beginning of page)
  *
- * @param data: Data from page
+ * @param data: Array to store data to
  *
  * @param bytes: Number of bytes to read from data buffer
  *
@@ -190,15 +190,15 @@ HAL_StatusTypeDef MEM_WRITE(uint16_t col_addr,uint16_t page_addr,uint8_t* data,u
  * */
 
 HAL_StatusTypeDef MEM_READPAGE(uint16_t page_addr,uint16_t col_addr,uint8_t* data,uint16_t bytes){ //Read one 2KiB page. Data will be put into internal buffer which can then be read. Wait at least tDR or until busy bit is clear
-	uint8_t transaction[]={READ_PAGE,0x00,(uint8_t)page_addr>>8,(uint8_t)page_addr};
+	uint8_t transaction[]={READ_PAGE,0x00,page_addr>>8,page_addr};
 	uint8_t transaction_size = sizeof(transaction)/sizeof(transaction[0]);
-	uint8_t read_data[bytes+4];
-	uint8_t rec_data[bytes+4];
+	uint8_t read_data[bytes+transaction_size];
+	uint8_t rec_data[bytes+transaction_size];
 
-	memset(read_data, 0, bytes+4);
+	memset(read_data, 0, bytes+transaction_size); //Fill our read_data command array for dummy data while getting actual data
 	read_data[0]=READ_BUF;
-	read_data[1]= (uint8_t) col_addr>>8;
-	read_data[2] = (uint8_t) col_addr;
+	read_data[1]= col_addr>>8;
+	read_data[2] = col_addr;
 	read_data[3] = 0x00; //dummy
 
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
@@ -211,7 +211,7 @@ HAL_StatusTypeDef MEM_READPAGE(uint16_t page_addr,uint16_t col_addr,uint8_t* dat
 	while((STAT_READ(STAT_REG3)&0x01) == 0x01); //Wait here until BUSY bit is cleared
 
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
-	if(HAL_SPI_TransmitReceive(&hspi2, read_data, rec_data, bytes+4, 100)!=HAL_OK){ //Ignore remaining 64 bytes so 2048 instead of 2112
+	if(HAL_SPI_TransmitReceive(&hspi2, read_data, rec_data, bytes+transaction_size, 100)!=HAL_OK){
 		HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
 		return(HAL_ERROR);
 	}
@@ -219,9 +219,14 @@ HAL_StatusTypeDef MEM_READPAGE(uint16_t page_addr,uint16_t col_addr,uint8_t* dat
 
 	while((STAT_READ(STAT_REG3)&0x01) == 0x01);
 
-	for(int i = 0; i < bytes; i++){
-		data[i] = rec_data[i+4]; //+4 as first four elements of rec_data are meaningless
+	if (bytes == 1) {
+		*data = rec_data[4];
+	} else {
+		for(int i = 0; i < bytes; i++){
+				data[i] = rec_data[i+4]; //+4 as first four elements of rec_data are meaningless
+		}
 	}
+
 	return(HAL_OK);
 
 }
@@ -229,37 +234,33 @@ HAL_StatusTypeDef MEM_READPAGE(uint16_t page_addr,uint16_t col_addr,uint8_t* dat
 /*
  * Function to find defective memory blocks (128kB) (There may be at most 20 defective blocks)
  *
- * !!Defective blocks are labelled by the manufacturer by the first page in the block beginning with
- * 0x00 instead of 0xFF!!
+ * Defective blocks are labelled by the manufacturer by the first page in the block beginning with
+ * 0x00 instead of 0xFF
  *
  * Defective blocks can be placed in the BBM look up table in order to avoid them whilst writing
  *
- * @param defect: Array to store addresses of defective pages/blocks
+ * @param defect: Array to store addresses of defective blocks
  * */
 
 HAL_StatusTypeDef MEM_SCAN(uint16_t* defect){
-	int i=0; //Keep track of index in defect array. +1 when defective address is found
+	int i = 0; //Keep track of index in defect array. +1 when defective address is found
+	char msg[50];
 
-
-	for(int addr=0;addr<0x10000;addr++){ //We have 65536 pages to check (0x0000 to 0xFFFF) but we only need to check the first byte
+	for(uint32_t addr = 0x0000; addr <= 0xFFFF; addr++) { //We have 65536 pages to check (0x0000 to 0xFFFF) but we only need to check the first byte
 		uint8_t byte;
-		if(MEM_READPAGE(addr, 0x00,&byte,1)!=HAL_OK){ //Set col addr to 0x00 as we are only interested in first byte
+		if(MEM_READPAGE((uint16_t)addr, 0x0000, &byte, 1) != HAL_OK){ //Set col addr to 0x00 as we are only interested in first byte
 			return(HAL_ERROR);
-		}
-		else{
-			if(byte==0x00){
+
+		} else if(byte != 0xFF){
 				defect[i]=addr;
-				Print("Address");
-				CDC_Transmit_FS(&addr, 2);
-				Print("is defective \n");
+				sprintf(msg, "Error at page 0x%X, read 0x%X expected 0xFF\r\n", addr, byte);
+				Print(msg);
 				i++;
-			}
-			else{
-
-			}
 		}
 
-
+	}
+	if (i == 0) {
+		Print("Memory clear");
 	}
 	return(HAL_OK);
 }

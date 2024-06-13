@@ -27,6 +27,7 @@
 #define READ_STAT 0x0F
 #define WRIT_STAT 0x1F
 #define W_EN 0x06
+#define W_DIS 0x04
 #define BLOCK_ERS 0xD8
 #define READ_PAGE 0x13
 #define FAST_READ 0x0B
