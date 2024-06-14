@@ -8,6 +8,8 @@
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="FF_MAX_SS"/>
+			<item value="FF_S"/>
 			<item value="disk_write"/>
 			<item value="GET_BLOCK_SIZE"/>
 			<item value="f_mkfs"/>

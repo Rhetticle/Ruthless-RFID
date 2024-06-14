@@ -60,7 +60,7 @@ TIM_HandleTypeDef htim3;
 osThreadId_t PERIPHINITHandle;
 const osThreadAttr_t PERIPHINIT_attributes = {
   .name = "PERIPHINIT",
-  .stack_size = 512 * 4,
+  .stack_size = 1024 * 4,
   .priority = (osPriority_t) osPriorityHigh,
 };
 /* Definitions for ReadCard */
@@ -598,8 +598,7 @@ void Start_Init(void *argument)
   /* Infinite loop */
   for(;;)
   {
-	uint8_t* sector_write = malloc(SECTOR_SIZE*sizeof(uint8_t));
-	uint8_t* sector_read = malloc(SECTOR_SIZE*sizeof(uint8_t));
+	BYTE* work = malloc(SECTOR_SIZE);
 
 	vTaskSuspend(ReadCardHandle);
     vTaskSuspend(WriteCardHandle);
@@ -612,16 +611,13 @@ void Start_Init(void *argument)
     OLED_Print(TC);
     mem_init(0);
     block_erase(0x0000);
-    memset(sector_write, 0xEE, SECTOR_SIZE);
     while(1) {
-    	USER_write(0, sector_write, 0, 1);
-    	USER_read(0, sector_read, 0, 1);
-    	for (int i = 0; i < SECTOR_SIZE; i++) {
-    		char msg[50];
-    		sprintf(msg,"Read 0x%X at address 0x%X\r\n", sector_read[i], i);
-    		CDC_Transmit_FS(msg, strlen(msg));
-    		HAL_Delay(10);
-    	}
+    	FATFS fs;
+    	FRESULT result1 = f_mkfs("", FM_ANY, 0, work, SECTOR_SIZE);
+    	//FRESULT result2 = f_mount(&fs, "0:/", 1);
+
+
+    	HAL_Delay(100);
     }
     while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) != 0);
     vTaskResume(HomeHandle);

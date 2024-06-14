@@ -161,8 +161,13 @@ DRESULT USER_ioctl (
     switch (cmd) {
 		case GET_SECTOR_COUNT:
 			*(DWORD*)buff = 65536;
+			break;
 		case GET_SECTOR_SIZE:
-			*(DWORD*)buff = 2048;
+			*(DWORD*)buff = SECTOR_SIZE;
+			break;
+		case GET_BLOCK_SIZE:
+			*(DWORD*) buff = 64;
+			break;
     }
     return RES_OK;
   /* USER CODE END IOCTL */

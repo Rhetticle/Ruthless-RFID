@@ -12,4 +12,4 @@ W25N01GVZEIG.c:267:6:findfreeaddr	3
 W25N01GVZEIG.c:291:9:mem_init	2
 W25N01GVZEIG.c:299:9:mem_getstatus	1
 W25N01GVZEIG.c:303:9:mem_read	5
-W25N01GVZEIG.c:321:9:mem_write	5
+W25N01GVZEIG.c:322:9:mem_write	5
