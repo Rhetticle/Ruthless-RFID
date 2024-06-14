@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "fatfs.h"
 #include "usb_device.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -28,6 +29,7 @@
 #include "OLED.h"
 #include "queue.h"
 #include "W25N01GVZEIG.h"
+#include "user_diskio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -203,6 +205,7 @@ int main(void)
   MX_SPI2_Init();
   MX_TIM2_Init();
   MX_TIM3_Init();
+  MX_FATFS_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -595,7 +598,7 @@ void Start_Init(void *argument)
   /* Infinite loop */
   for(;;)
   {
-	uint16_t defective[2];
+	uint8_t* sector = malloc(SECTOR_SIZE*sizeof(uint8_t));
 	vTaskSuspend(ReadCardHandle);
     vTaskSuspend(WriteCardHandle);
     vTaskSuspend(HomeHandle);
@@ -605,11 +608,18 @@ void Start_Init(void *argument)
     MFRC_ANTOFF();
     OLED_INIT();
     OLED_Print(TC);
-    MEM_INIT();
-    HAL_Delay(10);
-    block_erase(0xAAAA);
-    HAL_Delay(1000);
-    MEM_SCAN(defective);
+    mem_init(0);
+    block_erase(0x0000);
+    while(1) {
+    	if(USER_read(0, sector, 0, SECTOR_SIZE) != RES_OK) {
+    	    	Print("Error");
+    	} else {
+    		CDC_Transmit_FS(sector, 1);
+    	}
+    	HAL_Delay(100);
+    }
+
+
     while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) != 0);
     vTaskResume(HomeHandle);
     osDelay(10);

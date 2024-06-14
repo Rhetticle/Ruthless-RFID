@@ -8,4 +8,7 @@
 ../Core/Src/W25N01GVZEIG.c:147:19:MEM_WRITE	64	dynamic
 ../Core/Src/W25N01GVZEIG.c:192:19:MEM_READPAGE	104	dynamic
 ../Core/Src/W25N01GVZEIG.c:245:19:MEM_SCAN	80	static
-../Core/Src/W25N01GVZEIG.c:268:6:findfreeaddr	32	static
+../Core/Src/W25N01GVZEIG.c:265:6:findfreeaddr	32	static
+../Core/Src/W25N01GVZEIG.c:289:9:mem_init	16	static
+../Core/Src/W25N01GVZEIG.c:297:9:mem_getstatus	16	static
+../Core/Src/W25N01GVZEIG.c:301:9:mem_read	32	static

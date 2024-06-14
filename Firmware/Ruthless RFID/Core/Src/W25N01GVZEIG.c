@@ -15,7 +15,7 @@
 #include <string.h>
 
 extern SPI_HandleTypeDef hspi2;
-
+static volatile DSTATUS MEM_STATUS = STA_NOINIT; //Flag to indicate disk status
 /*
  * Function to read manufacturer and device ID's
  *
@@ -234,8 +234,8 @@ HAL_StatusTypeDef MEM_READPAGE(uint16_t page_addr,uint16_t col_addr,uint8_t* dat
 /*
  * Function to find defective memory blocks (128kB) (There may be at most 20 defective blocks)
  *
- * Defective blocks are labelled by the manufacturer by the first page in the block beginning with
- * 0x00 instead of 0xFF
+ * Defective blocks are labeled by the manufacturer by the first page in the block beginning with
+ * 0x00 instead of 0xFF.
  *
  * Defective blocks can be placed in the BBM look up table in order to avoid them whilst writing
  *
@@ -259,9 +259,6 @@ HAL_StatusTypeDef MEM_SCAN(uint16_t* defect){
 		}
 
 	}
-	if (i == 0) {
-		Print("Memory clear");
-	}
 	return(HAL_OK);
 }
 
@@ -282,5 +279,43 @@ void findfreeaddr (uint32_t* result) {
 	*result = pageaddr;
 	*(result+1) = coladdr;
 }
+
+/**
+ * 									FATFS Section
+ *
+ * Following functions are added in order to make this driver compatible with the FATFS package
+ * */
+
+DSTATUS mem_init (BYTE pdrv) {
+	if (MEM_INIT() != HAL_OK) {
+		return STA_NOINIT;
+	}
+	MEM_STATUS = MEM_OK;
+	return (MEM_STATUS); //Inidicates successful init
+}
+
+DSTATUS mem_getstatus (BYTE prdv) {
+	return MEM_STATUS;
+}
+
+DRESULT mem_read(BYTE pdrv, BYTE* buff, DWORD sector, UINT count) {
+	 if (!count) { //0 count, invalid parameter
+		 return RES_PARERR;
+	 }
+
+	 if (MEM_STATUS) { //Memory not initialised
+		 return RES_NOTRDY;
+	 }
+
+	 for (int i = 0; i < count; i++) {
+		 if (MEM_READPAGE(sector+i, 0x0000, (uint8_t*) buff, 1) != HAL_OK) {
+			 return RES_ERROR;
+		 }
+	 }
+
+	 return RES_OK;
+
+}
+
 
 
