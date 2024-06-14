@@ -6,10 +6,10 @@
 ../Core/Src/W25N01GVZEIG.c:106:6:block_erase	24	static
 ../Core/Src/W25N01GVZEIG.c:123:19:MEM_INIT	8	static
 ../Core/Src/W25N01GVZEIG.c:147:19:MEM_WRITE	64	dynamic
-../Core/Src/W25N01GVZEIG.c:192:19:MEM_READPAGE	104	dynamic
-../Core/Src/W25N01GVZEIG.c:245:19:MEM_SCAN	80	static
-../Core/Src/W25N01GVZEIG.c:265:6:findfreeaddr	32	static
-../Core/Src/W25N01GVZEIG.c:289:9:mem_init	16	static
-../Core/Src/W25N01GVZEIG.c:297:9:mem_getstatus	16	static
-../Core/Src/W25N01GVZEIG.c:301:9:mem_read	32	static
-../Core/Src/W25N01GVZEIG.c:320:9:mem_write	24	static
+../Core/Src/W25N01GVZEIG.c:192:19:MEM_READPAGE	56	static
+../Core/Src/W25N01GVZEIG.c:246:19:MEM_SCAN	80	static
+../Core/Src/W25N01GVZEIG.c:266:6:findfreeaddr	32	static
+../Core/Src/W25N01GVZEIG.c:290:9:mem_init	16	static
+../Core/Src/W25N01GVZEIG.c:298:9:mem_getstatus	16	static
+../Core/Src/W25N01GVZEIG.c:302:9:mem_read	32	static
+../Core/Src/W25N01GVZEIG.c:321:9:mem_write	24	static

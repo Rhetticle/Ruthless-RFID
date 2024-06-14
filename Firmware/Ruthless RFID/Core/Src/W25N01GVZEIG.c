@@ -23,7 +23,7 @@ static volatile DSTATUS MEM_STATUS = STA_NOINIT; //Flag to indicate disk status
  *
  * */
 void READ_ID(uint8_t* rec){
-	uint8_t transaction[]={ID,0x00,0x00,0x00,0x00}; //ID opcode and four dummy bytes
+	uint8_t transaction[]={ID, DUMMY, DUMMY, DUMMY, DUMMY}; //ID opcode and four dummy bytes
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
 	while(HAL_SPI_TransmitReceive(&hspi2, transaction,rec, 5, 100)!=HAL_OK); //Here the third to last byte will be MFR ID and last two will be Device ID
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
@@ -36,7 +36,7 @@ void READ_ID(uint8_t* rec){
  * */
 
 uint8_t STAT_READ(uint8_t addr){
-	uint8_t transaction[]={READ_STAT,addr,0x00};
+	uint8_t transaction[]={READ_STAT, addr, DUMMY};
 	uint8_t rec[3];
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
 	while(HAL_SPI_TransmitReceive(&hspi2, transaction,rec, 3, 100)!=HAL_OK);
@@ -104,7 +104,7 @@ void WRITE_DIS(void) {
  * @param page_addr - Page address to begin erasing from
  * */
 void block_erase(uint16_t page_addr) {
-	uint8_t transaction [] = {BLOCK_ERS, 0x00, page_addr>>8, page_addr};
+	uint8_t transaction [] = {BLOCK_ERS, DUMMY, page_addr>>8, page_addr};
 	WRIT_EN();
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
 	HAL_SPI_Transmit(&hspi2, transaction, 4, 100);
@@ -146,7 +146,7 @@ HAL_StatusTypeDef MEM_INIT(void){
 
 HAL_StatusTypeDef MEM_WRITE(uint16_t col_addr,uint16_t page_addr,uint8_t* data,uint16_t bytes){
 	uint8_t setup[bytes+3]; //Extra 3 bytes for write opcode and column address
-	uint8_t execute[]={WRIT_EXE,0x00,page_addr>>8, page_addr}; //0x00 is dummy (need 8 dummy clocks) between opcode and page address
+	uint8_t execute[]={WRIT_EXE, DUMMY, page_addr>>8, page_addr}; //0x00 is dummy (need 8 dummy clocks) between opcode and page address
 
 	setup[0] = WRIT_LOAD;
 	setup[1] = col_addr>>8;
@@ -190,16 +190,16 @@ HAL_StatusTypeDef MEM_WRITE(uint16_t col_addr,uint16_t page_addr,uint8_t* data,u
  * */
 
 HAL_StatusTypeDef MEM_READPAGE(uint16_t page_addr,uint16_t col_addr,uint8_t* data,uint16_t bytes){ //Read one 2KiB page. Data will be put into internal buffer which can then be read. Wait at least tDR or until busy bit is clear
-	uint8_t transaction[]={READ_PAGE,0x00,page_addr>>8,page_addr};
+	uint8_t transaction[]={READ_PAGE, DUMMY, page_addr>>8, page_addr};
 	uint8_t transaction_size = sizeof(transaction)/sizeof(transaction[0]);
-	uint8_t read_data[bytes+transaction_size];
-	uint8_t rec_data[bytes+transaction_size];
+	uint8_t* read_command = malloc(bytes+transaction_size); //Must allocate here since array may be too big for FreeRTOS task stack
+	uint8_t* rec_data = malloc(bytes+transaction_size);
 
-	memset(read_data, 0, bytes+transaction_size); //Fill our read_data command array for dummy data while getting actual data
-	read_data[0]=READ_BUF;
-	read_data[1]= col_addr>>8;
-	read_data[2] = col_addr;
-	read_data[3] = 0x00; //dummy
+	memset(read_command, 0, bytes+transaction_size);
+	read_command[0]=READ_BUF;
+	read_command[1]= col_addr>>8;
+	read_command[2] = col_addr;
+	read_command[3] = DUMMY;
 
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
 	if(HAL_SPI_Transmit(&hspi2, transaction, 4, 100)!=HAL_OK){ //load data to internal buffer
@@ -211,7 +211,7 @@ HAL_StatusTypeDef MEM_READPAGE(uint16_t page_addr,uint16_t col_addr,uint8_t* dat
 	while((STAT_READ(STAT_REG3)&0x01) == 0x01); //Wait here until BUSY bit is cleared
 
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
-	if(HAL_SPI_TransmitReceive(&hspi2, read_data, rec_data, bytes+transaction_size, 100)!=HAL_OK){
+	if(HAL_SPI_TransmitReceive(&hspi2, read_command, rec_data, bytes+transaction_size, 100)!=HAL_OK){
 		HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
 		return(HAL_ERROR);
 	}
@@ -226,7 +226,8 @@ HAL_StatusTypeDef MEM_READPAGE(uint16_t page_addr,uint16_t col_addr,uint8_t* dat
 				data[i] = rec_data[i+4]; //+4 as first four elements of rec_data are meaningless
 		}
 	}
-
+	free(read_command);
+	free(rec_data);
 	return(HAL_OK);
 
 }
@@ -308,7 +309,7 @@ DRESULT mem_read(BYTE pdrv, BYTE* buff, DWORD sector, UINT count) {
 	 }
 
 	 for (int i = 0; i < count; i++) {
-		 if (MEM_READPAGE(sector+i, 0x0000, (uint8_t*) buff, count) != HAL_OK) {
+		 if (MEM_READPAGE(sector+i, 0x0000, (uint8_t*) buff, SECTOR_SIZE) != HAL_OK) {
 			 return RES_ERROR;
 		 }
 	 }

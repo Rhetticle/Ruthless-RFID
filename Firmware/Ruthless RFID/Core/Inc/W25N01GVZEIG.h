@@ -42,6 +42,7 @@
 #define MEM_OK 0x00 //Used for FATFS
 
 //Constants
+#define DUMMY 0x00
 #define SECTOR_SIZE 2048
 
 //Functions
