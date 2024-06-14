@@ -11,9 +11,9 @@ main.c:437:13:MX_TIM2_Init	6
 main.c:496:13:MX_TIM3_Init	4
 main.c:541:13:MX_GPIO_Init	1
 main.c:593:6:Start_Init	2
-main.c:638:6:StartReadCard	4
-main.c:677:6:StartWriteCard	2
-main.c:700:6:StartHome	5
-main.c:740:6:CardFoundStart	5
-main.c:779:6:HAL_TIM_PeriodElapsedCallback	2
-main.c:796:6:Error_Handler	1
+main.c:641:6:StartReadCard	4
+main.c:680:6:StartWriteCard	2
+main.c:703:6:StartHome	5
+main.c:743:6:CardFoundStart	5
+main.c:782:6:HAL_TIM_PeriodElapsedCallback	2
+main.c:799:6:Error_Handler	1

@@ -144,9 +144,9 @@ HAL_StatusTypeDef MEM_INIT(void){
  * @param bytes: Number of bytes to write to page
  * */
 
-HAL_StatusTypeDef MEM_WRITE(uint16_t page_addr,uint16_t col_addr,uint8_t* data,uint16_t bytes){
-	uint8_t* setup = malloc((bytes+3)*sizeof(uint8_t)); //Extra 3 bytes for write opcode and column address
-	uint8_t execute[]={WRIT_EXE, DUMMY, page_addr>>8, page_addr};
+HAL_StatusTypeDef MEM_WRITE(uint16_t col_addr,uint16_t page_addr,uint8_t* data,uint16_t bytes){
+	uint8_t setup[bytes+3]; //Extra 3 bytes for write opcode and column address
+	uint8_t execute[]={WRIT_EXE, DUMMY, page_addr>>8, page_addr}; //0x00 is dummy (need 8 dummy clocks) between opcode and page address
 
 	setup[0] = WRIT_LOAD;
 	setup[1] = col_addr>>8;
@@ -171,7 +171,6 @@ HAL_StatusTypeDef MEM_WRITE(uint16_t page_addr,uint16_t col_addr,uint8_t* data,u
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
 
 	while((STAT_READ(STAT_REG3)&0x01) == 0x01);
-	free(setup);
 	return(HAL_OK);
 
 }
@@ -316,6 +315,7 @@ DRESULT mem_read(BYTE pdrv, BYTE* buff, DWORD sector, UINT count) {
 	 }
 
 	 return RES_OK;
+
 }
 
 DRESULT mem_write(BYTE pdrv, const BYTE* buff, DWORD sector, UINT count) {
@@ -327,13 +327,7 @@ DRESULT mem_write(BYTE pdrv, const BYTE* buff, DWORD sector, UINT count) {
 		return RES_NOTRDY;
 	}
 
-	for (int i = 0; i < count; i++) {
-		if (MEM_WRITE(0x0000, sector+i, (uint8_t*) buff, SECTOR_SIZE) != HAL_OK) {
-			return RES_ERROR;
-		}
-	}
 
-	return RES_OK;
 }
 
 

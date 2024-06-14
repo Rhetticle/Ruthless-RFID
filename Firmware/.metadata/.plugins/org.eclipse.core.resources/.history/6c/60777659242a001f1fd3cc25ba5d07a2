@@ -146,7 +146,7 @@ HAL_StatusTypeDef MEM_INIT(void){
 
 HAL_StatusTypeDef MEM_WRITE(uint16_t page_addr,uint16_t col_addr,uint8_t* data,uint16_t bytes){
 	uint8_t* setup = malloc((bytes+3)*sizeof(uint8_t)); //Extra 3 bytes for write opcode and column address
-	uint8_t execute[]={WRIT_EXE, DUMMY, page_addr>>8, page_addr};
+	uint8_t execute[]={WRIT_EXE, DUMMY, page_addr>>8, page_addr}; //0x00 is dummy (need 8 dummy clocks) between opcode and page address
 
 	setup[0] = WRIT_LOAD;
 	setup[1] = col_addr>>8;

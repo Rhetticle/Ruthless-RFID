@@ -617,8 +617,10 @@ void Start_Init(void *argument)
     	USER_write(0, sector_write, 0, 1);
     	USER_read(0, sector_read, 0, 1);
     	for (int i = 0; i < SECTOR_SIZE; i++) {
+    		uint8_t read;
     		char msg[50];
-    		sprintf(msg,"Read 0x%X at address 0x%X\r\n", sector_read[i], i);
+    		MEM_READPAGE(0x0000, i, &read, 1);
+    		sprintf(msg,"Read 0x%X at address 0x%X\r\n", read, i);
     		CDC_Transmit_FS(msg, strlen(msg));
     		HAL_Delay(10);
     	}
