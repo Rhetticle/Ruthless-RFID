@@ -611,12 +611,12 @@ void Start_Init(void *argument)
     mem_init(0);
     block_erase(0x0000);
     while(1) {
-    	if(USER_read(0, sector, 0, SECTOR_SIZE) != RES_OK) {
+    	if(USER_read(0, sector, 0, 1000) != RES_OK) {
     	    	Print("Error");
     	} else {
     		CDC_Transmit_FS(sector, 1);
     	}
-    	HAL_Delay(100);
+
     }
 
 

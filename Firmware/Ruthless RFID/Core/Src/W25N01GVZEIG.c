@@ -308,12 +308,24 @@ DRESULT mem_read(BYTE pdrv, BYTE* buff, DWORD sector, UINT count) {
 	 }
 
 	 for (int i = 0; i < count; i++) {
-		 if (MEM_READPAGE(sector+i, 0x0000, (uint8_t*) buff, 1) != HAL_OK) {
+		 if (MEM_READPAGE(sector+i, 0x0000, (uint8_t*) buff, count) != HAL_OK) {
 			 return RES_ERROR;
 		 }
 	 }
 
 	 return RES_OK;
+
+}
+
+DRESULT mem_write(BYTE pdrv, const BYTE* buff, DWORD sector, UINT count) {
+	if (!count) {
+		return RES_PARERR;
+	}
+
+	if (MEM_STATUS) {
+		return RES_NOTRDY;
+	}
+
 
 }
 

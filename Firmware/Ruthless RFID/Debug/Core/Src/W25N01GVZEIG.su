@@ -12,3 +12,4 @@
 ../Core/Src/W25N01GVZEIG.c:289:9:mem_init	16	static
 ../Core/Src/W25N01GVZEIG.c:297:9:mem_getstatus	16	static
 ../Core/Src/W25N01GVZEIG.c:301:9:mem_read	32	static
+../Core/Src/W25N01GVZEIG.c:320:9:mem_write	24	static
