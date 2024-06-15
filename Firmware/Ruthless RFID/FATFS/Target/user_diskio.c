@@ -158,18 +158,28 @@ DRESULT USER_ioctl (
 )
 {
   /* USER CODE BEGIN IOCTL */
+	DRESULT res = RES_ERROR;
+
     switch (cmd) {
 		case GET_SECTOR_COUNT:
 			*(DWORD*)buff = 65536;
+			res = RES_OK;
 			break;
 		case GET_SECTOR_SIZE:
 			*(DWORD*)buff = SECTOR_SIZE;
+			res = RES_OK;
 			break;
 		case GET_BLOCK_SIZE:
 			*(DWORD*) buff = 64;
+			res = RES_OK;
+			break;
+		case CTRL_SYNC:
+			if (!(STAT_READ(STAT_REG3)&0x01)) {
+				res = RES_OK;
+			}
 			break;
     }
-    return RES_OK;
+    return res;
   /* USER CODE END IOCTL */
 }
 #endif /* _USE_IOCTL == 1 */

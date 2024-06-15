@@ -1,9 +1,9 @@
-11:14:04 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+15:24:08 **** Incremental Build of configuration Debug for project Ruthless RFID ****
 make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../FATFS/Target -I../FATFS/App -I../Middlewares/Third_Party/FatFs/src -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 ../Core/Src/main.c: In function 'writecard':
-../Core/Src/main.c:172:15: warning: passing argument 1 of 'findfreeaddr' from incompatible pointer type [-Wincompatible-pointer-types]
-  172 |  findfreeaddr(address);
+../Core/Src/main.c:170:15: warning: passing argument 1 of 'findfreeaddr' from incompatible pointer type [-Wincompatible-pointer-types]
+  170 |  findfreeaddr(address);
       |               ^~~~~~~
       |               |
       |               uint32_t ** {aka long unsigned int **}
@@ -12,42 +12,60 @@ In file included from ../Core/Src/main.c:31:
    59 | void findfreeaddr (uint32_t* result);
       |                    ~~~~~~~~~~^~~~~~
 ../Core/Src/main.c: In function 'Start_Init':
-../Core/Src/main.c:622:6: warning: implicit declaration of function 'Print'; did you mean 'printf'? [-Wimplicit-function-declaration]
-  622 |      Print("here");
-      |      ^~~~~
-      |      printf
-../Core/Src/main.c:621:14: warning: unused variable 'result3' [-Wunused-variable]
-  621 |      FRESULT result3 = f_open(&test, "test.txt", FA_OPEN_ALWAYS|FA_READ|FA_WRITE);
-      |              ^~~~~~~
-../Core/Src/main.c:619:14: warning: unused variable 'result2' [-Wunused-variable]
-  619 |      FRESULT result2 = f_mount(&fs, "", 0);
-      |              ^~~~~~~
-../Core/Src/main.c:618:14: warning: unused variable 'result1' [-Wunused-variable]
-  618 |      FRESULT result1 = f_mkfs("", FM_ANY, 0, work, SECTOR_SIZE);
-      |              ^~~~~~~
+../Core/Src/main.c:625:41: warning: passing argument 4 of 'f_write' from incompatible pointer type [-Wincompatible-pointer-types]
+  625 |     FRESULT b = f_write(&test, nums, 5, &bw);
+      |                                         ^~~
+      |                                         |
+      |                                         BYTE * {aka unsigned char *}
+In file included from ../FATFS/App/fatfs.h:26,
+                 from ../Core/Src/main.c:22:
+../Middlewares/Third_Party/FatFs/src/ff.h:245:61: note: expected 'UINT *' {aka 'unsigned int *'} but argument is of type 'BYTE *' {aka 'unsigned char *'}
+  245 | FRESULT f_write (FIL* fp, const void* buff, UINT btw, UINT* bw); /* Write data to the file */
+      |                                                       ~~~~~~^~
+../Core/Src/main.c:626:13: warning: unused variable 'c' [-Wunused-variable]
+  626 |     FRESULT c = f_close(&test);
+      |             ^
+../Core/Src/main.c:625:13: warning: unused variable 'b' [-Wunused-variable]
+  625 |     FRESULT b = f_write(&test, nums, 5, &bw);
+      |             ^
+../Core/Src/main.c:624:13: warning: unused variable 'a' [-Wunused-variable]
+  624 |     FRESULT a = f_open(&test, "test.txt", FA_OPEN_ALWAYS|FA_WRITE);
+      |             ^
+../Core/Src/main.c:622:13: warning: unused variable 'result2' [-Wunused-variable]
+  622 |     FRESULT result2 = f_mount(&fs, "", 0);
+      |             ^~~~~~~
+../Core/Src/main.c:620:10: warning: unused variable 'read_nums' [-Wunused-variable]
+  620 |     BYTE read_nums[5];
+      |          ^~~~~~~~~
+../Core/Src/main.c:617:10: warning: unused variable 'br' [-Wunused-variable]
+  617 |     BYTE br;
+      |          ^~
+../Core/Src/main.c:615:13: warning: unused variable 'result1' [-Wunused-variable]
+  615 |     FRESULT result1 = f_mkfs("", FM_ANY, 0, work, SECTOR_SIZE);
+      |             ^~~~~~~
 ../Core/Src/main.c:604:11: warning: unused variable 'read' [-Wunused-variable]
   604 |  uint8_t* read = malloc(SECTOR_SIZE*sizeof(uint8_t));
       |           ^~~~
 ../Core/Src/main.c: In function 'StartReadCard':
-../Core/Src/main.c:654:5: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
-  654 |  if(DumpINFO(cardinf)==PCD_OK){
+../Core/Src/main.c:658:5: warning: implicit declaration of function 'DumpINFO' [-Wimplicit-function-declaration]
+  658 |  if(DumpINFO(cardinf)==PCD_OK){
       |     ^~~~~~~~
 ../Core/Src/main.c: In function 'CardFoundStart':
-../Core/Src/main.c:760:34: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
-  760 |  choose(&SCRN_CardFound,&suspend,&count,2,OLED_NORESTORE);
+../Core/Src/main.c:764:34: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  764 |  choose(&SCRN_CardFound,&suspend,&count,2,OLED_NORESTORE);
       |                                  ^~~~~~
       |                                  |
       |                                  int *
-../Core/Src/main.c:150:55: note: expected 'uint32_t *' {aka 'long unsigned int *'} but argument is of type 'int *'
-  150 | int choose (const Screen* screen,int* flag, uint32_t* count, int max, int restopt) {
+../Core/Src/main.c:148:55: note: expected 'uint32_t *' {aka 'long unsigned int *'} but argument is of type 'int *'
+  148 | int choose (const Screen* screen,int* flag, uint32_t* count, int max, int restopt) {
       |                                             ~~~~~~~~~~^~~~~
 ../Core/Src/main.c: In function 'choose':
-../Core/Src/main.c:168:1: warning: control reaches end of non-void function [-Wreturn-type]
-  168 | }
+../Core/Src/main.c:166:1: warning: control reaches end of non-void function [-Wreturn-type]
+  166 | }
       | ^
 ../Core/Src/main.c: In function 'writecard':
-../Core/Src/main.c:174:1: warning: control reaches end of non-void function [-Wreturn-type]
-  174 | }
+../Core/Src/main.c:172:1: warning: control reaches end of non-void function [-Wreturn-type]
+  172 | }
       | ^
 arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: Ruthless RFID.elf
@@ -55,11 +73,11 @@ Finished building target: Ruthless RFID.elf
 arm-none-eabi-size   Ruthless\ RFID.elf 
 arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
    text	   data	    bss	    dec	    hex	filename
-  76812	   1644	  31820	 110276	  1aec4	Ruthless RFID.elf
+  78732	   1644	  29724	 110100	  1ae14	Ruthless RFID.elf
 Finished building: default.size.stdout
  
 Finished building: Ruthless RFID.list
  
 
-11:14:06 Build Finished. 0 errors, 10 warnings. (took 1s.885ms)
+15:24:10 Build Finished. 0 errors, 14 warnings. (took 1s.987ms)
 
