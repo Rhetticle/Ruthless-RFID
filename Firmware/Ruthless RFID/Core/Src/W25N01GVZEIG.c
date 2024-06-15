@@ -329,7 +329,7 @@ DRESULT mem_write(BYTE pdrv, const BYTE* buff, DWORD sector, UINT count) {
 	}
 
 	for (int i = 0; i < count; i++) {
-		if (MEM_WRITE(0x0000, sector+i, (uint8_t*) buff, SECTOR_SIZE) != HAL_OK) {
+		if (MEM_WRITE(sector+i, 0x0000, (uint8_t*) buff, SECTOR_SIZE) != HAL_OK) {
 			return RES_ERROR;
 		}
 		buff += SECTOR_SIZE; //increment pointer

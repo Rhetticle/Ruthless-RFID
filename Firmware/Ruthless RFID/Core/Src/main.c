@@ -56,6 +56,8 @@ SPI_HandleTypeDef hspi2;
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
 
+FATFS fs;
+FIL test;
 /* Definitions for PERIPHINIT */
 osThreadId_t PERIPHINITHandle;
 const osThreadAttr_t PERIPHINIT_attributes = {
@@ -599,7 +601,7 @@ void Start_Init(void *argument)
   for(;;)
   {
 	BYTE* work = malloc(SECTOR_SIZE);
-
+	uint8_t* read = malloc(SECTOR_SIZE*sizeof(uint8_t));
 	vTaskSuspend(ReadCardHandle);
     vTaskSuspend(WriteCardHandle);
     vTaskSuspend(HomeHandle);
@@ -612,12 +614,12 @@ void Start_Init(void *argument)
     mem_init(0);
     block_erase(0x0000);
     while(1) {
-    	FATFS fs;
+
     	FRESULT result1 = f_mkfs("", FM_ANY, 0, work, SECTOR_SIZE);
-    	//FRESULT result2 = f_mount(&fs, "0:/", 1);
+    	FRESULT result2 = f_mount(&fs, "", 0);
 
-
-    	HAL_Delay(100);
+    	FRESULT result3 = f_open(&test, "test.txt", FA_OPEN_ALWAYS|FA_READ|FA_WRITE);
+    	Print("here");
     }
     while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) != 0);
     vTaskResume(HomeHandle);
