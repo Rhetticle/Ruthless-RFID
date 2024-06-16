@@ -3,6 +3,7 @@
 "./Core/Src/W25N01GVZEIG.o"
 "./Core/Src/freertos.o"
 "./Core/Src/main.o"
+"./Core/Src/ruthlessfs.o"
 "./Core/Src/screen.o"
 "./Core/Src/stm32f4xx_hal_msp.o"
 "./Core/Src/stm32f4xx_hal_timebase_tim.o"

@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  0002064c  2**0
                   CONTENTS, READONLY
- 12 .debug_info   00026688  00000000  00000000  0002067c  2**0
+ 12 .debug_info   00026686  00000000  00000000  0002067c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00005638  00000000  00000000  00046d04  2**0
+ 13 .debug_abbrev 00005667  00000000  00000000  00046d02  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00002008  00000000  00000000  0004c340  2**3
+ 14 .debug_aranges 00002008  00000000  00000000  0004c370  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_ranges 00001de8  00000000  00000000  0004e348  2**3
+ 15 .debug_ranges 00001de8  00000000  00000000  0004e378  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  0001c840  00000000  00000000  00050130  2**0
+ 16 .debug_macro  0001c840  00000000  00000000  00050160  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00025a2a  00000000  00000000  0006c970  2**0
+ 17 .debug_line   00025a2d  00000000  00000000  0006c9a0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0009e8cc  00000000  00000000  0009239a  2**0
+ 18 .debug_str    0009e8d3  00000000  00000000  000923cd  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000050  00000000  00000000  00130c66  2**0
+ 19 .comment      00000050  00000000  00000000  00130ca0  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00008b2c  00000000  00000000  00130cb8  2**2
+ 20 .debug_frame  00008b2c  00000000  00000000  00130cf0  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -2595,9 +2595,6 @@ void OLED_SELECT(const Screen* screen,uint8_t selopt, int restore){
  80012de:	785b      	ldrb	r3, [r3, #1]
  80012e0:	773b      	strb	r3, [r7, #28]
  80012e2:	e021      	b.n	8001328 <OLED_SELECT+0xec>
-
-
-
 	    }
 		else{
 	        prevpage=screen->seldata[selopt-1][0]; //See OLED.h this will give the page of the previous select option

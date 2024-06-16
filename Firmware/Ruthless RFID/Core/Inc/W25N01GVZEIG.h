@@ -34,14 +34,12 @@
 #define WRIT_EXE 0x10 //Takes internal buffer data and writes to memory array
 #define BBM 0xA1 //Bad Block Management
 
-//Flag values
-#define MEM_OK 0x00 //Used for FATFS
-
 //Constants
 #define DUMMY 0x00
 #define SECTOR_SIZE 131072 //(1024*128) 128KiB
 #define PAGE_SIZE 2048 //2KiB
-#define SECTOR_PAGECOUNT 64 //64 pages in a 128kB sector
+#define BLOCK_PAGECOUNT 64 //64 pages in a 128kB sector
+#define BLOCK_COUNT 1024
 
 //Functions
 void READ_ID(uint8_t* rec);
@@ -54,5 +52,5 @@ HAL_StatusTypeDef MEM_INIT(void);
 HAL_StatusTypeDef MEM_WRITE(uint16_t page_addr,uint16_t col_addr,uint8_t* data,uint32_t bytes);
 HAL_StatusTypeDef MEM_READPAGE(uint16_t addr,uint16_t col_addr,uint8_t* data,uint32_t bytes);
 HAL_StatusTypeDef MEM_SCAN(uint16_t* defect);
-void findfreeaddr (uint32_t* result);
+int mem_find_free_block(void);
 #endif /* INC_W25N01GVZEIG_H_ */

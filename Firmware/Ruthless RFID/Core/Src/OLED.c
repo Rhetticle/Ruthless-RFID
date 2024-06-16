@@ -464,11 +464,6 @@ void OLED_SELECT(const Screen* screen,uint8_t selopt, int restore){
 	        prevcol=screen->seldata[screen->selsize-1][1];
 	        thispage=screen->seldata[selopt][0];
 	        thiscol=screen->seldata[selopt][1];
-
-
-
-
-
 	    }
 		else{
 	        prevpage=screen->seldata[selopt-1][0]; //See OLED.h this will give the page of the previous select option
