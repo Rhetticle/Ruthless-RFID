@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="n_clst"/>
+		<item key="selection" value=""/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="n_clst"/>
+			<item value="xSemaphoreTake"/>
+			<item value="ff_req_grant"/>
+			<item value="lock_fs"/>
+			<item value="ENTER_FF"/>
+			<item value="putc_flush"/>
+			<item value="putc_bfd"/>
+			<item value="f_read"/>
 			<item value="f_mkfs"/>
+			<item value="n_clst"/>
 			<item value="FF_MAX_SS"/>
 			<item value="FF_S"/>
 			<item value="disk_write"/>
 			<item value="GET_BLOCK_SIZE"/>
 			<item value="mkfs"/>
 			<item value="mk"/>
-			<item value="MEM_SCAN"/>
-			<item value="home"/>
-			<item value="PERIPH_BASE"/>
-			<item value="AHB1PERIPH_BASE"/>
-			<item value="GPIOA_BASE"/>
-			<item value="mes"/>
 		</list>
 		<list key="replacehistory">
+			<item value=""/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

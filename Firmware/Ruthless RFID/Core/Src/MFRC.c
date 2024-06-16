@@ -367,6 +367,9 @@ PCD_StatusTypeDef PICC_Select(void){
 	  uint8_t ANTICOL2[5];
 	  uint8_t SELECT2[3];
 
+	  if (PICC_CHECK() != PCD_OK) {
+		  return PCD_COMM_ERR;
+	  }
 	  MFRC_ANTICOL1(ANTICOL1);
 	  if(ANTICOL1[0]!=0x88){
 		  return(PCD_COMM_ERR);
@@ -392,7 +395,7 @@ PCD_StatusTypeDef PICC_CHECK(void){
 	}
 
 	else{
-		if(ATQA[0]!=ULTRA_ATQA){
+		if((ATQA[0]!=ULTRA_ATQA0) || (ATQA[1] != ULTRA_ATQA1)){
 			return(PCD_COMM_ERR);
 		}
 		else{
@@ -410,22 +413,23 @@ PCD_StatusTypeDef PICC_CHECK(void){
  * */
 
 PCD_StatusTypeDef UL_READ(uint8_t addr,uint8_t* data){
+	if (PICC_Select() != PCD_OK) {
+		return PCD_COMM_ERR; //No PICC available
+	}
+	uint8_t transaction[4]={ULTRA_READ,addr};
+	uint8_t CRC_val[2];
 
-		uint8_t transaction[4]={ULTRA_READ,addr};
-		uint8_t CRC_val[2];
+	CALC_CRC(transaction, 2, CRC_val);
 
-		CALC_CRC(transaction, 2, CRC_val);
+	memcpy(transaction+2,CRC_val,2);
 
+	if(MFRC_TRANSCEIVE(transaction, 4, data, UL_READSIZE, 0)!=PCD_OK){
+		return(PCD_COMM_ERR);
+	}
 
-		memcpy(transaction+2,CRC_val,2);
-
-		if(MFRC_TRANSCEIVE(transaction, 4, data, 18, 0)!=PCD_OK){
-			return(PCD_COMM_ERR);
-		}
-
-		else{
-			return(PCD_OK);
-		}
+	else{
+		return(PCD_OK);
+	}
 }
 
 /*
@@ -441,6 +445,10 @@ PCD_StatusTypeDef UL_WRITE(uint8_t addr,uint8_t* data){
 	uint8_t transaction[4]={ULTRA_WRITE,addr};
 	uint8_t ack;
 	uint8_t CRC_val[2];
+
+	if (PICC_SELECT() != PCD_OK) {
+		return PCD_COMM_ERR;
+	}
 	memcpy(transaction+2,data,4);
 
 	CALC_CRC(transaction, 6, CRC_val);
@@ -482,9 +490,9 @@ PCD_StatusTypeDef DumpINFO(uint8_t* data){
 				Print("    BYTE\r\n");
 				Print("0 1 2 3\r\n");
 				Print("        \r\n");
-				for(int i=0;i<13;i+=4){
+				for(int i = 0; i < 13; i+= 4){
 					UL_READ(i, data);
-					for(int j=0;j<13;j+=4){
+					for(int j = 0; j < 13; j += 4){
 						char mess[20];
 						sprintf(mess,"%X, %X, %X, %X\r\n",data[j],data[j+1],data[j+2],data[j+3]);
 						Print(mess);
@@ -505,32 +513,80 @@ PCD_StatusTypeDef DumpINFO(uint8_t* data){
 		  		return(PCD_COMM_ERR);
 		  }
 
-		  else{
-			  HAL_Delay(10);
-			  PICC_Select();
-			  HAL_Delay(10);
-				Print("    BYTE\r\n");
-				Print("0 1 2 3\r\n");
-				Print("        \r\n");
-				for(int i=0;i<13;i+=4){
-					UL_READ(i, data);
-					for(int j=0;j<13;j+=4){
-						char mess[20];
-						sprintf(mess,"%X, %X, %X, %X\r\n",data[j],data[j+1],data[j+2],data[j+3]);
-						Print(mess);
-						return(PCD_OK);
-					}
-				}
+	  else{
+		HAL_Delay(10);
+		PICC_Select();
+		HAL_Delay(10);
+		Print("    BYTE\r\n");
+		Print("0 1 2 3\r\n");
+		Print("        \r\n");
+		for(int i=0;i<13;i+=4){
+			UL_READ(i, data);
+			for(int j=0;j<13;j+=4){
+				char mess[20];
+				sprintf(mess,"%X, %X, %X, %X\r\n",data[j],data[j+1],data[j+2],data[j+3]);
+				Print(mess);
+				return(PCD_OK);
+			}
+		}
 
-			  MFRC_HALTA();
-			  MFRC_WUPA(ATQA);
-			  WUPA=1;
+		 MFRC_HALTA();
+		 MFRC_WUPA(ATQA);
+		 WUPA=1;
 		  }
 	  }
+}
 
+/**
+ * Read the 7 byte uid of MIFARE Ultralight card
+ *
+ * @param uid - Array to store uid
+ * @return PCD_OK if uid was successfully read
+ * */
+PCD_StatusTypeDef UL_getuid(uint8_t* uid) {
+	uint8_t read[UL_READSIZE];
 
+	if (UL_READ(0x00, read) != PCD_OK) {
+		return PCD_COMM_ERR;
+	}
 
+	memcpy(uid, read, UL_UIDSIZE);
+	return PCD_OK;
+}
 
+/**
+ * Read uid into a string format
+ *
+ * @param uid - Array to store string representation of string
+ * @return PCD_OK if uid was successfully read
+ * */
+PCD_StatusTypeDef UL_getuidstr(char* uid_str) {
+	uint8_t uid[UL_UIDSIZE];
+
+	if (UL_getuid(uid) != PCD_OK) {
+		return PCD_COMM_ERR;
+	}
+
+	sprintf(uid_str, "%X%X%X%X%X%X%X", uid[0], uid[1], uid[2], uid[3], uid[4], uid[5], uid[6]);
+	return PCD_OK;
+}
+
+/**
+ * Get all 64 bytes of user data from card
+ *
+ * @param data - Array to store data
+ * @return PCD_OK if data was successfully read
+ * */
+PCD_StatusTypeDef UL_getalldata(uint8_t* data) {
+
+	for (int i = UL_DATASTART; i < UL_DATAEND; i+=UL_PAGESIZE) {
+		if (UL_READ(i, data) != PCD_OK) {
+			return PCD_COMM_ERR;
+		}
+		data += UL_PAGESIZE; //increment pointer
+	}
+
+	return PCD_OK;
 }
 
 

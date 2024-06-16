@@ -9,10 +9,6 @@
 #define INC_W25N01GVZEIG_H_
 
 #include "stm32f4xx.h"
-#include <integer.h>
-#include <fatfs.h>
-#include <integer.h>
-#include <diskio.h>
 //PINS
 #define CS_MEM GPIO_PIN_8 //Port A
 
@@ -43,7 +39,9 @@
 
 //Constants
 #define DUMMY 0x00
-#define SECTOR_SIZE 2048
+#define SECTOR_SIZE 131072 //(1024*128) 128KiB
+#define PAGE_SIZE 2048 //2KiB
+#define SECTOR_PAGECOUNT 64 //64 pages in a 128kB sector
 
 //Functions
 void READ_ID(uint8_t* rec);
@@ -53,11 +51,8 @@ void WRIT_EN(void);
 void WRITE_DIS(void);
 void block_erase(uint16_t page_addr);
 HAL_StatusTypeDef MEM_INIT(void);
-HAL_StatusTypeDef MEM_WRITE(uint16_t page_addr,uint16_t col_addr,uint8_t* data,uint16_t bytes);
-HAL_StatusTypeDef MEM_READPAGE(uint16_t addr,uint16_t col_addr,uint8_t* data,uint16_t bytes);
+HAL_StatusTypeDef MEM_WRITE(uint16_t page_addr,uint16_t col_addr,uint8_t* data,uint32_t bytes);
+HAL_StatusTypeDef MEM_READPAGE(uint16_t addr,uint16_t col_addr,uint8_t* data,uint32_t bytes);
 HAL_StatusTypeDef MEM_SCAN(uint16_t* defect);
 void findfreeaddr (uint32_t* result);
-DSTATUS mem_init (BYTE pdrv);
-DSTATUS mem_getstatus (BYTE prdv);
-DRESULT mem_read(BYTE pdrv, BYTE* buff, DWORD sector, UINT count);
 #endif /* INC_W25N01GVZEIG_H_ */

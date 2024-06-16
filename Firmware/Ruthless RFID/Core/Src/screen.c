@@ -28,6 +28,7 @@ static const uint8_t WRITE_SEL[1][2] = {{0,0}};
  *
  * */
 
+//Home screen
 const Screen SCRN_Home = {
 		.datsize = sizeof(HOME_SCREEN)/sizeof(HOME_SCREEN[0]),
 		.selsize = sizeof(HOME_SEL)/sizeof(HOME_SEL[0]),
@@ -36,6 +37,7 @@ const Screen SCRN_Home = {
 		.seldata = HOME_SEL,
 };
 
+//Read card
 const Screen SCRN_ReadCard = {
 		.datsize = sizeof(READ_SCREEN)/sizeof(READ_SCREEN[0]),
 		.selsize = sizeof(READ_SEL)/sizeof(READ_SEL[0]),
@@ -44,6 +46,7 @@ const Screen SCRN_ReadCard = {
 		.seldata = READ_SEL,
 };
 
+//Card found
 const Screen SCRN_CardFound = {
 		.datsize = sizeof(CARD_FOUNDSCREEN)/sizeof(CARD_FOUNDSCREEN[0]),
 		.selsize = sizeof(CARD_FOUNDSEL)/sizeof(CARD_FOUNDSEL[0]),

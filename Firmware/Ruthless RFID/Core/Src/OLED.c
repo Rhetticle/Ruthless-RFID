@@ -396,7 +396,7 @@ void OLED_SCREEN(const Screen* screen,uint8_t invert){
 	}
 }
 
-/*Function to add dynamic data to base screen i.e. adding UID read from card to display
+/*Function to add dynamic data to base screen e.g. adding UID read from card to display
  *
  * @param screen: Base screen to add data to
  *

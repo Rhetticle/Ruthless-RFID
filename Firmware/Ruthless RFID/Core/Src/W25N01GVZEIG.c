@@ -15,7 +15,6 @@
 #include <string.h>
 
 extern SPI_HandleTypeDef hspi2;
-static volatile DSTATUS MEM_STATUS = STA_NOINIT; //Flag to indicate disk status
 /*
  * Function to read manufacturer and device ID's
  *
@@ -144,7 +143,7 @@ HAL_StatusTypeDef MEM_INIT(void){
  * @param bytes: Number of bytes to write to page
  * */
 
-HAL_StatusTypeDef MEM_WRITE(uint16_t page_addr,uint16_t col_addr,uint8_t* data,uint16_t bytes){
+HAL_StatusTypeDef MEM_WRITE(uint16_t page_addr,uint16_t col_addr,uint8_t* data,uint32_t bytes){
 	uint8_t* setup = malloc((bytes+3)*sizeof(uint8_t)); //Extra 3 bytes for write opcode and column address
 	uint8_t execute[]={WRIT_EXE, DUMMY, page_addr>>8, page_addr};
 
@@ -190,7 +189,7 @@ HAL_StatusTypeDef MEM_WRITE(uint16_t page_addr,uint16_t col_addr,uint8_t* data,u
  * !!Note data must first be shifted from memory array into internal data buffer and then can be read!!
  * */
 
-HAL_StatusTypeDef MEM_READPAGE(uint16_t page_addr,uint16_t col_addr,uint8_t* data,uint16_t bytes){ //Read one 2KiB page. Data will be put into internal buffer which can then be read. Wait at least tDR or until busy bit is clear
+HAL_StatusTypeDef MEM_READPAGE(uint16_t page_addr,uint16_t col_addr,uint8_t* data,uint32_t bytes){ //Read one 2KiB page. Data will be put into internal buffer which can then be read. Wait at least tDR or until busy bit is clear
 	uint8_t transaction[]={READ_PAGE, DUMMY, page_addr>>8, page_addr};
 	uint8_t transaction_size = sizeof(transaction)/sizeof(transaction[0]);
 	uint8_t* read_command = malloc(bytes+transaction_size); //Must allocate here since array may be too big for FreeRTOS task stack
@@ -282,61 +281,6 @@ void findfreeaddr (uint32_t* result) {
 	*(result+1) = coladdr;
 }
 
-/**
- * 									FATFS Section
- *
- * Following functions are added in order to make this driver compatible with the FATFS package
- * */
-
-DSTATUS mem_init (BYTE pdrv) {
-	if (MEM_INIT() != HAL_OK) {
-		return STA_NOINIT;
-	}
-	MEM_STATUS = MEM_OK;
-	return (MEM_STATUS); //Inidicates successful init
-}
-
-DSTATUS mem_getstatus (BYTE prdv) {
-	return MEM_STATUS;
-}
-
-DRESULT mem_read(BYTE pdrv, BYTE* buff, DWORD sector, UINT count) {
-	 if (!count) { //0 count, invalid parameter
-		 return RES_PARERR;
-	 }
-
-	 if (MEM_STATUS) { //Memory not initialised
-		 return RES_NOTRDY;
-	 }
-
-	 for (int i = 0; i < count; i++) {
-		 if (MEM_READPAGE(sector+i, 0x0000, (uint8_t*) buff, SECTOR_SIZE) != HAL_OK) {
-			 return RES_ERROR;
-		 }
-		 buff += SECTOR_SIZE; //increment pointer
-	 }
-
-	 return RES_OK;
-}
-
-DRESULT mem_write(BYTE pdrv, const BYTE* buff, DWORD sector, UINT count) {
-	if (!count) {
-		return RES_PARERR;
-	}
-
-	if (MEM_STATUS) {
-		return RES_NOTRDY;
-	}
-
-	for (int i = 0; i < count; i++) {
-		if (MEM_WRITE(sector+i, 0x0000, (uint8_t*) buff, SECTOR_SIZE) != HAL_OK) {
-			return RES_ERROR;
-		}
-		buff += SECTOR_SIZE; //increment pointer
-	}
-
-	return RES_OK;
-}
 
 
 

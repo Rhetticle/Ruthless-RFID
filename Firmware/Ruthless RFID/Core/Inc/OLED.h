@@ -22,6 +22,7 @@
 #define OLED_NORESTORE 0
 #define OLED_RESTORE 1
 
+//Commands
 #define LOWER_COL 0x02 //Lower nibble op code for column start (0x02)
 #define UPPER_COL 0x10 //Upper nibble op code of column start (0x02)
 #define CHRG_PMP 0x33 //Set Charge pump output to 9V

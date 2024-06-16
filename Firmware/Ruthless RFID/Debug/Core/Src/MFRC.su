@@ -18,8 +18,11 @@
 ../Core/Src/MFRC.c:321:19:MFRC_ANTICOL2	32	static
 ../Core/Src/MFRC.c:341:19:MFRC_SEL2	40	static
 ../Core/Src/MFRC.c:364:19:PICC_Select	32	static
-../Core/Src/MFRC.c:388:19:PICC_CHECK	16	static
-../Core/Src/MFRC.c:412:19:UL_READ	32	static
-../Core/Src/MFRC.c:440:19:UL_WRITE	32	static
-../Core/Src/MFRC.c:459:6:Print	48	dynamic
-../Core/Src/MFRC.c:472:19:DumpINFO	96	static
+../Core/Src/MFRC.c:391:19:PICC_CHECK	16	static
+../Core/Src/MFRC.c:415:19:UL_READ	32	static
+../Core/Src/MFRC.c:444:19:UL_WRITE	32	static
+../Core/Src/MFRC.c:467:6:Print	48	dynamic
+../Core/Src/MFRC.c:480:19:DumpINFO	96	static
+../Core/Src/MFRC.c:546:19:UL_getuid	40	static
+../Core/Src/MFRC.c:563:19:UL_getuidstr	64	static
+../Core/Src/MFRC.c:580:19:UL_getalldata	24	static

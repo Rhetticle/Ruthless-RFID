@@ -27,8 +27,19 @@ typedef enum{
 
 #define ULTRA_READ 0x30
 #define ULTRA_WRITE 0xA2
-#define ULTRA_ATQA 0x44 //We will just use this to check REQA response note the PICC responds with 0x44 followed by 0x00
+#define ULTRA_ATQA0 0x44 //First byte of ATQA response should be 0x44
+#define ULTRA_ATQA1 0x00 //Second byte of ATQA response should be 0x00
 #define ULTRA_HALTA 0x50
+
+//MIFARE ULTRALIGHT Card characteristics
+
+#define UL_MEMSIZE 64 //16 pages each containing 4 bytes
+#define UL_UIDSIZE 7 //7 Byte UID
+#define UL_DATASIZE 44 //44 bytes of user data (Pages 4 to 15)
+#define UL_READSIZE 18 //A UL read will give 18 bytes back (16 bytes data and 2 CRC)
+#define UL_PAGESIZE 4 //4 bytes in a page
+#define UL_DATASTART 0x04 //Start address of data memory
+#define UL_DATAEND 0x0F //last page
 //Register Addresses
 
 #define CMD_REG 0x01
@@ -68,8 +79,6 @@ typedef enum{
 #define MFAUTH 0x0E //Performs MIFARE reader authentication
 #define SRST 0x0F //Soft reset
 
-
-
 //Function Prototypes
 
 PCD_StatusTypeDef MFRC_REGW(uint8_t addr,uint8_t data);
@@ -92,6 +101,8 @@ PCD_StatusTypeDef PICC_Select(void);
 PCD_StatusTypeDef PICC_CHECK(void);
 PCD_StatusTypeDef UL_READ(uint8_t addr,uint8_t* data);
 PCD_StatusTypeDef UL_WRITE(uint8_t addr,uint8_t* data);
-
-
+PCD_StatusTypeDef DumpINFO(uint8_t* data);
+PCD_StatusTypeDef UL_getuid(uint8_t* uid);
+PCD_StatusTypeDef UL_getuidstr(char* uid_str);
+PCD_StatusTypeDef UL_getalldata(uint8_t* data);
 #endif /* INC_MFRC_H_ */
