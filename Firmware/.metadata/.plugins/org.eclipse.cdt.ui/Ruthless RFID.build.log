@@ -1,38 +1,10 @@
-00:54:43 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+17:39:26 **** Incremental Build of configuration Debug for project Ruthless RFID ****
 make -j8 all 
-arm-none-eabi-gcc "../Core/Src/ruthlessfs.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/ruthlessfs.d" -MT"Core/Src/ruthlessfs.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/ruthlessfs.o"
-../Core/Src/ruthlessfs.c: In function 'enter_card':
-../Core/Src/ruthlessfs.c:15:44: warning: implicit declaration of function 'strlen' [-Wimplicit-function-declaration]
-   15 |  MEM_WRITE(free_block, 0x0000, card->name, strlen(card->name));
-      |                                            ^~~~~~
-../Core/Src/ruthlessfs.c:15:44: warning: incompatible implicit declaration of built-in function 'strlen'
-../Core/Src/ruthlessfs.c:11:1: note: include '<string.h>' or provide a declaration of 'strlen'
-   10 | #include "ruthlessfs.h"
-  +++ |+#include <string.h>
-   11 | 
-../Core/Src/ruthlessfs.c:15:36: warning: pointer targets in passing argument 3 of 'MEM_WRITE' differ in signedness [-Wpointer-sign]
-   15 |  MEM_WRITE(free_block, 0x0000, card->name, strlen(card->name));
-      |                                ~~~~^~~~~~
-      |                                    |
-      |                                    char *
-In file included from ../Core/Src/ruthlessfs.c:9:
-../Core/Inc/W25N01GVZEIG.h:52:75: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
-   52 | HAL_StatusTypeDef MEM_WRITE(uint16_t page_addr,uint16_t col_addr,uint8_t* data,uint32_t bytes);
-      |                                                                  ~~~~~~~~~^~~~
-../Core/Src/ruthlessfs.c:17:1: warning: control reaches end of non-void function [-Wreturn-type]
-   17 | }
-      | ^
-arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: Ruthless RFID.elf
- 
 arm-none-eabi-size   Ruthless\ RFID.elf 
-arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
    text	   data	    bss	    dec	    hex	filename
   61204	   1620	  27556	  90380	  1610c	Ruthless RFID.elf
 Finished building: default.size.stdout
  
-Finished building: Ruthless RFID.list
- 
 
-00:54:45 Build Finished. 0 errors, 4 warnings. (took 1s.639ms)
+17:39:27 Build Finished. 0 errors, 0 warnings. (took 869ms)
 
