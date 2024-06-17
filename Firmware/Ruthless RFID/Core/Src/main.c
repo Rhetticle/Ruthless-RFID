@@ -28,6 +28,7 @@
 #include "OLED.h"
 #include "queue.h"
 #include "W25N01GVZEIG.h"
+#include "ruthlessfs.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -595,16 +596,35 @@ void Start_Init(void *argument)
   /* Infinite loop */
   for(;;)
   {
-
 	vTaskSuspend(ReadCardHandle);
     vTaskSuspend(WriteCardHandle);
     vTaskSuspend(HomeHandle);
     vTaskSuspend(CardFoundHandle);
+
     MFRC_INIT();
     MFRC_ANTOFF();
     OLED_INIT();
     OLED_Print(TC);
     MEM_INIT();
+    block_erase(0x0000);
+    HAL_Delay(2000);
+    uint8_t contents_test[] = {0xAA,0xBB,0xCC,0xDD};
+    uint8_t uid_test[] = {0xBE,0xEF};
+    Card* read;
+
+    Card test = {
+    		.contents = contents_test,
+			.contents_size = 4,
+			.name = "Test Card",
+			.read_protected = 0,
+			.type = "MIFARE ULTRALIGHT",
+			.uid = uid_test,
+			.uidsize = 2,
+    };
+
+    enter_card(&test);
+    read = read_card_entry(0);
+    CDC_Transmit_FS(read, 10);
     while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) != 0);
     vTaskResume(HomeHandle);
     osDelay(10);

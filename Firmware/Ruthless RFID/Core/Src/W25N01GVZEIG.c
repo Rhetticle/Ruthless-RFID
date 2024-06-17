@@ -266,7 +266,7 @@ HAL_StatusTypeDef MEM_SCAN(uint16_t* defect){
 int mem_find_free_block(void) {
 	for (int i = 0; i < BLOCK_COUNT; i+=BLOCK_PAGECOUNT) {
 		uint8_t first_byte;
-		if (MEM_READPAGE(i, 0x0000, &first_byte, 1) != HAL_OK) {
+		if (MEM_READPAGE(i * BLOCK_PAGECOUNT, 0x0000, &first_byte, 1) != HAL_OK) {
 			return -1;
 		}
 

@@ -1,5 +1,5 @@
 ruthlessfs.c:30:19:enter_card	4
 ruthlessfs.c:55:19:enter_metadata	2
-ruthlessfs.c:78:7:read_card_name	4
-ruthlessfs.c:100:7:read_card_entry	1
+ruthlessfs.c:80:7:read_card_name	4
+ruthlessfs.c:102:7:read_card_entry	1
 ruthlessfs.c:116:10:get_metasize	3

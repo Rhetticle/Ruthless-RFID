@@ -1,5 +1,5 @@
 ../Core/Src/ruthlessfs.c:30:19:enter_card	32	static
 ../Core/Src/ruthlessfs.c:55:19:enter_metadata	32	static
-../Core/Src/ruthlessfs.c:78:7:read_card_name	32	static
-../Core/Src/ruthlessfs.c:100:7:read_card_entry	32	static
+../Core/Src/ruthlessfs.c:80:7:read_card_name	32	static
+../Core/Src/ruthlessfs.c:102:7:read_card_entry	32	static
 ../Core/Src/ruthlessfs.c:116:10:get_metasize	24	static
