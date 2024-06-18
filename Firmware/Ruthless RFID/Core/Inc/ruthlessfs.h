@@ -14,7 +14,8 @@ typedef enum {
 	RFS_CARD_OVERSIZE = 0x02,
 	RFS_CARD_PROTECTED = 0x03,
 	RFS_WRITE_ERROR = 0x04,
-	RFS_READ_ERROR = 0x05
+	RFS_READ_ERROR = 0x05,
+	RFS_CARD_UNINTIALISED = 0x06
 } RFS_StatusTypeDef;
 
 typedef struct {
@@ -27,8 +28,9 @@ typedef struct {
 	uint16_t contents_size;
 }Card;
 
+#define METAPAGE_OFFSET 0
 #define NAMEPAGE_OFFSET 1
-#define DATAPAGE_OFFSET  2
+#define DATAPAGE_OFFSET 2
 #define READ_PROTECTED  1
 
 //Functions
@@ -36,5 +38,8 @@ RFS_StatusTypeDef enter_card(Card* card);
 RFS_StatusTypeDef enter_metadata(Card* card, uint16_t block_addr);
 Card* read_card_name (char* name);
 Card* read_card_entry(uint16_t entry);
-uint16_t get_metasize(uint16_t entry);
+RFS_StatusTypeDef read_metadata(Card* result, uint16_t entry);
+RFS_StatusTypeDef read_nameuid(Card* result, uint16_t entry);
+RFS_StatusTypeDef read_cardcontents(Card* result, uint16_t entry);
+uint16_t get_datasize(uint16_t entry, uint8_t page);
 #endif /* INC_RUTHLESSFS_H_ */

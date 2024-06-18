@@ -607,7 +607,7 @@ void Start_Init(void *argument)
     OLED_Print(TC);
     MEM_INIT();
     block_erase(0x0000);
-    HAL_Delay(2000);
+    //HAL_Delay(2000);
     uint8_t contents_test[] = {0xAA,0xBB,0xCC,0xDD};
     uint8_t uid_test[] = {0xBE,0xEF};
     Card* read;

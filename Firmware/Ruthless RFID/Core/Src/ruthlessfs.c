@@ -10,7 +10,7 @@
  *
  * File system used by Ruthless RFID to store data of read cards. Each entry occupies a 128kB block (smallest erasable block size).
  *
- * Page 1 - Metadata (Stored as: Type, card memory size, read protected, uid size)
+ * Page 1 - Metadata (Stored as: Type, card memory size, uid size, read protected,)
  * Page 2 - Card name + uid
  * Page 3 - Contents
  * */
@@ -89,7 +89,7 @@ Card* read_card_name (char* name) {
 	if (block_addr == BLOCK_COUNT) {
 		return NULL; //We couldn't find the name
 	}
-	return get_card_entry(block_addr);
+	return read_card_entry(block_addr);
 
 }
 
@@ -101,28 +101,125 @@ Card* read_card_name (char* name) {
  * */
 Card* read_card_entry(uint16_t entry) {
 	Card* result = malloc(sizeof(Card));
-	uint16_t metadata_size = get_metasize(entry);
-	char* type = malloc(metadata_size - 1); //-1 to account for data after type
 
-	MEM_READPAGE(entry * BLOCK_PAGECOUNT, 0x0000, type, metadata_size - 1); //read card type
-	type[metadata_size - 1] = '\0';
+
+	if (read_metadata(result, entry) != RFS_OK) {
+		return NULL;
+	}
+
+	if (read_nameuid(result, entry) != RFS_OK) {
+		return NULL;
+	}
+
+	if(read_cardcontents(result, entry) != RFS_OK) {
+		return NULL;
+	}
+
+	return result;
 }
 
 /**
- * Get the size of the metadata for a specific entry
- * @param entry - Entry to get size of
- * @return size of metadata in bytes
+ * Read metadata of entry
+ *
+ * @param result - Card to store data to
+ * @param entry - entry to read from
+ * @return RFS_OK if data was successfully read
  * */
-uint16_t get_metasize(uint16_t entry) {
+RFS_StatusTypeDef read_metadata(Card* result, uint16_t entry) {
+	uint16_t metadata_size = get_datasize(entry, METAPAGE_OFFSET);
+	uint8_t* metadata = malloc(metadata_size * sizeof(uint8_t));
+	char* type = malloc(((metadata_size - 3) + 1) * sizeof(uint8_t)); //+1 for null
+
+	if (MEM_READPAGE(entry * BLOCK_PAGECOUNT, 0x0000, metadata, metadata_size) != HAL_OK) {
+		free(metadata);
+		return RFS_READ_ERROR;
+	}
+
+	memcpy(type, metadata, metadata_size - 3);
+	type[metadata_size - 3] = '\0';
+	result->type = type;
+	result->contents_size = metadata[metadata_size - 3];
+	result->uidsize = metadata[metadata_size - 2];
+	if (metadata[metadata_size - 1] != 0) { //Card is read protected
+		free(metadata);
+		return RFS_CARD_PROTECTED;
+	}
+	result->read_protected = metadata[metadata_size - 1];
+	free(metadata);
+
+	return RFS_OK;
+}
+
+/**
+ * Read the name and uid of card entry. Note that metadata must be read before name and uid can be read
+ * @param result - Result to store data to
+ * @param entry - Entry to read from
+ * @return RFS_OK if name and uid was successfully read
+ * */
+RFS_StatusTypeDef read_nameuid(Card* result, uint16_t entry) {
+	uint16_t datasize = get_datasize(entry, NAMEPAGE_OFFSET);
+	uint8_t* raw_data = malloc(datasize*sizeof(uint8_t));
+	char* name = malloc(datasize - result->uidsize);
+	uint8_t* uid = malloc(result->uidsize);
+
+	if (MEM_READPAGE((entry * BLOCK_PAGECOUNT) + NAMEPAGE_OFFSET, 0x0000, raw_data, datasize) != HAL_OK) {
+		free(raw_data);
+		return RFS_READ_ERROR;
+	}
+
+	memcpy(name, raw_data, datasize - result->uidsize);
+	result->name = name;
+	result->uid = uid;
+	free(raw_data);
+
+	return RFS_OK;
+}
+
+/**
+ * Read the contents of a card entry
+ * @param entry - Entry to read contents of
+ * @return RFS_OK if data was successfully read
+ * */
+RFS_StatusTypeDef read_cardcontents(Card* result, uint16_t entry) {
+	uint8_t* contents = malloc(result->contents_size * sizeof(uint8_t));
+
+	if (MEM_READPAGE((entry * BLOCK_PAGECOUNT) + DATAPAGE_OFFSET, 0x0000, contents, result->contents_size) != HAL_OK) {
+		free(contents);
+		return RFS_READ_ERROR;
+	}
+
+	result->contents = contents;
+	return RFS_OK;
+}
+
+/**
+ * Get the size of a chunk of data from specific block and page
+ * @param entry - Entry to read from
+ * @param page - Page to begin reading from
+ * @return size of data in bytes
+ * */
+uint16_t get_datasize(uint16_t entry, uint8_t page) {
 	uint16_t size = 0;
 	uint8_t byte_read = 0x00;
 
 	while(byte_read != 0xFF) {
-		if (MEM_READPAGE(entry * BLOCK_PAGECOUNT, size, &byte_read, 1) != HAL_OK) {
+		if (MEM_READPAGE((entry * BLOCK_PAGECOUNT) + page, size, &byte_read, 1) != HAL_OK) {
 			return 0; //Error occured whilst reading
 		}
 		size++;
 	}
 
-	return size;
+	return size - 1; //Last iteration will add 1 to true size so -1
 }
+
+/**
+ * Free a card instance
+ * @param card - Card to free
+ * */
+void free_card(Card* card) {
+	free(card->contents);
+	free(card->name);
+	free(card->type);
+	free(card->uid);
+}
+
