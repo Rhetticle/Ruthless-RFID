@@ -260,10 +260,7 @@ void OLED_drawChar(uint8_t page,uint8_t col, char character, uint8_t invert){
 
 void OLED_Printlin(uint8_t page,uint8_t col,char* string,uint8_t invert){
 	for(int i=0;i<strlen(string);i++){
-
-			OLED_drawChar(page, col+(i*6), string[i],invert);
-
-
+		OLED_drawChar(page, col+(i*6), string[i],invert);
 	}
 }
 

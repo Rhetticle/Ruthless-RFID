@@ -618,7 +618,20 @@ void Start_Init(void *argument)
     OLED_INIT();
     OLED_Print(TC);
     MEM_INIT();
-
+    block_erase(0x0000);
+    Card* read;
+    uint8_t con[] = {0xAA,0xBB,0xCC,0xDD};
+    uint8_t u[] = {0xBE, 0xEF};
+    Card fake_card = {
+    		.contents = con,
+			.contents_size = 4,
+			.name = "Test Card",
+			.read_protected = 0,
+			.type = "MIFARE ULTRALIGHT",
+			.uid = u,
+			.uidsize = 2
+    };
+    enter_card(&fake_card);
     //read = read_card_entry(0);
     while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) != 0);
     vTaskResume(HomeHandle);
@@ -759,7 +772,7 @@ void CardFoundStart(void *argument)
 		free(uid_str);
 	}
 
-	choose(&SCRN_CardFound,&suspend,&count,2,OLED_NORESTORE);
+	choose(&SCRN_CardFound, &suspend, &count, 2, OLED_NORESTORE);
  	if (suspend == 1) {
  		vTaskResume(HomeHandle);
  		ranonce = 0;
@@ -791,7 +804,7 @@ void StartShowFiles(void *argument)
   {
 	  if (ranonce == 0) {
 		  OLED_SCREEN(&SCRN_ShowFiles, NORMAL);
-		  OLED_SELECT(&SCRN_ShowFiles, 0, OLED_NORESTORE);
+		  OLED_SELECT(&SCRN_ShowFiles, 0, OLED_RESTORE);
 		  OLED_display_files(&SCRN_ShowFiles, 0);
 		  ranonce++;
 	  }
