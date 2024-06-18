@@ -88,6 +88,7 @@ PCD_StatusTypeDef MFRC_FIFOR(uint8_t* data,uint8_t size);
 void MFRC_Test(void);
 void MFRC_ANTON(void);
 void MFRC_ANTOFF(void);
+void Print(char* mess);
 PCD_StatusTypeDef MFRC_INIT(void);
 PCD_StatusTypeDef MFRC_TRANSCEIVE(uint8_t* sendData,uint8_t sendsize,uint8_t* recdata,uint8_t recsize,uint8_t validbits);
 PCD_StatusTypeDef MFRC_REQA(uint8_t* response);

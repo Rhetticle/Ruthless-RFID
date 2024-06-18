@@ -263,6 +263,11 @@ HAL_StatusTypeDef MEM_SCAN(uint16_t* defect){
 	return(HAL_OK);
 }
 
+/**
+ * Find the next free/empty block
+ *
+ * @return address of free block or -1 if no blocks available
+ * */
 int mem_find_free_block(void) {
 	for (int i = 0; i < BLOCK_COUNT; i+=BLOCK_PAGECOUNT) {
 		uint8_t first_byte;

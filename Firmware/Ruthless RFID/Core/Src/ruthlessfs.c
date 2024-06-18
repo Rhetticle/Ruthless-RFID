@@ -17,9 +17,11 @@
 #include "stm32f4xx.h"
 #include "W25N01GVZEIG.h"
 #include "ruthlessfs.h"
+#include "MFRC.h"
+#include "OLED.h"
 #include <string.h>
 #include <stdlib.h>
-
+#include <stdio.h>
 
 /**
  * Enter a card into the file system
@@ -140,7 +142,7 @@ RFS_StatusTypeDef read_metadata(Card* result, uint16_t entry) {
 	result->type = type;
 	result->contents_size = metadata[metadata_size - 3];
 	result->uidsize = metadata[metadata_size - 2];
-	if (metadata[metadata_size - 1] != 0) { //Card is read protected
+	if (metadata[metadata_size - 1] == READ_PROTECTED) { //Card is read protected
 		free(metadata);
 		return RFS_CARD_PROTECTED;
 	}
@@ -159,8 +161,8 @@ RFS_StatusTypeDef read_metadata(Card* result, uint16_t entry) {
 RFS_StatusTypeDef read_nameuid(Card* result, uint16_t entry) {
 	uint16_t datasize = get_datasize(entry, NAMEPAGE_OFFSET);
 	uint8_t* raw_data = malloc(datasize*sizeof(uint8_t));
-	char* name = malloc(datasize - result->uidsize);
-	uint8_t* uid = malloc(result->uidsize);
+	char* name = malloc((datasize - result->uidsize + 1) * sizeof(char)); //+1 for null
+	uint8_t* uid = malloc((result->uidsize) * sizeof(uint8_t));
 
 	if (MEM_READPAGE((entry * BLOCK_PAGECOUNT) + NAMEPAGE_OFFSET, 0x0000, raw_data, datasize) != HAL_OK) {
 		free(raw_data);
@@ -168,7 +170,10 @@ RFS_StatusTypeDef read_nameuid(Card* result, uint16_t entry) {
 	}
 
 	memcpy(name, raw_data, datasize - result->uidsize);
+	name[datasize - result->uidsize] = '\0';
 	result->name = name;
+
+	memcpy(uid, raw_data + strlen(name), result->uidsize);
 	result->uid = uid;
 	free(raw_data);
 
@@ -221,5 +226,20 @@ void free_card(Card* card) {
 	free(card->name);
 	free(card->type);
 	free(card->uid);
+}
+
+/**
+ * Print card details to terminal (used for checking correct functionality)
+ *
+ * @param entry - Entry to read card from
+ * */
+void print_card_to_serial(uint16_t entry) {
+	Card* card = read_card_entry(0);
+	char* msg = malloc(200 * sizeof(char));
+
+	sprintf(msg,"Card entry 0 is a %s with uid size %i and called %s\r\n", card->type, card->uidsize, card->name);
+
+	Print(msg);
+	free(msg);
 }
 

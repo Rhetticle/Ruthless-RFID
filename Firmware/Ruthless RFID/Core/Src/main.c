@@ -606,25 +606,10 @@ void Start_Init(void *argument)
     OLED_INIT();
     OLED_Print(TC);
     MEM_INIT();
-    block_erase(0x0000);
-    //HAL_Delay(2000);
-    uint8_t contents_test[] = {0xAA,0xBB,0xCC,0xDD};
-    uint8_t uid_test[] = {0xBE,0xEF};
-    Card* read;
+    //block_erase(0x0000);
+    HAL_Delay(2000);
 
-    Card test = {
-    		.contents = contents_test,
-			.contents_size = 4,
-			.name = "Test Card",
-			.read_protected = 0,
-			.type = "MIFARE ULTRALIGHT",
-			.uid = uid_test,
-			.uidsize = 2,
-    };
-
-    enter_card(&test);
-    read = read_card_entry(0);
-    CDC_Transmit_FS(read, 10);
+    print_card_to_serial(0);
     while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) != 0);
     vTaskResume(HomeHandle);
     osDelay(10);
