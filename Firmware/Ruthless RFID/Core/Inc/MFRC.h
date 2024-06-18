@@ -12,6 +12,7 @@
 #define NRST GPIO_PIN_5 //Port B
 
 #include "stm32f4xx.h"
+#include "ruthlessfs.h"
 
 typedef enum{
 	PCD_COMM_ERR= 0xAA,
@@ -89,6 +90,7 @@ void MFRC_Test(void);
 void MFRC_ANTON(void);
 void MFRC_ANTOFF(void);
 void Print(char* mess);
+char* uid_tostring(uint8_t* uid, uint8_t size);
 PCD_StatusTypeDef MFRC_INIT(void);
 PCD_StatusTypeDef MFRC_TRANSCEIVE(uint8_t* sendData,uint8_t sendsize,uint8_t* recdata,uint8_t recsize,uint8_t validbits);
 PCD_StatusTypeDef MFRC_REQA(uint8_t* response);
@@ -106,4 +108,5 @@ PCD_StatusTypeDef DumpINFO(uint8_t* data);
 PCD_StatusTypeDef UL_getuid(uint8_t* uid);
 PCD_StatusTypeDef UL_getuidstr(char* uid_str);
 PCD_StatusTypeDef UL_getalldata(uint8_t* data);
+PCD_StatusTypeDef UL_readcard(Card* result);
 #endif /* INC_MFRC_H_ */

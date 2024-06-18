@@ -10,6 +10,7 @@
 #include "stm32f4xx.h"
 #include "usbd_cdc_if.h"
 #include "OLED.h"
+#include "ruthlessfs.h"
 
 extern I2C_HandleTypeDef hi2c1;
 
@@ -588,5 +589,43 @@ PCD_StatusTypeDef UL_getalldata(uint8_t* data) {
 
 	return PCD_OK;
 }
+
+/**
+ * Read MIFARE Ultralight card data into card struct
+ *
+ * @param result - Card to store data into
+ * @return PCD_OK if data was successfully read
+ * */
+PCD_StatusTypeDef UL_readcard(Card* result) {
+	uint8_t* uid = malloc(UL_UIDSIZE * sizeof(uint8_t));
+
+	result->type = "MIFARE Ultralight";
+	result->name = "Test card";
+	result->uidsize = UL_UIDSIZE;
+	result->contents_size = UL_MEMSIZE;
+	result->read_protected = 0;
+
+	if ((UL_getuid(uid) != PCD_OK)) {
+		return PCD_COMM_ERR;
+	}
+	result->uid = uid;
+	result->contents = NULL;
+	return PCD_OK;
+}
+
+char* uid_tostring(uint8_t* uid, uint8_t size) {
+	char* result = malloc((2 * size * sizeof(char)) + 1); //multiply by 2 since 1 byte is two hex digits
+
+	for (int i = 0; i < size; i++) {
+		if (uid[i] <= 0x0F) { //Only one hex character
+			sprintf(result + (2 * i), "0%X", uid[i]);
+		} else {
+			sprintf(result + (2 * i), "%X", uid[i]);
+		}
+	}
+	result[2 * size] = '\0';
+	return result;
+}
+
 
 

@@ -225,7 +225,7 @@ int main(void)
 
   /* Create the queue(s) */
   /* creation of UidtoFound */
-  UidtoFoundHandle = osMessageQueueNew (1, sizeof(uint8_t*), &UidtoFound_attributes);
+  UidtoFoundHandle = osMessageQueueNew (1, sizeof(Card*), &UidtoFound_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -606,10 +606,7 @@ void Start_Init(void *argument)
     OLED_INIT();
     OLED_Print(TC);
     MEM_INIT();
-    //block_erase(0x0000);
-    HAL_Delay(2000);
 
-    print_card_to_serial(0);
     while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) != 0);
     vTaskResume(HomeHandle);
     osDelay(10);
@@ -628,7 +625,7 @@ void Start_Init(void *argument)
 void StartReadCard(void *argument)
 {
   /* USER CODE BEGIN StartReadCard */
-	char* uid = malloc(2*UL_UIDSIZE);
+	Card* read_card = malloc(sizeof(Card)); //Store our read card here
 	int ranonce = 0;
   /* Infinite loop */
   for(;;)
@@ -639,10 +636,10 @@ void StartReadCard(void *argument)
 		OLED_SCREEN(&SCRN_ReadCard, NORMAL);
 		ranonce++;
 	}
-	if(UL_getuidstr(uid) == PCD_OK){
+	if(UL_readcard(read_card) == PCD_OK){
 			BUZZ();
 			MFRC_ANTOFF();
-			xQueueSend(UidtoFoundHandle,&uid,0); //Send a pointer to our string to the Card Found task to use
+			xQueueSend(UidtoFoundHandle,&read_card,0); //Send a pointer to our string to the Card Found task to use
 			suspend = 1;
 		}
 	if (suspend == 1) {
@@ -730,20 +727,22 @@ void CardFoundStart(void *argument)
   /* USER CODE BEGIN CardFoundStart */
 	 int count = 0;
 	 int ranonce = 0;
-	 char* cardinf;
-	 char type[]="MIFARE ULTRALIGHT";
+	 Card* read_card;
   /* Infinite loop */
   for(;;)
   {
 	int suspend = 0;
 	if (ranonce == 0) {
-		while(xQueueReceive(UidtoFoundHandle, &cardinf, 0)!=pdTRUE);
+		while(xQueueReceive(UidtoFoundHandle, &read_card, 0) != pdTRUE);
+		char* uid_str = uid_tostring(read_card->uid, read_card->uidsize);
 		OLED_SCREEN(&SCRN_CardFound, NORMAL);
-		OLED_SCRNREF(&SCRN_CardFound, UID_LOC, cardinf);
-		OLED_SCRNREF(&SCRN_CardFound, CARDTYPE_LOC, type);
+		OLED_SCRNREF(&SCRN_CardFound, UID_LOC, uid_str);
+		OLED_SCRNREF(&SCRN_CardFound, CARDTYPE_LOC, read_card->type);
 		OLED_SELECT(&SCRN_CardFound, count, OLED_NORESTORE);
 		ranonce++;
+		free(uid_str);
 	}
+
 	choose(&SCRN_CardFound,&suspend,&count,2,OLED_NORESTORE);
  	if((suspend == 1) && (count == 1)){
  		vTaskResume(HomeHandle);

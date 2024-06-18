@@ -11,9 +11,9 @@
 ../Core/Src/main.c:494:13:MX_TIM3_Init	32	static
 ../Core/Src/main.c:539:13:MX_GPIO_Init	40	static
 ../Core/Src/main.c:591:6:Start_Init	16	static
-../Core/Src/main.c:628:6:StartReadCard	32	static
-../Core/Src/main.c:665:6:StartWriteCard	24	static
-../Core/Src/main.c:688:6:StartHome	40	static
-../Core/Src/main.c:728:6:CardFoundStart	72	static
-../Core/Src/main.c:767:6:HAL_TIM_PeriodElapsedCallback	16	static
-../Core/Src/main.c:784:6:Error_Handler	4	static,ignoring_inline_asm
+../Core/Src/main.c:625:6:StartReadCard	32	static
+../Core/Src/main.c:662:6:StartWriteCard	24	static
+../Core/Src/main.c:685:6:StartHome	40	static
+../Core/Src/main.c:725:6:CardFoundStart	48	static
+../Core/Src/main.c:766:6:HAL_TIM_PeriodElapsedCallback	16	static
+../Core/Src/main.c:783:6:Error_Handler	4	static,ignoring_inline_asm
