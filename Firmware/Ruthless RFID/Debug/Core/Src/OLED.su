@@ -15,3 +15,4 @@
 ../Core/Src/OLED.c:426:6:OLED_FILL	24	static
 ../Core/Src/OLED.c:443:6:OLED_SELECT	40	static
 ../Core/Src/OLED.c:484:6:OLED_PWRDWN	16	static
+../Core/Src/OLED.c:498:19:OLED_display_files	24	static

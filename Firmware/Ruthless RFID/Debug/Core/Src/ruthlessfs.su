@@ -3,8 +3,10 @@
 ../Core/Src/ruthlessfs.c:82:7:read_card_name	32	static
 ../Core/Src/ruthlessfs.c:104:7:read_card_entry	24	static
 ../Core/Src/ruthlessfs.c:130:19:read_metadata	32	static
-../Core/Src/ruthlessfs.c:161:19:read_nameuid	32	static
-../Core/Src/ruthlessfs.c:188:19:read_cardcontents	24	static
-../Core/Src/ruthlessfs.c:206:10:get_datasize	24	static
-../Core/Src/ruthlessfs.c:224:6:free_card	16	static
-../Core/Src/ruthlessfs.c:236:6:print_card_to_serial	32	static
+../Core/Src/ruthlessfs.c:165:19:read_nameuid	32	static
+../Core/Src/ruthlessfs.c:197:19:read_cardcontents	24	static
+../Core/Src/ruthlessfs.c:215:10:get_datasize	24	static
+../Core/Src/ruthlessfs.c:233:6:free_card	16	static
+../Core/Src/ruthlessfs.c:245:6:print_card_to_serial	32	static
+../Core/Src/ruthlessfs.c:259:5:get_number_files	16	static
+../Core/Src/ruthlessfs.c:278:19:get_all_files	32	static

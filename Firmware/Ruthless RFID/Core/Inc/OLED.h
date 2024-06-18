@@ -172,5 +172,5 @@ void OLED_SCREEN(const Screen* screen,uint8_t invert);
 void OLED_SCRNREF(const Screen* screen,uint8_t dataindx,char* data);
 void OLED_FILL(uint8_t* data,uint8_t page,uint8_t start_col, uint8_t length);
 void OLED_SELECT(const Screen* screen,uint8_t selopt,int restore);
-
+HAL_StatusTypeDef OLED_display_files(Screen* screen, uint8_t page);
 #endif /* INC_OLED_H_ */

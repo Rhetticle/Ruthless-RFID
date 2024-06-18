@@ -137,6 +137,10 @@ RFS_StatusTypeDef read_metadata(Card* result, uint16_t entry) {
 		return RFS_READ_ERROR;
 	}
 
+	if ((uint8_t)type[0] == 0xFF) { //Simple check to see if we read an empty entry
+		free(metadata);
+		return RFS_NO_CARD;
+	}
 	memcpy(type, metadata, metadata_size - 3);
 	type[metadata_size - 3] = '\0';
 	result->type = type;
@@ -167,6 +171,11 @@ RFS_StatusTypeDef read_nameuid(Card* result, uint16_t entry) {
 	if (MEM_READPAGE((entry * BLOCK_PAGECOUNT) + NAMEPAGE_OFFSET, 0x0000, raw_data, datasize) != HAL_OK) {
 		free(raw_data);
 		return RFS_READ_ERROR;
+	}
+
+	if ((uint8_t)name[0] == 0xFF) { //Simple check to see if we read an empty entry
+		free(raw_data);
+		return RFS_NO_CARD;
 	}
 
 	memcpy(name, raw_data, datasize - result->uidsize);
@@ -241,5 +250,41 @@ void print_card_to_serial(uint16_t entry) {
 
 	Print(msg);
 	free(msg);
+}
+
+/**
+ * Get number of files currently stored
+ * @return number of files stored
+ * */
+int get_number_files(void) {
+	int count = 0;
+
+	for (int i = 0; i < BLOCK_COUNT; i++) {
+		if (read_card_entry(i) == NULL) {
+			break;
+		}
+		count++;
+	}
+
+	return count;
+}
+
+/**
+ * Get the names of all currently stored cards
+ *
+ * @param result - Array to store file names
+ * @return RFS_OK if all file names were read correctly
+ * */
+RFS_StatusTypeDef get_all_files(char** result) {
+	Card* work;
+
+	work = read_card_entry(0);
+	result[0] = malloc(strlen(work->name) + 1);
+	memcpy(result[0], work->name, strlen(work->name));
+	result[strlen(work->name)] = '\0';
+
+
+	free(work);
+	return RFS_OK;
 }
 

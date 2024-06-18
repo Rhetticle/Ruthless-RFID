@@ -90,6 +90,13 @@ const osThreadAttr_t CardFound_attributes = {
   .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for ShowFiles */
+osThreadId_t ShowFilesHandle;
+const osThreadAttr_t ShowFiles_attributes = {
+  .name = "ShowFiles",
+  .stack_size = 512 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
 /* Definitions for UidtoFound */
 osMessageQueueId_t UidtoFoundHandle;
 const osMessageQueueAttr_t UidtoFound_attributes = {
@@ -117,6 +124,7 @@ void StartReadCard(void *argument);
 void StartWriteCard(void *argument);
 void StartHome(void *argument);
 void CardFoundStart(void *argument);
+void StartShowFiles(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -246,6 +254,9 @@ int main(void)
 
   /* creation of CardFound */
   CardFoundHandle = osThreadNew(CardFoundStart, NULL, &CardFound_attributes);
+
+  /* creation of ShowFiles */
+  ShowFilesHandle = osThreadNew(StartShowFiles, NULL, &ShowFiles_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -600,6 +611,7 @@ void Start_Init(void *argument)
     vTaskSuspend(WriteCardHandle);
     vTaskSuspend(HomeHandle);
     vTaskSuspend(CardFoundHandle);
+    vTaskSuspend(ShowFilesHandle);
 
     MFRC_INIT();
     MFRC_ANTOFF();
@@ -607,6 +619,7 @@ void Start_Init(void *argument)
     OLED_Print(TC);
     MEM_INIT();
 
+    //read = read_card_entry(0);
     while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) != 0);
     vTaskResume(HomeHandle);
     osDelay(10);
@@ -705,6 +718,9 @@ void StartHome(void *argument)
 			case 1:
 				vTaskResume(WriteCardHandle);
 				break;
+			case 2:
+				vTaskResume(ShowFilesHandle);
+				break;
 		}
 		ranonce = 0;
 		vTaskSuspend(NULL);
@@ -744,15 +760,43 @@ void CardFoundStart(void *argument)
 	}
 
 	choose(&SCRN_CardFound,&suspend,&count,2,OLED_NORESTORE);
- 	if((suspend == 1) && (count == 1)){
+ 	if (suspend == 1) {
  		vTaskResume(HomeHandle);
  		ranonce = 0;
  		count = 0;
+ 		if (count == 0) {
+ 			enter_card(read_card);
+ 		}
  		vTaskSuspend(NULL);
  	}
 
   }
   /* USER CODE END CardFoundStart */
+}
+
+/* USER CODE BEGIN Header_StartShowFiles */
+/**
+* @brief Function implementing the ShowFiles thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartShowFiles */
+void StartShowFiles(void *argument)
+{
+  /* USER CODE BEGIN StartShowFiles */
+  int count = 0;
+  int ranonce = 0;
+	/* Infinite loop */
+  for(;;)
+  {
+	  if (ranonce == 0) {
+		  OLED_SCREEN(&SCRN_ShowFiles, NORMAL);
+		  OLED_SELECT(&SCRN_ShowFiles, 0, OLED_NORESTORE);
+		  OLED_display_files(&SCRN_ShowFiles, 0);
+		  ranonce++;
+	  }
+  }
+  /* USER CODE END StartShowFiles */
 }
 
 /**

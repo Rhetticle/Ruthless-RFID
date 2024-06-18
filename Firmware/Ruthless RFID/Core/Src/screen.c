@@ -23,6 +23,10 @@ static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443","SRC FILE
 static const uint8_t WRITE_DATLOC[4][2]={{0,0},{2,START_COL},{4,START_COL},{6,START_COL}};
 static const uint8_t WRITE_SEL[1][2] = {{0,0}};
 
+static const char* SHOW_FILESSCREEN[4] = {"FILES", "", "", ""};
+static const uint8_t SHOW_DATLOC[4][2] = {{0,0},{2, START_COL+2}, {4, START_COL+2}, {6, START_COL+2}};
+static const uint8_t SHOW_SEL[3][2] = {{2, START_COL}, {4,START_COL}, {6, START_COL}};
+
 /**
  * Screens
  *
@@ -61,4 +65,13 @@ const Screen SCRN_WriteCard = {
 		.data = WRITE_SCREEN,
 		.dataloc = WRITE_DATLOC,
 		.seldata = WRITE_SEL,
+};
+
+//Show Files
+const Screen SCRN_ShowFiles = {
+		.datsize = sizeof(SHOW_FILESSCREEN)/sizeof(SHOW_FILESSCREEN[0]),
+		.selsize = sizeof(SHOW_SEL)/sizeof(SHOW_SEL[0]),
+		.data = SHOW_FILESSCREEN,
+		.dataloc = SHOW_DATLOC,
+		.seldata = SHOW_SEL,
 };

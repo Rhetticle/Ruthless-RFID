@@ -44,4 +44,6 @@ RFS_StatusTypeDef read_cardcontents(Card* result, uint16_t entry);
 uint16_t get_datasize(uint16_t entry, uint8_t page);
 void free_card(Card* card);
 void print_card_to_serial(uint16_t entry);
+int get_number_files(void);
+RFS_StatusTypeDef get_all_files(char** result);
 #endif /* INC_RUTHLESSFS_H_ */
