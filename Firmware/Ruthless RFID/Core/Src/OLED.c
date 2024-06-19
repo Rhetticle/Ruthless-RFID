@@ -493,7 +493,7 @@ void OLED_PWRDWN(void){
  * @return HAL_OK if files were successfully displayed
  * */
 HAL_StatusTypeDef OLED_display_files(Screen* screen, uint8_t page) {
-	char** file_names = malloc(1 * sizeof(char*));
+	char** file_names = malloc(get_number_files() * sizeof(char*));
 
 	if (get_all_files(file_names) != RFS_OK) {
 		return HAL_ERROR;

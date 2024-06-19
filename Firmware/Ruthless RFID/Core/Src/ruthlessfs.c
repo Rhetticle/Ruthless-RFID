@@ -27,20 +27,21 @@
  * Enter a card into the file system
  *
  * @param card - Card to store
+ * @param entry - Entry (Block number) to store card
  * @return RFS_OK if card was successfully stored
  * */
-RFS_StatusTypeDef enter_card(Card* card) {
-	uint16_t free_block = (uint16_t)mem_find_free_block();
-	block_erase(free_block); //Erase entire block ready for new data
-	enter_metadata(card, free_block);
+RFS_StatusTypeDef enter_card(Card* card, uint16_t entry) {
+	uint16_t block_startaddr = entry * BLOCK_PAGECOUNT;
+	block_erase(entry); //Erase entire block ready for new data
+	enter_metadata(card, entry);
 
-	if (MEM_WRITE(free_block + NAMEPAGE_OFFSET, 0x0000, (uint8_t*)card->name, strlen(card->name)) != HAL_OK) {
+	if (MEM_WRITE(block_startaddr + NAMEPAGE_OFFSET, 0x0000, (uint8_t*)card->name, strlen(card->name)) != HAL_OK) {
 		return RFS_WRITE_ERROR;
 	}
-	if (MEM_WRITE(free_block + NAMEPAGE_OFFSET, 0x0000 + strlen(card->name),card->uid ,card->uidsize) != HAL_OK) {
+	if (MEM_WRITE(block_startaddr + NAMEPAGE_OFFSET, 0x0000 + strlen(card->name),card->uid ,card->uidsize) != HAL_OK) {
 		return RFS_WRITE_ERROR;
 	}
-	if (MEM_WRITE(free_block + DATAPAGE_OFFSET, 0x0000, card->contents, card->contents_size) != HAL_OK) {
+	if (MEM_WRITE(block_startaddr + DATAPAGE_OFFSET, 0x0000, card->contents, card->contents_size) != HAL_OK) {
 		return RFS_WRITE_ERROR;
 	}
 
@@ -52,9 +53,9 @@ RFS_StatusTypeDef enter_card(Card* card) {
  * Write the card metadata into a block
  *
  * @param card - Card to write
- * @param block_addr - Block start address
+ * @param block_num - Block number
  * */
-RFS_StatusTypeDef enter_metadata(Card* card, uint16_t block_addr) {
+RFS_StatusTypeDef enter_metadata(Card* card, uint16_t block_num) {
 	uint8_t card_size = card->contents_size; //Card contents is uint8_t
 	uint8_t read_protected = card->read_protected;
 	uint8_t uid_size = card->uidsize;
@@ -66,7 +67,7 @@ RFS_StatusTypeDef enter_metadata(Card* card, uint16_t block_addr) {
 	metadata[strlen(card->type) + 1] = uid_size;
 	metadata[strlen(card->type) + 2] = read_protected;
 
-	if (MEM_WRITE(block_addr, 0x0000, metadata, metasize) != HAL_OK) {
+	if (MEM_WRITE(block_num * BLOCK_PAGECOUNT, 0x0000, metadata, metasize) != HAL_OK) {
 		return RFS_WRITE_ERROR;
 	}
 	free(metadata);
@@ -104,7 +105,6 @@ Card* read_card_name (char* name) {
 Card* read_card_entry(uint16_t entry) {
 	Card* result = malloc(sizeof(Card));
 
-
 	if (read_metadata(result, entry) != RFS_OK) {
 		return NULL;
 	}
@@ -130,7 +130,7 @@ Card* read_card_entry(uint16_t entry) {
 RFS_StatusTypeDef read_metadata(Card* result, uint16_t entry) {
 	uint16_t metadata_size = get_datasize(entry, METAPAGE_OFFSET);
 	uint8_t* metadata = malloc(metadata_size * sizeof(uint8_t));
-	char* type = malloc(((metadata_size - 3) + 1) * sizeof(uint8_t)); //+1 for null
+	char* type = malloc(((metadata_size - 3) + 1) * sizeof(char)); //+1 for null
 
 	if (MEM_READPAGE(entry * BLOCK_PAGECOUNT, 0x0000, metadata, metadata_size) != HAL_OK) {
 		free(metadata);
@@ -141,6 +141,7 @@ RFS_StatusTypeDef read_metadata(Card* result, uint16_t entry) {
 		free(metadata);
 		return RFS_NO_CARD;
 	}
+
 	memcpy(type, metadata, metadata_size - 3);
 	type[metadata_size - 3] = '\0';
 	result->type = type;
@@ -260,10 +261,12 @@ int get_number_files(void) {
 	int count = 0;
 
 	for (int i = 0; i < BLOCK_COUNT; i++) {
-		if (read_card_entry(i) == NULL) {
+		if (entry_present(i) == RFS_OK) {
+			count++;
+		} else {
 			break;
 		}
-		count++;
+
 	}
 
 	return count;
@@ -278,13 +281,38 @@ int get_number_files(void) {
 RFS_StatusTypeDef get_all_files(char** result) {
 	Card* work;
 
-	work = read_card_entry(0);
-	result[0] = malloc(strlen(work->name) + 1);
-	memcpy(result[0], work->name, strlen(work->name));
-	result[strlen(work->name)] = '\0';
-
+	for (int i = 0; i < BLOCK_COUNT; i++) {
+		if (entry_present(i) == RFS_OK) {
+			work = read_card_entry(i);
+			result[i] = malloc(strlen(work->name) + 1);
+			memcpy(result[i], work->name, strlen(work->name));
+			result[strlen(work->name)] = '\0';
+		} else {
+			break;
+		}
+	}
 
 	free(work);
+	return RFS_OK;
+}
+
+/**
+ * Check if entry is present
+ *
+ * @param entry - Entry to check
+ * @return RFS_OK if entry is present
+ * */
+RFS_StatusTypeDef entry_present(uint16_t entry) {
+	uint8_t byte_read;
+
+	if (MEM_READPAGE(entry * BLOCK_PAGECOUNT, 0x0000, &byte_read, 1) != HAL_OK) {
+		return RFS_READ_ERROR;
+	}
+
+	if (byte_read == 0xFF) {
+		return RFS_NO_CARD;
+	}
+
 	return RFS_OK;
 }
 

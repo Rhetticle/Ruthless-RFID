@@ -100,9 +100,10 @@ void WRITE_DIS(void) {
 /**
  * Erase a 128kB (64 pages) block to 0xFF
  *
- * @param page_addr - Page address to begin erasing from
+ * @param block_num - Block number to erase
  * */
-void block_erase(uint16_t page_addr) {
+void block_erase(uint16_t block_num) {
+	uint16_t page_addr = block_num * BLOCK_PAGECOUNT;
 	uint8_t transaction [] = {BLOCK_ERS, DUMMY, page_addr>>8, page_addr};
 	WRIT_EN();
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
@@ -269,7 +270,7 @@ HAL_StatusTypeDef MEM_SCAN(uint16_t* defect){
  * @return address of free block or -1 if no blocks available
  * */
 int mem_find_free_block(void) {
-	for (int i = 0; i < BLOCK_COUNT; i+=BLOCK_PAGECOUNT) {
+	for (int i = 0; i < BLOCK_COUNT; i++) {
 		uint8_t first_byte;
 		if (MEM_READPAGE(i * BLOCK_PAGECOUNT, 0x0000, &first_byte, 1) != HAL_OK) {
 			return -1;
@@ -282,6 +283,14 @@ int mem_find_free_block(void) {
 	return -1;
 }
 
+/**
+ * Clear entire memory array to 0xFF
+ * */
+void memory_reset(void) {
+	for (int i = 0; i < BLOCK_COUNT; i++) {
+		block_erase(i*BLOCK_PAGECOUNT);
+	}
+}
 
 
 

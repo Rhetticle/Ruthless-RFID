@@ -27,4 +27,4 @@
 ../Core/Src/MFRC.c:564:19:UL_getuidstr	64	static
 ../Core/Src/MFRC.c:581:19:UL_getalldata	24	static
 ../Core/Src/MFRC.c:599:19:UL_readcard	24	static
-../Core/Src/MFRC.c:616:7:uid_tostring	24	static
+../Core/Src/MFRC.c:626:7:uid_tostring	24	static

@@ -47,10 +47,11 @@ uint8_t STAT_READ(uint8_t addr);
 HAL_StatusTypeDef STAT_WRITE(uint8_t addr,uint8_t value);
 void WRIT_EN(void);
 void WRITE_DIS(void);
-void block_erase(uint16_t page_addr);
+void block_erase(uint16_t block_num);
 HAL_StatusTypeDef MEM_INIT(void);
 HAL_StatusTypeDef MEM_WRITE(uint16_t page_addr,uint16_t col_addr,uint8_t* data,uint32_t bytes);
 HAL_StatusTypeDef MEM_READPAGE(uint16_t addr,uint16_t col_addr,uint8_t* data,uint32_t bytes);
 HAL_StatusTypeDef MEM_SCAN(uint16_t* defect);
 int mem_find_free_block(void);
+void memory_reset(void);
 #endif /* INC_W25N01GVZEIG_H_ */

@@ -598,21 +598,31 @@ PCD_StatusTypeDef UL_getalldata(uint8_t* data) {
  * */
 PCD_StatusTypeDef UL_readcard(Card* result) {
 	uint8_t* uid = malloc(UL_UIDSIZE * sizeof(uint8_t));
+	uint8_t* fake_contents = malloc(2);
+	fake_contents[0] = 0xAA;
+	fake_contents[1] = 0xBB;
 
 	result->type = "MIFARE Ultralight";
-	result->name = "Test card";
+	result->name = "Test1";
 	result->uidsize = UL_UIDSIZE;
-	result->contents_size = UL_MEMSIZE;
+	result->contents_size = 3;
 	result->read_protected = 0;
 
 	if ((UL_getuid(uid) != PCD_OK)) {
 		return PCD_COMM_ERR;
 	}
 	result->uid = uid;
-	result->contents = NULL;
+	result->contents = fake_contents;
 	return PCD_OK;
 }
 
+/**
+ * Convert a uid to a string
+ *
+ * @param uid - Uid
+ * @param size - Size of uid
+ * @return pointer to string of uid
+ * */
 char* uid_tostring(uint8_t* uid, uint8_t size) {
 	char* result = malloc((2 * size * sizeof(char)) + 1); //multiply by 2 since 1 byte is two hex digits
 
@@ -623,7 +633,7 @@ char* uid_tostring(uint8_t* uid, uint8_t size) {
 			sprintf(result + (2 * i), "%X", uid[i]);
 		}
 	}
-	result[2 * size] = '\0';
+	result[2 * size] = '\0'; //Add null
 	return result;
 }
 

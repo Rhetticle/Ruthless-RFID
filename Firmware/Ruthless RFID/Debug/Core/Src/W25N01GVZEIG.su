@@ -4,8 +4,9 @@
 ../Core/Src/W25N01GVZEIG.c:74:6:WRIT_EN	16	static
 ../Core/Src/W25N01GVZEIG.c:90:6:WRITE_DIS	16	static
 ../Core/Src/W25N01GVZEIG.c:105:6:block_erase	24	static
-../Core/Src/W25N01GVZEIG.c:122:19:MEM_INIT	8	static
-../Core/Src/W25N01GVZEIG.c:146:19:MEM_WRITE	32	static
-../Core/Src/W25N01GVZEIG.c:192:19:MEM_READPAGE	56	static
-../Core/Src/W25N01GVZEIG.c:246:19:MEM_SCAN	80	static
-../Core/Src/W25N01GVZEIG.c:271:5:mem_find_free_block	16	static
+../Core/Src/W25N01GVZEIG.c:123:19:MEM_INIT	8	static
+../Core/Src/W25N01GVZEIG.c:147:19:MEM_WRITE	32	static
+../Core/Src/W25N01GVZEIG.c:193:19:MEM_READPAGE	56	static
+../Core/Src/W25N01GVZEIG.c:247:19:MEM_SCAN	80	static
+../Core/Src/W25N01GVZEIG.c:272:5:mem_find_free_block	16	static
+../Core/Src/W25N01GVZEIG.c:289:6:memory_reset	16	static

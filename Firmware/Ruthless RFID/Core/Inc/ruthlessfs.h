@@ -34,8 +34,8 @@ typedef struct {
 #define READ_PROTECTED  1
 
 //Functions
-RFS_StatusTypeDef enter_card(Card* card);
-RFS_StatusTypeDef enter_metadata(Card* card, uint16_t block_addr);
+RFS_StatusTypeDef enter_card(Card* card, uint16_t entry);
+RFS_StatusTypeDef enter_metadata(Card* card, uint16_t block_num);
 Card* read_card_name (char* name);
 Card* read_card_entry(uint16_t entry);
 RFS_StatusTypeDef read_metadata(Card* result, uint16_t entry);
@@ -46,4 +46,5 @@ void free_card(Card* card);
 void print_card_to_serial(uint16_t entry);
 int get_number_files(void);
 RFS_StatusTypeDef get_all_files(char** result);
+RFS_StatusTypeDef entry_present(uint16_t entry);
 #endif /* INC_RUTHLESSFS_H_ */
