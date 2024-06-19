@@ -618,6 +618,7 @@ void Start_Init(void *argument)
     OLED_INIT();
     OLED_Print(TC);
     MEM_INIT();
+    block_erase(0x0000);
 
     while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) != 0);
     vTaskResume(HomeHandle);
@@ -764,7 +765,7 @@ void CardFoundStart(void *argument)
  		ranonce = 0;
  		count = 0;
  		if (count == 0) {
- 			enter_card(read_card, 0);
+ 			enter_card(read_card, mem_find_free_block());
  		}
  		vTaskSuspend(NULL);
  	}

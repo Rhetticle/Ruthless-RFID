@@ -13,6 +13,7 @@
 ../Core/Src/OLED.c:387:6:OLED_SCREEN	24	static
 ../Core/Src/OLED.c:405:6:OLED_SCRNREF	32	static
 ../Core/Src/OLED.c:423:6:OLED_FILL	24	static
-../Core/Src/OLED.c:440:6:OLED_SELECT	40	static
-../Core/Src/OLED.c:481:6:OLED_PWRDWN	16	static
-../Core/Src/OLED.c:495:19:OLED_display_files	24	static
+../Core/Src/OLED.c:440:6:OLED_SELECT	48	static
+../Core/Src/OLED.c:478:6:OLED_PWRDWN	16	static
+../Core/Src/OLED.c:492:19:OLED_display_files	24	static
+../Core/Src/OLED.c:513:9:find_restore_string	24	static

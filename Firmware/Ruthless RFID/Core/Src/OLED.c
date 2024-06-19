@@ -444,18 +444,6 @@ void OLED_SELECT(const Screen* screen,uint8_t selopt, int restore){
 	uint8_t prevpage,prevcol,thispage,thiscol;
 	char* rest;
 
-		if(restore==OLED_RESTORE){
-			if(selopt==0){
-			rest=(char*)screen->data[screen->datsize-1]; //Here we may be wrapping around so we must restore the last select option
-			}
-			else{
-				rest=(char*)screen->data[selopt];
-			}
-		}
-		else{
-			rest="  ";
-		}
-
 	    if(selopt==0){
 	        prevpage=screen->seldata[screen->selsize-1][0];
 	        prevcol=screen->seldata[screen->selsize-1][1];
@@ -468,6 +456,15 @@ void OLED_SELECT(const Screen* screen,uint8_t selopt, int restore){
 		    thispage=screen->seldata[selopt][0];
 	        thiscol=screen->seldata[selopt][1];
 
+	    }
+	    if(restore==OLED_RESTORE){
+	    	if (selopt == 0) {
+	    		rest=(char*)screen->data[find_restore_string(screen, screen->selsize - 1)]; //Here we may be wrapping around so we must restore the last select option
+	    	} else {
+	    		rest=(char*)screen->data[find_restore_string(screen, selopt - 1)];
+	    	}
+	    } else {
+	    	rest = "  ";
 	    }
 
 	    OLED_Printlin(prevpage, prevcol, rest, NORMAL); //This restores the line of the previous (now deselected) select option
@@ -492,7 +489,10 @@ void OLED_PWRDWN(void){
  * @param page - Page of files to display (page count is increased as user scrolls through files)
  * @return HAL_OK if files were successfully displayed
  * */
-HAL_StatusTypeDef OLED_display_files(Screen* screen, uint8_t page) {
+HAL_StatusTypeDef OLED_display_files(const Screen* screen, uint8_t page) {
+	if (get_number_files() == 0) {
+		return HAL_ERROR;
+	}
 	char** file_names = malloc(get_number_files() * sizeof(char*));
 
 	if (get_all_files(file_names) != RFS_OK) {
@@ -501,4 +501,24 @@ HAL_StatusTypeDef OLED_display_files(Screen* screen, uint8_t page) {
 
 	OLED_SCRNREF(screen, 1, file_names[0]);
 	return HAL_OK;
+}
+
+/**
+ * Find the string to restore for given previous string selected
+ *
+ * @param screen - Screen to update
+ * @param prev_sel_opt - Previous selected option
+ * @return index of string in screen->data to be used as replacement
+ * */
+uint8_t find_restore_string(const Screen* screen, uint8_t prev_sel_opt) {
+	uint8_t index_of_string;
+
+	for (int i = 1; i < screen->datsize; i++) {
+		if((screen->dataloc[i][0] == screen->seldata[prev_sel_opt][0]) && (screen->dataloc[i][1] == screen->seldata[prev_sel_opt][1])) {
+			index_of_string = i;
+			break;
+		}
+	}
+
+	return index_of_string;
 }
