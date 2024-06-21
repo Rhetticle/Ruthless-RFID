@@ -748,8 +748,8 @@ void CardFoundStart(void *argument)
 		while(xQueueReceive(UidtoFoundHandle, &read_card, 0) != pdTRUE);
 		char* uid_str = uid_tostring(read_card->uid, read_card->uidsize);
 		OLED_SCREEN(&SCRN_CardFound, NORMAL);
-		OLED_SCRNREF(&SCRN_CardFound, UID_LOC, uid_str);
-		OLED_SCRNREF(&SCRN_CardFound, CARDTYPE_LOC, read_card->type);
+		OLED_SCRNREF(&SCRN_CardFound, FOUND_UID_LOC, uid_str);
+		OLED_SCRNREF(&SCRN_CardFound, FOUND_CARDTYPE_LOC, read_card->type);
 		OLED_SELECT(&SCRN_CardFound, count, OLED_NORESTORE);
 		ranonce++;
 		free(uid_str);
@@ -800,10 +800,8 @@ void StartShowFiles(void *argument)
 			  ranonce = 0;
 			  vTaskSuspend(NULL);
 		  }
-		  if (count == 0) {
-			  OLED_SCREEN(&SCRN_FileData, NORMAL);
-			  OLED_SCRNREF(&SCRN_FileData, 0, get_file_name(count));
-			  OLED_SELECT(&SCRN_FileData, 0, OLED_NORESTORE);
+		  if ((count == 0) && (entry_present(count) == RFS_OK)) {
+			  oled_show_file(count);
 		  }
 	  }
   }

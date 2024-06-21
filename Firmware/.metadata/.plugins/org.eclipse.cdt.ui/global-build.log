@@ -404,3 +404,220 @@ Finished building: default.size.stdout
  
 Finished building: Ruthless RFID.list
  
+22:43:10 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/MFRC.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/MFRC.d" -MT"Core/Src/MFRC.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/MFRC.o"
+arm-none-eabi-gcc "../Core/Src/OLED.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/OLED.d" -MT"Core/Src/OLED.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/OLED.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/ruthlessfs.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/ruthlessfs.d" -MT"Core/Src/ruthlessfs.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/ruthlessfs.o"
+../Core/Src/MFRC.c: In function 'MFRC_TRANSCEIVE':
+../Core/Src/MFRC.c:201:14: warning: suggest parentheses around comparison in operand of '&' [-Wparentheses]
+  201 |  while(IRQval&0x30!=0x30){ //Hang here until RXIRQ and IDLEIRQ bits are set
+      |              ^
+../Core/Src/MFRC.c: In function 'DumpINFO':
+../Core/Src/MFRC.c:534:1: warning: control reaches end of non-void function [-Wreturn-type]
+  534 | }
+      | ^
+../Core/Src/main.c: In function 'CardFoundStart':
+../Core/Src/main.c:758:36: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  758 |  choose(&SCRN_CardFound, &suspend, &count, 2, OLED_NORESTORE);
+      |                                    ^~~~~~
+      |                                    |
+      |                                    int *
+../Core/Src/main.c:155:55: note: expected 'uint32_t *' {aka 'long unsigned int *'} but argument is of type 'int *'
+  155 | int choose (const Screen* screen,int* flag, uint32_t* count, int max, int restopt) {
+      |                                             ~~~~~~~~~~^~~~~
+../Core/Src/main.c: In function 'StartShowFiles':
+../Core/Src/main.c:795:38: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  795 |    choose(&SCRN_ShowFiles, &suspend, &count, 4, OLED_RESTORE);
+      |                                      ^~~~~~
+      |                                      |
+      |                                      int *
+../Core/Src/main.c:155:55: note: expected 'uint32_t *' {aka 'long unsigned int *'} but argument is of type 'int *'
+  155 | int choose (const Screen* screen,int* flag, uint32_t* count, int max, int restopt) {
+      |                                             ~~~~~~~~~~^~~~~
+../Core/Src/main.c: In function 'choose':
+../Core/Src/main.c:173:1: warning: control reaches end of non-void function [-Wreturn-type]
+  173 | }
+      | ^
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  64504	   1668	  27564	  93736	  16e28	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+22:49:26 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/MFRC.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/MFRC.d" -MT"Core/Src/MFRC.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/MFRC.o"
+arm-none-eabi-gcc "../Core/Src/OLED.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/OLED.d" -MT"Core/Src/OLED.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/OLED.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/ruthlessfs.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/ruthlessfs.d" -MT"Core/Src/ruthlessfs.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/ruthlessfs.o"
+arm-none-eabi-gcc "../Core/Src/screen.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/screen.d" -MT"Core/Src/screen.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/screen.o"
+In file included from ../Core/Src/screen.c:7:
+../Core/Inc/screen.h:40: warning: "UID_LOC" redefined
+   40 | #define UID_LOC 2
+      | 
+../Core/Inc/screen.h:35: note: this is the location of the previous definition
+   35 | #define UID_LOC 1 //Location index for UID when calling OLED_SCRNREF
+      | 
+In file included from ../Core/Inc/OLED.h:12,
+                 from ../Core/Src/OLED.c:8:
+../Core/Inc/screen.h:40: warning: "UID_LOC" redefined
+   40 | #define UID_LOC 2
+      | 
+../Core/Inc/screen.h:35: note: this is the location of the previous definition
+   35 | #define UID_LOC 1 //Location index for UID when calling OLED_SCRNREF
+      | 
+In file included from ../Core/Inc/OLED.h:12,
+                 from ../Core/Src/ruthlessfs.c:21:
+../Core/Inc/screen.h:40: warning: "UID_LOC" redefined
+   40 | #define UID_LOC 2
+      | 
+../Core/Inc/screen.h:35: note: this is the location of the previous definition
+   35 | #define UID_LOC 1 //Location index for UID when calling OLED_SCRNREF
+      | 
+In file included from ../Core/Inc/OLED.h:12,
+                 from ../Core/Src/MFRC.c:12:
+../Core/Inc/screen.h:40: warning: "UID_LOC" redefined
+   40 | #define UID_LOC 2
+      | 
+../Core/Inc/screen.h:35: note: this is the location of the previous definition
+   35 | #define UID_LOC 1 //Location index for UID when calling OLED_SCRNREF
+      | 
+../Core/Src/MFRC.c: In function 'MFRC_TRANSCEIVE':
+../Core/Src/MFRC.c:201:14: warning: suggest parentheses around comparison in operand of '&' [-Wparentheses]
+  201 |  while(IRQval&0x30!=0x30){ //Hang here until RXIRQ and IDLEIRQ bits are set
+      |              ^
+../Core/Src/MFRC.c: In function 'DumpINFO':
+../Core/Src/MFRC.c:534:1: warning: control reaches end of non-void function [-Wreturn-type]
+  534 | }
+      | ^
+In file included from ../Core/Inc/OLED.h:12,
+                 from ../Core/Src/main.c:28:
+../Core/Inc/screen.h:40: warning: "UID_LOC" redefined
+   40 | #define UID_LOC 2
+      | 
+../Core/Inc/screen.h:35: note: this is the location of the previous definition
+   35 | #define UID_LOC 1 //Location index for UID when calling OLED_SCRNREF
+      | 
+../Core/Src/main.c: In function 'CardFoundStart':
+../Core/Src/main.c:758:36: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  758 |  choose(&SCRN_CardFound, &suspend, &count, 2, OLED_NORESTORE);
+      |                                    ^~~~~~
+      |                                    |
+      |                                    int *
+../Core/Src/main.c:155:55: note: expected 'uint32_t *' {aka 'long unsigned int *'} but argument is of type 'int *'
+  155 | int choose (const Screen* screen,int* flag, uint32_t* count, int max, int restopt) {
+      |                                             ~~~~~~~~~~^~~~~
+../Core/Src/main.c: In function 'StartShowFiles':
+../Core/Src/main.c:795:38: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  795 |    choose(&SCRN_ShowFiles, &suspend, &count, 4, OLED_RESTORE);
+      |                                      ^~~~~~
+      |                                      |
+      |                                      int *
+../Core/Src/main.c:155:55: note: expected 'uint32_t *' {aka 'long unsigned int *'} but argument is of type 'int *'
+  155 | int choose (const Screen* screen,int* flag, uint32_t* count, int max, int restopt) {
+      |                                             ~~~~~~~~~~^~~~~
+../Core/Src/main.c: In function 'choose':
+../Core/Src/main.c:173:1: warning: control reaches end of non-void function [-Wreturn-type]
+  173 | }
+      | ^
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  64516	   1668	  27564	  93748	  16e34	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+22:51:30 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/MFRC.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/MFRC.d" -MT"Core/Src/MFRC.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/MFRC.o"
+arm-none-eabi-gcc "../Core/Src/OLED.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/OLED.d" -MT"Core/Src/OLED.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/OLED.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/ruthlessfs.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/ruthlessfs.d" -MT"Core/Src/ruthlessfs.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/ruthlessfs.o"
+arm-none-eabi-gcc "../Core/Src/screen.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/screen.d" -MT"Core/Src/screen.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/screen.o"
+../Core/Src/MFRC.c: In function 'MFRC_TRANSCEIVE':
+../Core/Src/MFRC.c:201:14: warning: suggest parentheses around comparison in operand of '&' [-Wparentheses]
+  201 |  while(IRQval&0x30!=0x30){ //Hang here until RXIRQ and IDLEIRQ bits are set
+      |              ^
+../Core/Src/MFRC.c: In function 'DumpINFO':
+../Core/Src/MFRC.c:534:1: warning: control reaches end of non-void function [-Wreturn-type]
+  534 | }
+      | ^
+../Core/Src/main.c: In function 'CardFoundStart':
+../Core/Src/main.c:751:33: error: 'UID_LOC' undeclared (first use in this function)
+  751 |   OLED_SCRNREF(&SCRN_CardFound, UID_LOC, uid_str);
+      |                                 ^~~~~~~
+../Core/Src/main.c:751:33: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/main.c:752:33: error: 'CARDTYPE_LOC' undeclared (first use in this function)
+  752 |   OLED_SCRNREF(&SCRN_CardFound, CARDTYPE_LOC, read_card->type);
+      |                                 ^~~~~~~~~~~~
+../Core/Src/main.c:758:36: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  758 |  choose(&SCRN_CardFound, &suspend, &count, 2, OLED_NORESTORE);
+      |                                    ^~~~~~
+      |                                    |
+      |                                    int *
+../Core/Src/main.c:155:55: note: expected 'uint32_t *' {aka 'long unsigned int *'} but argument is of type 'int *'
+  155 | int choose (const Screen* screen,int* flag, uint32_t* count, int max, int restopt) {
+      |                                             ~~~~~~~~~~^~~~~
+../Core/Src/main.c: In function 'StartShowFiles':
+../Core/Src/main.c:795:38: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  795 |    choose(&SCRN_ShowFiles, &suspend, &count, 4, OLED_RESTORE);
+      |                                      ^~~~~~
+      |                                      |
+      |                                      int *
+../Core/Src/main.c:155:55: note: expected 'uint32_t *' {aka 'long unsigned int *'} but argument is of type 'int *'
+  155 | int choose (const Screen* screen,int* flag, uint32_t* count, int max, int restopt) {
+      |                                             ~~~~~~~~~~^~~~~
+../Core/Src/main.c: In function 'choose':
+../Core/Src/main.c:173:1: warning: control reaches end of non-void function [-Wreturn-type]
+  173 | }
+      | ^
+make: *** [Core/Src/subdir.mk:55: Core/Src/main.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+22:51:46 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'CardFoundStart':
+../Core/Src/main.c:758:36: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  758 |  choose(&SCRN_CardFound, &suspend, &count, 2, OLED_NORESTORE);
+      |                                    ^~~~~~
+      |                                    |
+      |                                    int *
+../Core/Src/main.c:155:55: note: expected 'uint32_t *' {aka 'long unsigned int *'} but argument is of type 'int *'
+  155 | int choose (const Screen* screen,int* flag, uint32_t* count, int max, int restopt) {
+      |                                             ~~~~~~~~~~^~~~~
+../Core/Src/main.c: In function 'StartShowFiles':
+../Core/Src/main.c:795:38: warning: passing argument 3 of 'choose' from incompatible pointer type [-Wincompatible-pointer-types]
+  795 |    choose(&SCRN_ShowFiles, &suspend, &count, 4, OLED_RESTORE);
+      |                                      ^~~~~~
+      |                                      |
+      |                                      int *
+../Core/Src/main.c:155:55: note: expected 'uint32_t *' {aka 'long unsigned int *'} but argument is of type 'int *'
+  155 | int choose (const Screen* screen,int* flag, uint32_t* count, int max, int restopt) {
+      |                                             ~~~~~~~~~~^~~~~
+../Core/Src/main.c: In function 'choose':
+../Core/Src/main.c:173:1: warning: control reaches end of non-void function [-Wreturn-type]
+  173 | }
+      | ^
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  64516	   1668	  27564	  93748	  16e34	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 

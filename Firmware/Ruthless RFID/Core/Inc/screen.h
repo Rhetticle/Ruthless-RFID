@@ -32,7 +32,11 @@ typedef struct{
 extern const Screen SCRN_Home, SCRN_ReadCard, SCRN_CardFound, SCRN_WriteCard, SCRN_ShowFiles, SCRN_FileData; //Screens
 
 //Card found data locations
-#define UID_LOC 1 //Location index for UID when calling OLED_SCRNREF
-#define CARDTYPE_LOC 2 //Location index for PICC type
+#define FOUND_UID_LOC 1 //Location index for UID when calling OLED_SCRNREF
+#define FOUND_CARDTYPE_LOC 2 //Location index for PICC type
 
+
+//Show File data locations
+#define SHOWFILE_UID_LOC 2
+#define SHOWFILE_CONTENTS_LOC 3
 #endif /* INC_SCREEN_H_ */

@@ -10,6 +10,7 @@
 #include "stm32f4xx.h"
 #include "usbd_cdc_if.h"
 #include "ruthlessfs.h"
+#include "screen.h"
 
 // 'Capture1', 128x64px HVE logo
 uint8_t HVE[] = {
@@ -521,4 +522,26 @@ uint8_t find_restore_string(const Screen* screen, uint8_t prev_sel_opt) {
 	}
 
 	return index_of_string;
+}
+
+/**
+ * Show the file data of given file entry number
+ * @param entry - Entry to show data of
+ * */
+void oled_show_file(uint16_t entry) {
+	Card* work;
+
+	if (entry_present(entry) != RFS_OK) {
+		return; //No card entry present
+	}
+
+	work = read_card_entry(entry);
+
+	OLED_SCREEN(&SCRN_FileData, NORMAL);
+	OLED_SCRNREF(&SCRN_FileData, 0, work->name);
+	OLED_SCRNREF(&SCRN_FileData, SHOWFILE_UID_LOC, uid_tostring(work->uid, work->uidsize));
+	OLED_SCRNREF(&SCRN_FileData, SHOWFILE_CONTENTS_LOC, uid_tostring(work->contents, work->contents_size));
+	OLED_SELECT(&SCRN_FileData, 0, OLED_NORESTORE);
+
+	free(work);
 }
