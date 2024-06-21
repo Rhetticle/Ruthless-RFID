@@ -404,7 +404,7 @@ void OLED_SCREEN(const Screen* screen,uint8_t invert){
 
 void OLED_SCRNREF(const Screen* screen,uint8_t dataindx,char* data){
 	int len=strlen(screen->data[dataindx]);
-	int start_col=START_COL+((len)*6);
+	int start_col=screen->dataloc[dataindx][1]+((len)*6);
 
 	OLED_Printlin(screen->dataloc[dataindx][0], start_col, data, NORMAL);
 }
