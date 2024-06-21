@@ -17,6 +17,7 @@
 typedef enum{
 	PCD_COMM_ERR= 0xAA,
 	PCD_I2C_ERR = 0xBB,
+	PCD_NO_PICC = 0x01,
 	PCD_OK      = 0xCC,
 	TIMEOUT_ERR = 0xDD,
 	CRC_ERR     = 0xEE,
@@ -37,7 +38,7 @@ typedef enum{
 #define UL_MEMSIZE 64 //16 pages each containing 4 bytes
 #define UL_UIDSIZE 7 //7 Byte UID
 #define UL_DATASIZE 44 //44 bytes of user data (Pages 4 to 15)
-#define UL_READSIZE 18 //A UL read will give 18 bytes back (16 bytes data and 2 CRC)
+#define UL_READSIZE 16 //A UL read will give 16 bytes back (excluding 2 CRC bytes)
 #define UL_PAGESIZE 4 //4 bytes in a page
 #define UL_DATASTART 0x04 //Start address of data memory
 #define UL_DATAEND 0x0F //last page

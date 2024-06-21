@@ -27,6 +27,9 @@ static const char* SHOW_FILESSCREEN[7] = {"FILES", "* ", "* ", "* ", "FREE: ", "
 static const uint8_t SHOW_DATLOC[7][2] = {{0,0},{2,START_COL},{4,START_COL},{6,START_COL},{2,MID_COL},{4,MID_COL}, {6,MID_COL - 12}};
 static const uint8_t SHOW_SEL[4][2] = {{2, START_COL}, {4,START_COL}, {6, START_COL}, {6, MID_COL-12}};
 
+static const char* FILEDATA_SCREEN[5] = {".", "SIZE: ", "UID: ", "CONTENTS: ", "EXIT"};
+static const uint8_t FILEDATA_DATLOC[5][2] = {{0,0}, {2,START_COL},{4,START_COL},{6,START_COL}, {2, MID_COL}};
+static const uint8_t FILEDATA_SEL[1][2] = {{0,0}};
 /**
  * Screens
  *
@@ -74,4 +77,13 @@ const Screen SCRN_ShowFiles = {
 		.data = SHOW_FILESSCREEN,
 		.dataloc = SHOW_DATLOC,
 		.seldata = SHOW_SEL,
+};
+
+//Show File contents
+const Screen SCRN_FileData = {
+		.datsize = sizeof(FILEDATA_SCREEN)/sizeof(FILEDATA_SCREEN[0]),
+		.selsize = sizeof(FILEDATA_SEL)/sizeof(FILEDATA_SEL[0]),
+		.data = FILEDATA_SCREEN,
+		.dataloc = FILEDATA_DATLOC,
+		.seldata = FILEDATA_SEL,
 };

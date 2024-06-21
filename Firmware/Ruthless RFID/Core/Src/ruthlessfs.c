@@ -68,6 +68,7 @@ RFS_StatusTypeDef enter_metadata(Card* card, uint16_t block_num) {
 	metadata[strlen(card->type) + 2] = read_protected;
 
 	if (MEM_WRITE(block_num * BLOCK_PAGECOUNT, 0x0000, metadata, metasize) != HAL_OK) {
+		free(metadata);
 		return RFS_WRITE_ERROR;
 	}
 	free(metadata);
@@ -286,7 +287,7 @@ RFS_StatusTypeDef get_all_files(char** result) {
 			work = read_card_entry(i);
 			result[i] = malloc(strlen(work->name) + 1);
 			memcpy(result[i], work->name, strlen(work->name));
-			result[strlen(work->name)] = '\0';
+			result[i][strlen(work->name)] = '\0';
 		} else {
 			break;
 		}
@@ -316,3 +317,23 @@ RFS_StatusTypeDef entry_present(uint16_t entry) {
 	return RFS_OK;
 }
 
+/**
+ * Get the file name of a given entry
+ * @param entry - Entry to get name of
+ * @return pointer to name
+ * */
+char* get_file_name(uint16_t entry) {
+	Card* work;
+
+	if (entry_present(entry) != RFS_OK) {
+		return NULL;
+	}
+
+	work = read_card_entry(entry);
+
+	char* name = malloc((strlen(work->name) + 1) * sizeof(char));
+	strcpy(name, work->name);
+	free(work);
+
+	return name;
+}

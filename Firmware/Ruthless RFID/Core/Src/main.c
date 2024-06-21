@@ -172,11 +172,7 @@ int choose (const Screen* screen,int* flag, uint32_t* count, int max, int restop
 	 	}
 }
 
-HAL_StatusTypeDef writecard (uint8_t* carddump) {
-	uint32_t* address[2];
-	findfreeaddr(address);
 
-}
 /* USER CODE END 0 */
 
 /**
@@ -762,11 +758,11 @@ void CardFoundStart(void *argument)
 	choose(&SCRN_CardFound, &suspend, &count, 2, OLED_NORESTORE);
  	if (suspend == 1) {
  		vTaskResume(HomeHandle);
+ 		if (count == 0) {
+ 			enter_card(read_card, 0);
+ 		}
  		ranonce = 0;
  		count = 0;
- 		if (count == 0) {
- 			enter_card(read_card, mem_find_free_block());
- 		}
  		vTaskSuspend(NULL);
  	}
 
@@ -803,6 +799,11 @@ void StartShowFiles(void *argument)
 			  count = 0;
 			  ranonce = 0;
 			  vTaskSuspend(NULL);
+		  }
+		  if (count == 0) {
+			  OLED_SCREEN(&SCRN_FileData, NORMAL);
+			  OLED_SCRNREF(&SCRN_FileData, 0, get_file_name(count));
+			  OLED_SELECT(&SCRN_FileData, 0, OLED_NORESTORE);
 		  }
 	  }
   }
