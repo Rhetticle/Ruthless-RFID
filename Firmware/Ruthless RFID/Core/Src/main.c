@@ -789,11 +789,21 @@ void StartShowFiles(void *argument)
 	/* Infinite loop */
   for(;;)
   {
+	  int suspend = 0;
 	  if (ranonce == 0) {
 		  OLED_SCREEN(&SCRN_ShowFiles, NORMAL);
 		  OLED_SELECT(&SCRN_ShowFiles, 0, OLED_RESTORE);
 		  OLED_display_files(&SCRN_ShowFiles, 0);
 		  ranonce++;
+	  }
+	  choose(&SCRN_ShowFiles, &suspend, &count, 4, OLED_RESTORE);
+	  if (suspend == 1) {
+		  if (count == 3) {
+			  vTaskResume(HomeHandle);
+			  count = 0;
+			  ranonce = 0;
+			  vTaskSuspend(NULL);
+		  }
 	  }
   }
   /* USER CODE END StartShowFiles */
