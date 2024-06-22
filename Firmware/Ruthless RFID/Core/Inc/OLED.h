@@ -175,4 +175,5 @@ void OLED_SELECT(const Screen* screen,uint8_t selopt,int restore);
 HAL_StatusTypeDef OLED_display_files(const Screen* screen, uint8_t page);
 uint8_t find_restore_string(const Screen* screen, uint8_t prev_sel_opt);
 void oled_show_file(uint16_t entry);
+void free_filenames(char** file_names, int size);
 #endif /* INC_OLED_H_ */

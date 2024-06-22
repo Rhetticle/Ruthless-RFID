@@ -499,13 +499,27 @@ HAL_StatusTypeDef OLED_display_files(const Screen* screen, uint8_t page) {
 	char** file_names = malloc(file_count * sizeof(char*));
 
 	if (get_all_files(file_names) != RFS_OK) {
+		free_filenames(file_names, file_count);
 		return HAL_ERROR;
 	}
 
 	for (int i = 0; i < file_count; i++) {
 		OLED_SCRNREF(&SCRN_ShowFiles, i + 1, file_names[i]);
 	}
+	free_filenames(file_names, file_count);
 	return HAL_OK;
+}
+
+/**
+ * Free list of file names
+ * @param file_names - File names
+ * @param size -  Number of file names
+ * */
+void free_filenames(char** file_names, int size) {
+	for (int i = 0; i < size; i++) {
+		free(file_names[i]);
+	}
+	free(file_names);
 }
 
 /**
