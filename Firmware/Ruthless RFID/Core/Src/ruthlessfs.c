@@ -344,3 +344,11 @@ char* get_file_name(uint16_t entry) {
 
 	return name;
 }
+
+/**
+ * Remove card from file system
+ * @param entry - Entry to remove
+ * */
+void remove_card(uint16_t entry) {
+	block_erase(entry);
+}

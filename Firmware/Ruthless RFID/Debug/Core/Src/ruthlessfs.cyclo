@@ -12,3 +12,4 @@ ruthlessfs.c:268:5:get_number_files	3
 ruthlessfs.c:289:19:get_all_files	3
 ruthlessfs.c:313:19:entry_present	3
 ruthlessfs.c:332:7:get_file_name	2
+ruthlessfs.c:352:6:remove_card	1

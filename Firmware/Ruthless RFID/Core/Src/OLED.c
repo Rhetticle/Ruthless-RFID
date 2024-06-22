@@ -506,6 +506,7 @@ HAL_StatusTypeDef OLED_display_files(const Screen* screen, uint8_t page) {
 	for (int i = 0; i < file_count; i++) {
 		OLED_SCRNREF(&SCRN_ShowFiles, i + 1, file_names[i]);
 	}
+
 	free_filenames(file_names, file_count);
 	return HAL_OK;
 }
@@ -557,8 +558,8 @@ void oled_show_file(uint16_t entry) {
 
 	OLED_SCREEN(&SCRN_FileData, NORMAL);
 	OLED_SCRNREF(&SCRN_FileData, 0, work->name);
+	OLED_SCRNREF(&SCRN_FileData, SHOWFILE_TYPE_LOC, work->type);
 	OLED_SCRNREF(&SCRN_FileData, SHOWFILE_UID_LOC, uid_tostring(work->uid, work->uidsize));
-	OLED_SCRNREF(&SCRN_FileData, SHOWFILE_CONTENTS_LOC, uid_tostring(work->contents, work->contents_size));
 	OLED_SELECT(&SCRN_FileData, 0, OLED_NORESTORE);
 
 	free(work);

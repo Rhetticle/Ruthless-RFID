@@ -14,6 +14,6 @@ main.c:634:6:StartReadCard	4
 main.c:671:6:StartWriteCard	2
 main.c:694:6:StartHome	7
 main.c:737:6:CardFoundStart	5
-main.c:781:6:StartShowFiles	6
-main.c:820:6:HAL_TIM_PeriodElapsedCallback	2
-main.c:837:6:Error_Handler	1
+main.c:781:6:StartShowFiles	8
+main.c:838:6:HAL_TIM_PeriodElapsedCallback	2
+main.c:855:6:Error_Handler	1

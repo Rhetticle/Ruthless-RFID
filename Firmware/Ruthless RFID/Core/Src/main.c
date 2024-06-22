@@ -801,8 +801,26 @@ void StartShowFiles(void *argument)
 			  ranonce = 0;
 			  vTaskSuspend(NULL);
 		  }
-		  if ((count == 0) && (entry_present(count) == RFS_OK)) {
-			  oled_show_file(count);
+		  if ((entry_present(count) == RFS_OK)) {
+			  suspend = 0;
+			  ranonce = 0;
+			  uint16_t entry = count;
+			  oled_show_file(entry);
+			  count = 0;
+
+			  while(1) {
+				  choose(&SCRN_FileData, &suspend, &count, 2, OLED_NORESTORE);
+				  if (suspend == 1) {
+					  if (count == 1) {
+						  OLED_SELECT(&SCRN_ShowFiles, 0, OLED_RESTORE);
+						  break;
+					  } else if (count == 0) {
+						  remove_card(entry);
+						  OLED_SELECT(&SCRN_ShowFiles, 0, OLED_RESTORE);
+						  break;
+					  }
+				  }
+			  }
 		  }
 	  }
   }

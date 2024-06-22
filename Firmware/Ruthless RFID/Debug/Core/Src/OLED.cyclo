@@ -16,6 +16,6 @@ OLED.c:424:6:OLED_FILL	2
 OLED.c:441:6:OLED_SELECT	4
 OLED.c:479:6:OLED_PWRDWN	1
 OLED.c:493:19:OLED_display_files	4
-OLED.c:518:6:free_filenames	2
-OLED.c:532:9:find_restore_string	4
-OLED.c:549:6:oled_show_file	2
+OLED.c:519:6:free_filenames	2
+OLED.c:533:9:find_restore_string	4
+OLED.c:550:6:oled_show_file	2

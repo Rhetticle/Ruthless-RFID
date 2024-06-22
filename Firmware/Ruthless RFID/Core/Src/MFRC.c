@@ -595,7 +595,7 @@ PCD_StatusTypeDef UL_readcard(Card* result) {
 	uint8_t* uid = malloc(UL_UIDSIZE * sizeof(uint8_t));
 	uint8_t* contents = malloc(UL_MEMSIZE);
 
-	result->type = "AIFARE Ultralight";
+	result->type = "MIFARE Ultralight";
 	result->name = "Test1";
 	result->uidsize = UL_UIDSIZE;
 	result->contents_size = UL_MEMSIZE;
