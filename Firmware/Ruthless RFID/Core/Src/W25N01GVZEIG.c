@@ -107,7 +107,7 @@ void block_erase(uint16_t block_num) {
 	uint8_t transaction [] = {BLOCK_ERS, DUMMY, page_addr>>8, page_addr};
 	WRIT_EN();
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
-	HAL_SPI_Transmit(&hspi2, transaction, 4, 100);
+	HAL_SPI_Transmit(&hspi2, transaction, sizeof(transaction)/sizeof(transaction[0]), 100);
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
 	while((STAT_READ(STAT_REG3)&0x01) == 0x01);
 }
@@ -157,6 +157,7 @@ HAL_StatusTypeDef MEM_WRITE(uint16_t page_addr,uint16_t col_addr,uint8_t* data,u
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
 	if(HAL_SPI_Transmit(&hspi2, setup, bytes+3, 100)!=HAL_OK){ //load data to internal buffer
 		HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
+		free(setup);
 		return(HAL_ERROR);
 	}
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
@@ -166,6 +167,7 @@ HAL_StatusTypeDef MEM_WRITE(uint16_t page_addr,uint16_t col_addr,uint8_t* data,u
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
 	if(HAL_SPI_Transmit(&hspi2, execute, 4, 100)!=HAL_OK){ //Send command to dump internal buffer data to memory array
 		HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
+		free(setup);
 		return(HAL_ERROR);
 	}
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
@@ -205,6 +207,8 @@ HAL_StatusTypeDef MEM_READPAGE(uint16_t page_addr,uint16_t col_addr,uint8_t* dat
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
 	if(HAL_SPI_Transmit(&hspi2, transaction, 4, 100)!=HAL_OK){ //load data to internal buffer
 		HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
+		free(read_command);
+		free(rec_data);
 		return(HAL_ERROR);
 	}
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
@@ -212,8 +216,10 @@ HAL_StatusTypeDef MEM_READPAGE(uint16_t page_addr,uint16_t col_addr,uint8_t* dat
 	while((STAT_READ(STAT_REG3)&0x01) == 0x01); //Wait here until BUSY bit is cleared
 
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 0);
-	if(HAL_SPI_TransmitReceive(&hspi2, read_command, rec_data, bytes+transaction_size, 100)!=HAL_OK){
+	if(HAL_SPI_TransmitReceive(&hspi2, read_command, rec_data, bytes+transaction_size, 100)!=HAL_OK){ //Send command to flush buffer to memory array
 		HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
+		free(read_command);
+		free(rec_data);
 		return(HAL_ERROR);
 	}
 	HAL_GPIO_WritePin(GPIOA, CS_MEM, 1);
@@ -288,7 +294,7 @@ int mem_find_free_block(void) {
  * */
 void memory_reset(void) {
 	for (int i = 0; i < BLOCK_COUNT; i++) {
-		block_erase(i*BLOCK_PAGECOUNT);
+		block_erase(i);
 	}
 }
 

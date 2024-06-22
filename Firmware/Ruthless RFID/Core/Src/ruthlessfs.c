@@ -76,6 +76,13 @@ RFS_StatusTypeDef enter_metadata(Card* card, uint16_t block_num) {
 }
 
 /**
+ * Enter the name and UID of a card into entry
+ * @param card - Card to enter
+ * @return RFS_OK if data was entered successfully
+ * */
+
+
+/**
  * Read a card from memory
  *
  * @param Name - Card entry name

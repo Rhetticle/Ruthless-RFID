@@ -494,13 +494,17 @@ HAL_StatusTypeDef OLED_display_files(const Screen* screen, uint8_t page) {
 	if (get_number_files() == 0) {
 		return HAL_ERROR;
 	}
-	char** file_names = malloc(get_number_files() * sizeof(char*));
+	uint16_t file_count = get_number_files();
+
+	char** file_names = malloc(file_count * sizeof(char*));
 
 	if (get_all_files(file_names) != RFS_OK) {
 		return HAL_ERROR;
 	}
 
-	OLED_SCRNREF(screen, 1, file_names[0]);
+	for (int i = 0; i < file_count; i++) {
+		OLED_SCRNREF(&SCRN_ShowFiles, i + 1, file_names[i]);
+	}
 	return HAL_OK;
 }
 
