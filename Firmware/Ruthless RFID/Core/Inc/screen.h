@@ -24,6 +24,7 @@
 typedef struct{
     int datsize;
     int selsize;
+    uint8_t restore;
     const char** data;
     const uint8_t (*dataloc)[2];
     const uint8_t (*seldata)[2];

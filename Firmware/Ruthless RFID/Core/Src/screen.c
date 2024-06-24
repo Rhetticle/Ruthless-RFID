@@ -4,6 +4,7 @@
  *  Created on: Jun 11, 2024
  *      Author: rhett
  */
+#include "OLED.h"
 #include "screen.h"
 #include "stdint.h"
 
@@ -42,6 +43,7 @@ const Screen SCRN_Home = {
 		.data = HOME_SCREEN,
 		.dataloc = HOME_DATLOC,
 		.seldata = HOME_SEL,
+		.restore = OLED_RESTORE
 };
 
 //Read card
@@ -51,6 +53,7 @@ const Screen SCRN_ReadCard = {
 		.data = READ_SCREEN,
 		.dataloc = READ_DATLOC,
 		.seldata = READ_SEL,
+		.restore = OLED_NORESTORE
 };
 
 //Card found
@@ -60,6 +63,7 @@ const Screen SCRN_CardFound = {
 		.data = CARD_FOUNDSCREEN,
 		.dataloc = CARD_FOUNDATLOC,
 		.seldata = CARD_FOUNDSEL,
+		.restore = OLED_NORESTORE
 };
 
 const Screen SCRN_WriteCard = {
@@ -68,6 +72,7 @@ const Screen SCRN_WriteCard = {
 		.data = WRITE_SCREEN,
 		.dataloc = WRITE_DATLOC,
 		.seldata = WRITE_SEL,
+		.restore = OLED_RESTORE
 };
 
 //Show Files
@@ -77,6 +82,7 @@ const Screen SCRN_ShowFiles = {
 		.data = SHOW_FILESSCREEN,
 		.dataloc = SHOW_DATLOC,
 		.seldata = SHOW_SEL,
+		.restore = OLED_RESTORE
 };
 
 //Show File contents
@@ -86,4 +92,5 @@ const Screen SCRN_FileData = {
 		.data = FILEDATA_SCREEN,
 		.dataloc = FILEDATA_DATLOC,
 		.seldata = FILEDATA_SEL,
+		.restore = OLED_NORESTORE
 };

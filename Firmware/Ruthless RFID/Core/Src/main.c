@@ -98,6 +98,13 @@ const osThreadAttr_t ShowFiles_attributes = {
   .stack_size = 256 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for UpdateDisplay */
+osThreadId_t UpdateDisplayHandle;
+const osThreadAttr_t UpdateDisplay_attributes = {
+  .name = "UpdateDisplay",
+  .stack_size = 512 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
 /* Definitions for UidtoFound */
 osMessageQueueId_t UidtoFoundHandle;
 const osMessageQueueAttr_t UidtoFound_attributes = {
@@ -107,6 +114,16 @@ const osMessageQueueAttr_t UidtoFound_attributes = {
 osMessageQueueId_t UserInputHandle;
 const osMessageQueueAttr_t UserInput_attributes = {
   .name = "UserInput"
+};
+/* Definitions for ScreenRequest */
+osMessageQueueId_t ScreenRequestHandle;
+const osMessageQueueAttr_t ScreenRequest_attributes = {
+  .name = "ScreenRequest"
+};
+/* Definitions for UpdateSelection */
+osMessageQueueId_t UpdateSelectionHandle;
+const osMessageQueueAttr_t UpdateSelection_attributes = {
+  .name = "UpdateSelection"
 };
 /* USER CODE BEGIN PV */
 char TC[]="HVE strongly condemns malicious use of it's products.The Ruthless RFID is sold as an educational device. HVE is not liable for damages caused by misuse.";
@@ -131,6 +148,7 @@ void StartWriteCard(void *argument);
 void StartHome(void *argument);
 void CardFoundStart(void *argument);
 void StartShowFiles(void *argument);
+void StartUpdateDisplay(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -220,6 +238,12 @@ int main(void)
   /* creation of UserInput */
   UserInputHandle = osMessageQueueNew (1, sizeof(uint8_t), &UserInput_attributes);
 
+  /* creation of ScreenRequest */
+  ScreenRequestHandle = osMessageQueueNew (1, sizeof(Screen*), &ScreenRequest_attributes);
+
+  /* creation of UpdateSelection */
+  UpdateSelectionHandle = osMessageQueueNew (1, sizeof(uint8_t), &UpdateSelection_attributes);
+
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
@@ -242,6 +266,9 @@ int main(void)
 
   /* creation of ShowFiles */
   ShowFilesHandle = osThreadNew(StartShowFiles, NULL, &ShowFiles_attributes);
+
+  /* creation of UpdateDisplay */
+  UpdateDisplayHandle = osThreadNew(StartUpdateDisplay, NULL, &UpdateDisplay_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -691,24 +718,16 @@ void StartHome(void *argument)
   /* USER CODE BEGIN StartHome */
 	uint8_t select_index = 0;
 	int ranonce = 0;
-	Button_StateTypeDef button_state = NO_PRESS;
+	Screen* toSend = &SCRN_Home;
   /* Infinite loop */
   for(;;)
   {
 	  int suspend = 0;
 	  if (ranonce == 0) {
-		  OLED_SCREEN(&SCRN_Home, NORMAL);
-		  OLED_SELECT(&SCRN_Home, select_index, OLED_RESTORE);
+		  xQueueSend(ScreenRequestHandle, &toSend, 0);
 		  ranonce++;
 	  }
 
-	  if (xQueueReceive(UserInputHandle, &button_state, 0) == pdTRUE) {
-		  if (button_state == SHORT_PRESS) {
-			  oled_move_selection(&SCRN_Home, &select_index, OLED_RESTORE);
-		  } else if (button_state == LONG_PRESS){
-			  suspend = 1;
-		  }
-	  }
 	  if (suspend == 1) {
 		switch(select_index) {
 			case 0:
@@ -827,6 +846,35 @@ void StartShowFiles(void *argument)
 	  }
   }
   /* USER CODE END StartShowFiles */
+}
+
+/* USER CODE BEGIN Header_StartUpdateDisplay */
+/**
+* @brief Function implementing the UpdateDisplay thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartUpdateDisplay */
+void StartUpdateDisplay(void *argument)
+{
+  /* USER CODE BEGIN StartUpdateDisplay */
+	Screen* currentScreen;
+	Button_StateTypeDef button_state;
+	uint8_t select_index = 0;
+  /* Infinite loop */
+  for(;;)
+  {
+	  if (xQueueReceive(ScreenRequestHandle, &currentScreen, 0) == pdTRUE) {
+		  OLED_SCREEN(currentScreen, NORMAL);
+	  }
+	  if (xQueueReceive(UserInputHandle, &button_state, 0) == pdTRUE) {
+		  if (button_state == SHORT_PRESS) {
+			  oled_move_selection(currentScreen, &select_index, currentScreen->restore);
+		  }
+
+	  }
+  }
+  /* USER CODE END StartUpdateDisplay */
 }
 
 /**
