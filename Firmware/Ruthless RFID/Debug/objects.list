@@ -1,6 +1,7 @@
 "./Core/Src/MFRC.o"
 "./Core/Src/OLED.o"
 "./Core/Src/W25N01GVZEIG.o"
+"./Core/Src/button.o"
 "./Core/Src/freertos.o"
 "./Core/Src/main.o"
 "./Core/Src/ruthlessfs.o"

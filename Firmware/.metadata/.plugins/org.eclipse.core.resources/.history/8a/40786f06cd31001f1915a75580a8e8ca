@@ -1,0 +1,17 @@
+/*
+ * button.c
+ *
+ *  Created on: Jun 24, 2024
+ *      Author: rhett
+ */
+
+#include "button.h"
+#include "stm32f4xx.h"
+#include "FreeRTOS.h"
+#include "queue.h"
+
+extern TIM_HandleTypeDef htim3;
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+	uint16_t tim_val = __HAL_TIM_GET_COUNTER(&htim3);
+}

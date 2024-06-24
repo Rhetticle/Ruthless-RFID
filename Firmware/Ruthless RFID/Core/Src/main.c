@@ -29,6 +29,7 @@
 #include "queue.h"
 #include "W25N01GVZEIG.h"
 #include "ruthlessfs.h"
+#include "button.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -94,13 +95,18 @@ const osThreadAttr_t CardFound_attributes = {
 osThreadId_t ShowFilesHandle;
 const osThreadAttr_t ShowFiles_attributes = {
   .name = "ShowFiles",
-  .stack_size = 512 * 4,
+  .stack_size = 256 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for UidtoFound */
 osMessageQueueId_t UidtoFoundHandle;
 const osMessageQueueAttr_t UidtoFound_attributes = {
   .name = "UidtoFound"
+};
+/* Definitions for UserInput */
+osMessageQueueId_t UserInputHandle;
+const osMessageQueueAttr_t UserInput_attributes = {
+  .name = "UserInput"
 };
 /* USER CODE BEGIN PV */
 char TC[]="HVE strongly condemns malicious use of it's products.The Ruthless RFID is sold as an educational device. HVE is not liable for damages caused by misuse.";
@@ -150,26 +156,6 @@ void BUZZ(void){
 	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
 	HAL_Delay(1000);
 	HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_3);
-}
-
-int choose (const Screen* screen,int* flag, uint32_t* count, int max, int restopt) {
-	if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
-	 	    __HAL_TIM_SET_COUNTER(&htim3,0);
-	 	    while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)==0){
-	 	    	HAL_TIM_Base_Start(&htim3);
-	 	    	if(__HAL_TIM_GET_COUNTER(&htim3)==999){
-	 	    		HAL_TIM_Base_Stop(&htim3);
-	 	    		*flag = 1;
-	 	    		return(*count);
-	 	    		}
-	 	    	}
-	 	    (*count)++;
-	 	    if (*count == max) {
-	 	    	*count = 0;
-	 	    }
-	 	    OLED_SELECT(screen, *count, restopt);
-	 	    HAL_TIM_Base_Stop(&htim3);
-	 	}
 }
 
 
@@ -230,6 +216,9 @@ int main(void)
   /* Create the queue(s) */
   /* creation of UidtoFound */
   UidtoFoundHandle = osMessageQueueNew (1, sizeof(Card*), &UidtoFound_attributes);
+
+  /* creation of UserInput */
+  UserInputHandle = osMessageQueueNew (1, sizeof(uint8_t), &UserInput_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -514,7 +503,7 @@ static void MX_TIM3_Init(void)
   htim3.Instance = TIM3;
   htim3.Init.Prescaler = 42000-1;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 1000-1;
+  htim3.Init.Period = 60000-1;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
@@ -562,7 +551,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : BUTTON_Pin */
   GPIO_InitStruct.Pin = BUTTON_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(BUTTON_GPIO_Port, &GPIO_InitStruct);
 
@@ -579,6 +568,10 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI1_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
@@ -617,8 +610,10 @@ void Start_Init(void *argument)
     memory_reset();
 
     while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) != 0);
-    vTaskResume(HomeHandle);
     osDelay(10);
+    uint8_t clear = NO_PRESS;
+    xQueueSend(UserInputHandle, &clear, 0);
+    vTaskResume(HomeHandle);
     vTaskSuspend(NULL);
   }
   /* USER CODE END 5 */
@@ -694,20 +689,28 @@ void StartWriteCard(void *argument)
 void StartHome(void *argument)
 {
   /* USER CODE BEGIN StartHome */
-	uint32_t count = 0;
+	uint8_t select_index = 0;
 	int ranonce = 0;
+	Button_StateTypeDef button_state = NO_PRESS;
   /* Infinite loop */
   for(;;)
   {
 	  int suspend = 0;
 	  if (ranonce == 0) {
 		  OLED_SCREEN(&SCRN_Home, NORMAL);
-		  OLED_SELECT(&SCRN_Home, count, OLED_RESTORE);
+		  OLED_SELECT(&SCRN_Home, select_index, OLED_RESTORE);
 		  ranonce++;
 	  }
-	  choose(&SCRN_Home,&suspend,&count,6,OLED_RESTORE);
+
+	  if (xQueueReceive(UserInputHandle, &button_state, 0) == pdTRUE) {
+		  if (button_state == SHORT_PRESS) {
+			  oled_move_selection(&SCRN_Home, &select_index, OLED_RESTORE);
+		  } else if (button_state == LONG_PRESS){
+			  suspend = 1;
+		  }
+	  }
 	  if (suspend == 1) {
-		switch(count) {
+		switch(select_index) {
 			case 0:
 				vTaskResume(ReadCardHandle);
 				break;
@@ -755,13 +758,12 @@ void CardFoundStart(void *argument)
 		free(uid_str);
 	}
 
-	choose(&SCRN_CardFound, &suspend, &count, 2, OLED_NORESTORE);
  	if (suspend == 1) {
- 		vTaskResume(HomeHandle);
  		if (count == 0) {
  			int free_block = mem_find_free_block();
  			enter_card(read_card, mem_find_free_block());
  		}
+ 		vTaskResume(HomeHandle);
  		ranonce = 0;
  		count = 0;
  		vTaskSuspend(NULL);
@@ -793,7 +795,7 @@ void StartShowFiles(void *argument)
 		  OLED_display_files(&SCRN_ShowFiles, 0);
 		  ranonce++;
 	  }
-	  choose(&SCRN_ShowFiles, &suspend, &count, 4, OLED_RESTORE);
+
 	  if (suspend == 1) {
 		  if (count == 3) {
 			  vTaskResume(HomeHandle);
@@ -809,7 +811,7 @@ void StartShowFiles(void *argument)
 			  count = 0;
 
 			  while(1) {
-				  choose(&SCRN_FileData, &suspend, &count, 2, OLED_NORESTORE);
+
 				  if (suspend == 1) {
 					  if (count == 1) {
 						  OLED_SELECT(&SCRN_ShowFiles, 0, OLED_RESTORE);

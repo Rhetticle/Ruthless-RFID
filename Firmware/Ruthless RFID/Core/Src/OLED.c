@@ -442,23 +442,22 @@ void OLED_SELECT(const Screen* screen,uint8_t selopt, int restore){
 
 	char arrow[]="->";
 
-	uint8_t prevpage,prevcol,thispage,thiscol;
+	uint8_t prevpage,prevcol,thispage,thiscol,index;
 	char* rest;
 
-	    if(selopt==0){
-	        prevpage=screen->seldata[screen->selsize-1][0];
-	        prevcol=screen->seldata[screen->selsize-1][1];
-	        thispage=screen->seldata[selopt][0];
-	        thiscol=screen->seldata[selopt][1];
+	    if(selopt == 0){
+	    	index = screen->selsize - 1;
 	    }
 		else{
-	        prevpage=screen->seldata[selopt-1][0]; //See OLED.h this will give the page of the previous select option
-		    prevcol=screen->seldata[selopt-1][1];
-		    thispage=screen->seldata[selopt][0];
-	        thiscol=screen->seldata[selopt][1];
-
+			index = selopt - 1;
 	    }
-	    if(restore==OLED_RESTORE){
+
+	    prevpage=screen->seldata[index][0];
+	    prevcol=screen->seldata[index][1];
+	    thispage=screen->seldata[selopt][0];
+	    thiscol=screen->seldata[selopt][1];
+
+	    if(restore == OLED_RESTORE){
 	    	if (selopt == 0) {
 	    		rest=(char*)screen->data[find_restore_string(screen, screen->selsize - 1)]; //Here we may be wrapping around so we must restore the last select option
 	    	} else {
@@ -563,4 +562,17 @@ void oled_show_file(uint16_t entry) {
 	OLED_SELECT(&SCRN_FileData, 0, OLED_NORESTORE);
 
 	free(work);
+}
+
+/***/
+void oled_move_selection(const Screen* screen, uint8_t* arrow_index, uint8_t restore) {
+	uint8_t max_index = screen->selsize;
+
+	if (*arrow_index >= max_index - 1) {
+		*arrow_index = 0;
+	} else {
+		*arrow_index += 1;
+
+	}
+	OLED_SELECT(screen, *arrow_index, restore);
 }
