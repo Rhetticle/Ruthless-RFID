@@ -27,4 +27,4 @@ MFRC.c:542:19:UL_getuid	2
 MFRC.c:559:19:UL_getuidstr	2
 MFRC.c:576:19:UL_getalldata	3
 MFRC.c:594:19:UL_readcard	4
-MFRC.c:622:7:uid_tostring	3
+MFRC.c:618:7:uid_tostring	3

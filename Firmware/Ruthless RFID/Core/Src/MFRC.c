@@ -592,8 +592,6 @@ PCD_StatusTypeDef UL_getalldata(uint8_t* data) {
  * @return PCD_OK if data was successfully read
  * */
 PCD_StatusTypeDef UL_readcard(Card* result) {
-	uint8_t* uid = malloc(UL_UIDSIZE * sizeof(uint8_t));
-	uint8_t* contents = malloc(UL_MEMSIZE);
 
 	result->type = "MIFARE Ultralight";
 	result->name = "Test1";
@@ -604,11 +602,9 @@ PCD_StatusTypeDef UL_readcard(Card* result) {
 	if (PICC_Select() != PCD_OK) { //Select PICC if available
 		return PCD_NO_PICC;
 	}
-	if ((UL_getuid(uid) != PCD_OK) || (UL_getalldata(contents) !=  PCD_OK)) {
+	if ((UL_getuid(result->uid) != PCD_OK) || (UL_getalldata(result->contents) !=  PCD_OK)) {
 		return PCD_COMM_ERR;
 	}
-	result->uid = uid;
-	result->contents = contents;
 	return PCD_OK;
 }
 

@@ -95,13 +95,13 @@ const osThreadAttr_t CardFound_attributes = {
 osThreadId_t ShowFilesHandle;
 const osThreadAttr_t ShowFiles_attributes = {
   .name = "ShowFiles",
-  .stack_size = 256 * 4,
+  .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
-/* Definitions for UpdateDisplay */
-osThreadId_t UpdateDisplayHandle;
-const osThreadAttr_t UpdateDisplay_attributes = {
-  .name = "UpdateDisplay",
+/* Definitions for ShowFileData */
+osThreadId_t ShowFileDataHandle;
+const osThreadAttr_t ShowFileData_attributes = {
+  .name = "ShowFileData",
   .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
@@ -115,15 +115,10 @@ osMessageQueueId_t UserInputHandle;
 const osMessageQueueAttr_t UserInput_attributes = {
   .name = "UserInput"
 };
-/* Definitions for ScreenRequest */
-osMessageQueueId_t ScreenRequestHandle;
-const osMessageQueueAttr_t ScreenRequest_attributes = {
-  .name = "ScreenRequest"
-};
-/* Definitions for UpdateSelection */
-osMessageQueueId_t UpdateSelectionHandle;
-const osMessageQueueAttr_t UpdateSelection_attributes = {
-  .name = "UpdateSelection"
+/* Definitions for FileEntry */
+osMessageQueueId_t FileEntryHandle;
+const osMessageQueueAttr_t FileEntry_attributes = {
+  .name = "FileEntry"
 };
 /* USER CODE BEGIN PV */
 char TC[]="HVE strongly condemns malicious use of it's products.The Ruthless RFID is sold as an educational device. HVE is not liable for damages caused by misuse.";
@@ -148,7 +143,7 @@ void StartWriteCard(void *argument);
 void StartHome(void *argument);
 void CardFoundStart(void *argument);
 void StartShowFiles(void *argument);
-void StartUpdateDisplay(void *argument);
+void StartShowFileData(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -238,11 +233,8 @@ int main(void)
   /* creation of UserInput */
   UserInputHandle = osMessageQueueNew (1, sizeof(uint8_t), &UserInput_attributes);
 
-  /* creation of ScreenRequest */
-  ScreenRequestHandle = osMessageQueueNew (1, sizeof(Screen*), &ScreenRequest_attributes);
-
-  /* creation of UpdateSelection */
-  UpdateSelectionHandle = osMessageQueueNew (1, sizeof(uint8_t), &UpdateSelection_attributes);
+  /* creation of FileEntry */
+  FileEntryHandle = osMessageQueueNew (1, sizeof(uint16_t), &FileEntry_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -267,8 +259,8 @@ int main(void)
   /* creation of ShowFiles */
   ShowFilesHandle = osThreadNew(StartShowFiles, NULL, &ShowFiles_attributes);
 
-  /* creation of UpdateDisplay */
-  UpdateDisplayHandle = osThreadNew(StartUpdateDisplay, NULL, &UpdateDisplay_attributes);
+  /* creation of ShowFileData */
+  ShowFileDataHandle = osThreadNew(StartShowFileData, NULL, &ShowFileData_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -628,6 +620,7 @@ void Start_Init(void *argument)
     vTaskSuspend(HomeHandle);
     vTaskSuspend(CardFoundHandle);
     vTaskSuspend(ShowFilesHandle);
+    vTaskSuspend(ShowFileDataHandle);
 
     MFRC_INIT();
     MFRC_ANTOFF();
@@ -657,11 +650,13 @@ void StartReadCard(void *argument)
 {
   /* USER CODE BEGIN StartReadCard */
 	Card* read_card = malloc(sizeof(Card)); //Store our read card here
+	read_card->contents = malloc(UL_MEMSIZE * sizeof(uint8_t));
+	read_card->uid = malloc(UL_UIDSIZE * sizeof(uint8_t));
 	int ranonce = 0;
   /* Infinite loop */
   for(;;)
   {
-	int suspend = 0;
+
 	MFRC_ANTON();
 	if (ranonce == 0){
 		OLED_SCREEN(&SCRN_ReadCard, NORMAL);
@@ -670,14 +665,12 @@ void StartReadCard(void *argument)
 	if(UL_readcard(read_card) == PCD_OK){
 			BUZZ();
 			MFRC_ANTOFF();
-			xQueueSend(UidtoFoundHandle,&read_card,0); //Send a pointer to our string to the Card Found task to use
-			suspend = 1;
+			xQueueSend(UidtoFoundHandle,&read_card,0);
+			vTaskResume(CardFoundHandle);
+			ranonce = 0;
+			vTaskSuspend(NULL);
 		}
-	if (suspend == 1) {
-		vTaskResume(CardFoundHandle);
-		ranonce = 0;
-		vTaskSuspend(NULL);
-		}
+
 
 	}
   /* USER CODE END StartReadCard */
@@ -718,30 +711,34 @@ void StartHome(void *argument)
   /* USER CODE BEGIN StartHome */
 	uint8_t select_index = 0;
 	int ranonce = 0;
-	Screen* toSend = &SCRN_Home;
+	Button_StateTypeDef button_state;
   /* Infinite loop */
   for(;;)
   {
-	  int suspend = 0;
 	  if (ranonce == 0) {
-		  xQueueSend(ScreenRequestHandle, &toSend, 0);
+		  OLED_SCREEN(&SCRN_Home, NORMAL);
+		  OLED_SELECT(&SCRN_Home, select_index, OLED_RESTORE);
 		  ranonce++;
 	  }
 
-	  if (suspend == 1) {
-		switch(select_index) {
-			case 0:
-				vTaskResume(ReadCardHandle);
-				break;
-			case 1:
-				vTaskResume(WriteCardHandle);
-				break;
-			case 2:
-				vTaskResume(ShowFilesHandle);
-				break;
-		}
-		ranonce = 0;
-		vTaskSuspend(NULL);
+	  if (xQueueReceive(UserInputHandle, &button_state, 0) == pdTRUE) {
+		  if (button_state == SHORT_PRESS) {
+			  oled_move_selection(&SCRN_Home, &select_index, OLED_RESTORE);
+		  } else if (button_state == LONG_PRESS) {
+			  switch(select_index) {
+			  	  case 0:
+			  		  vTaskResume(ReadCardHandle);
+			  		  break;
+			  	  case 1:
+			  		  vTaskResume(WriteCardHandle);
+			  		  break;
+			  	  case 2:
+			  		  vTaskResume(ShowFilesHandle);
+			  		  break;
+			  }
+			  ranonce = 0;
+			  vTaskSuspend(NULL);
+		  }
 	  }
 
 
@@ -759,33 +756,36 @@ void StartHome(void *argument)
 void CardFoundStart(void *argument)
 {
   /* USER CODE BEGIN CardFoundStart */
-	 int count = 0;
-	 int ranonce = 0;
-	 Card* read_card;
+	uint8_t select_index = 0;
+	int ranonce = 0;
+	Button_StateTypeDef button_state;
+	Card* read_card;
   /* Infinite loop */
   for(;;)
   {
-	int suspend = 0;
+
 	if (ranonce == 0) {
 		while(xQueueReceive(UidtoFoundHandle, &read_card, 0) != pdTRUE);
 		char* uid_str = uid_tostring(read_card->uid, read_card->uidsize);
 		OLED_SCREEN(&SCRN_CardFound, NORMAL);
 		OLED_SCRNREF(&SCRN_CardFound, FOUND_UID_LOC, uid_str);
 		OLED_SCRNREF(&SCRN_CardFound, FOUND_CARDTYPE_LOC, read_card->type);
-		OLED_SELECT(&SCRN_CardFound, count, OLED_NORESTORE);
+		OLED_SELECT(&SCRN_CardFound, select_index, OLED_NORESTORE);
 		ranonce++;
 		free(uid_str);
 	}
 
- 	if (suspend == 1) {
- 		if (count == 0) {
- 			int free_block = mem_find_free_block();
- 			enter_card(read_card, mem_find_free_block());
+ 	if (xQueueReceive(UserInputHandle, &button_state, 0) == pdTRUE) {
+ 		if (button_state == SHORT_PRESS) {
+ 			oled_move_selection(&SCRN_CardFound, &select_index, OLED_NORESTORE);
+ 		} else if (button_state == LONG_PRESS) {
+ 			if (select_index == 0) {
+ 				enter_card(read_card, mem_find_free_block());
+ 			 }
+ 			vTaskResume(HomeHandle);
+ 			ranonce = 0;
+ 			vTaskSuspend(NULL);
  		}
- 		vTaskResume(HomeHandle);
- 		ranonce = 0;
- 		count = 0;
- 		vTaskSuspend(NULL);
  	}
 
   }
@@ -802,79 +802,84 @@ void CardFoundStart(void *argument)
 void StartShowFiles(void *argument)
 {
   /* USER CODE BEGIN StartShowFiles */
-  int count = 0;
-  int ranonce = 0;
+	uint8_t select_index = 0;
+	int ranonce = 0;
+	Button_StateTypeDef button_state;
 	/* Infinite loop */
   for(;;)
   {
-	  int suspend = 0;
+
 	  if (ranonce == 0) {
 		  OLED_SCREEN(&SCRN_ShowFiles, NORMAL);
-		  OLED_SELECT(&SCRN_ShowFiles, 0, OLED_RESTORE);
+		  OLED_SELECT(&SCRN_ShowFiles, select_index, OLED_RESTORE);
 		  OLED_display_files(&SCRN_ShowFiles, 0);
 		  ranonce++;
 	  }
 
-	  if (suspend == 1) {
-		  if (count == 3) {
-			  vTaskResume(HomeHandle);
-			  count = 0;
-			  ranonce = 0;
-			  vTaskSuspend(NULL);
-		  }
-		  if ((entry_present(count) == RFS_OK)) {
-			  suspend = 0;
-			  ranonce = 0;
-			  uint16_t entry = count;
-			  oled_show_file(entry);
-			  count = 0;
+	  if (xQueueReceive(UserInputHandle, &button_state, 0) == pdTRUE) {
+		  if (button_state == SHORT_PRESS) {
 
-			  while(1) {
+			  oled_move_selection(&SCRN_ShowFiles, &select_index, OLED_RESTORE);
 
-				  if (suspend == 1) {
-					  if (count == 1) {
-						  OLED_SELECT(&SCRN_ShowFiles, 0, OLED_RESTORE);
-						  break;
-					  } else if (count == 0) {
-						  remove_card(entry);
-						  OLED_SELECT(&SCRN_ShowFiles, 0, OLED_RESTORE);
-						  break;
-					  }
-				  }
+		  } else if (button_state == LONG_PRESS) {
+
+			  if (select_index == SHOWFILE_EXIT_LOC) {
+				  vTaskResume(HomeHandle);
+				  ranonce = 0;
+				  vTaskSuspend(NULL);
+			  } else if ((entry_present(select_index) == RFS_OK)) {
+				  uint16_t entry = select_index;
+				  xQueueSend(FileEntryHandle, &entry, 0);
+				  vTaskResume(ShowFileDataHandle);
+				  ranonce = 0;
+				  vTaskSuspend(NULL);
 			  }
+
 		  }
 	  }
+
   }
   /* USER CODE END StartShowFiles */
 }
 
-/* USER CODE BEGIN Header_StartUpdateDisplay */
+/* USER CODE BEGIN Header_StartShowFileData */
 /**
-* @brief Function implementing the UpdateDisplay thread.
+* @brief Function implementing the ShowFileData thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_StartUpdateDisplay */
-void StartUpdateDisplay(void *argument)
+/* USER CODE END Header_StartShowFileData */
+void StartShowFileData(void *argument)
 {
-  /* USER CODE BEGIN StartUpdateDisplay */
-	Screen* currentScreen;
-	Button_StateTypeDef button_state;
+  /* USER CODE BEGIN StartShowFileData */
 	uint8_t select_index = 0;
+	int ranonce = 0;
+	Button_StateTypeDef button_state;
+	uint16_t entry_to_show;
   /* Infinite loop */
   for(;;)
   {
-	  if (xQueueReceive(ScreenRequestHandle, &currentScreen, 0) == pdTRUE) {
-		  OLED_SCREEN(currentScreen, NORMAL);
-	  }
-	  if (xQueueReceive(UserInputHandle, &button_state, 0) == pdTRUE) {
-		  if (button_state == SHORT_PRESS) {
-			  oled_move_selection(currentScreen, &select_index, currentScreen->restore);
-		  }
 
-	  }
+    if (ranonce == 0) {
+    	while(xQueueReceive(FileEntryHandle, &entry_to_show, 0) != pdTRUE);
+    	oled_show_file(entry_to_show);
+    	ranonce++;
+    }
+
+    if (xQueueReceive(UserInputHandle, &button_state, 0) == pdTRUE) {
+    	if (button_state == SHORT_PRESS) {
+    		oled_move_selection(&SCRN_FileData, &select_index, OLED_NORESTORE);
+    	} else if (button_state == LONG_PRESS) {
+    		if (select_index == 0) {
+    			remove_card(entry_to_show);
+    		}
+    		vTaskResume(ShowFilesHandle);
+    		ranonce = 0;
+    		vTaskSuspend(NULL);
+    	}
+    }
   }
-  /* USER CODE END StartUpdateDisplay */
+  /* USER CODE END StartShowFileData */
 }
 
 /**
