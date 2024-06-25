@@ -391,7 +391,7 @@ PCD_StatusTypeDef PICC_Select(void){
 
 PCD_StatusTypeDef PICC_CHECK(void){
 	uint8_t ATQA[2];
-	if(MFRC_REQA(ATQA)!=PCD_OK){
+	if(MFRC_WUPA(ATQA)!=PCD_OK){
 		return(PCD_COMM_ERR);
 	}
 
@@ -441,9 +441,14 @@ PCD_StatusTypeDef UL_READ(uint8_t addr,uint8_t* data){
  * */
 
 PCD_StatusTypeDef UL_WRITE(uint8_t addr,uint8_t* data){
-	uint8_t transaction[4]={ULTRA_WRITE,addr};
+	uint8_t transaction[8]={ULTRA_WRITE,addr};
 	uint8_t ack;
 	uint8_t CRC_val[2];
+
+	//Safety check to see if we're trying to write to any of the first four pages which contain sensitive data (uid, OTP etc)
+	if (addr <= 3) {
+		return PCD_PROTECTED_ERR;
+	}
 
 	memcpy(transaction+2,data,4);
 
@@ -609,6 +614,30 @@ PCD_StatusTypeDef UL_readcard(Card* result) {
 }
 
 /**
+ * Write a card object to a physical card
+ * @param towrite - Card instance to write
+ * @return PCD_OK if card was successfully written to and verified.
+ * */
+PCD_StatusTypeDef UL_writecard(Card* towrite) {
+	uint8_t* data_to_write = malloc(UL_DATASIZE * sizeof(uint8_t));
+	memcpy(data_to_write, towrite->contents + (UL_MEMSIZE - UL_DATASIZE), UL_DATASIZE);
+
+	if (PICC_Select() != PCD_OK) {
+		free(data_to_write);
+		return PCD_NO_PICC;
+	}
+
+	for (int addr = UL_DATASTART; addr < UL_DATAEND; addr++) {
+		if (UL_WRITE(addr, data_to_write + (4 * (addr - UL_DATASTART))) != PCD_OK) {
+			free(data_to_write);
+			return PCD_COMM_ERR;
+		}
+	}
+	free(data_to_write);
+	return PCD_OK;
+}
+
+/**
  * Convert a uid to a string
  *
  * @param uid - Uid
@@ -627,6 +656,34 @@ char* uid_tostring(uint8_t* uid, uint8_t size) {
 	}
 	result[2 * size] = '\0'; //Add null
 	return result;
+}
+
+/**
+ * Verify that a phyiscal card's contents matches what was intended to be written
+ * @param check - Card to check phyiscal card data against
+ * @return PCD_OK if contents is correct
+ * */
+PCD_StatusTypeDef UL_verify(Card* check) {
+	Card* read = malloc(sizeof(Card));
+	read->contents = malloc(UL_MEMSIZE * sizeof(uint8_t));
+	read->uid = malloc(UL_UIDSIZE * sizeof(uint8_t));
+
+	if (UL_readcard(read) != PCD_OK) {
+		return PCD_COMM_ERR;
+	}
+
+	for (int byte = 0; byte < UL_MEMSIZE; byte++) {
+		if (read->contents[byte] != check->contents[byte]) {
+			free(read->contents);
+			free(read->uid);
+			free(read);
+			return PCD_VERIFY_ERR;
+		}
+	}
+	free(read->contents);
+	free(read->uid);
+	free(read);
+	return PCD_OK;
 }
 
 

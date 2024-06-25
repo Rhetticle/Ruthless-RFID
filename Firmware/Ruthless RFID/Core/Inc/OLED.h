@@ -22,6 +22,10 @@
 #define OLED_NORESTORE 0
 #define OLED_RESTORE 1
 
+//Character constants
+#define OLED_CHARSIZE 5 //Character is 5 columns long
+#define ASCII_START 0x20
+
 //Commands
 #define LOWER_COL 0x02 //Lower nibble op code for column start (0x02)
 #define UPPER_COL 0x10 //Upper nibble op code of column start (0x02)
@@ -151,10 +155,6 @@ static const char ASCII[96][5] = {
 ,{0x00, 0x06, 0x09, 0x09, 0x06} // 7f ?
 }; // end char ASCII[96][5]
 
-typedef struct {
-	const Screen* screen;
-	uint8_t sel_option;
-}DisplayUpdate;
 
 extern SPI_HandleTypeDef hspi1; //Our SPI bus connected to OLED
 

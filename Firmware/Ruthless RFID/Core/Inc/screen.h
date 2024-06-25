@@ -36,9 +36,14 @@ extern const Screen SCRN_Home, SCRN_ReadCard, SCRN_CardFound, SCRN_WriteCard, SC
 #define FOUND_UID_LOC 1 //Location index for UID when calling OLED_SCRNREF
 #define FOUND_CARDTYPE_LOC 2 //Location index for PICC type
 
+//Write Card data locations
+#define WRITE_SRC_LOC 2
 
 //Show File data locations
 #define SHOWFILE_TYPE_LOC 1
 #define SHOWFILE_UID_LOC 2
-#define SHOWFILE_EXIT_LOC 3
+#define SHOWFILE_DELETE_LOC 0
+
+//Show Files data locations
+#define SHOWFILES_EXIT_LOC 3
 #endif /* INC_SCREEN_H_ */

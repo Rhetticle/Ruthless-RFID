@@ -19,4 +19,5 @@ OLED.c:492:19:OLED_display_files	4
 OLED.c:518:6:free_filenames	2
 OLED.c:532:9:find_restore_string	4
 OLED.c:549:6:oled_show_file	2
-OLED.c:568:6:oled_move_selection	2
+OLED.c:573:6:oled_move_selection	2
+OLED.c:590:6:oled_select_invert	1

@@ -629,6 +629,34 @@ void Start_Init(void *argument)
     MEM_INIT();
     memory_reset();
 
+    uint8_t fake_contents[64] = {0x04, 0x41, 0xBF, 0x72,
+    							0x1A, 0x06, 0x6C, 0x81,
+								0xF1, 0x48, 0x00,0x00,
+    							0x00, 0x00, 0x00, 0x00,
+    							0x01, 0x33, 0x00, 0x01,
+    							0xFE, 0xED, 0xBE, 0xEF,
+    							0x00, 0x01, 0x00, 0x01,
+    							0x00, 0x00, 0x00, 0x00,
+    							0x00, 0x00, 0x00, 0x00,
+    							0x00, 0x00, 0x00 ,0x63,
+    							0x01, 0x33, 0x00, 0x01,
+    							0x00, 0x01, 0x00, 0x01,
+    							0x00, 0x01, 0x00, 0x01,
+    							0x00, 0x00, 0x00, 0x00,
+    							0x00, 0x00, 0x00, 0x00,
+    							0x00, 0x00, 0x00, 0x63};
+    uint8_t uid[7] = {0x04, 0x41, 0xBF, 0x72, 0x1A, 0x06, 0x6C};
+
+    Card fake_card = {
+    	.contents = fake_contents,
+		.contents_size = 64,
+    	.uid = uid,
+    	.uidsize = 7,
+		.name = "fake",
+		.type = "MIFARE Ultralight",
+		.read_protected = 0
+    };
+    enter_card(&fake_card, 0);
     while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) != 0);
     osDelay(10);
     uint8_t clear = NO_PRESS;
@@ -686,7 +714,10 @@ void StartReadCard(void *argument)
 void StartWriteCard(void *argument)
 {
   /* USER CODE BEGIN StartWriteCard */
-  int ranonce = 0;
+	uint8_t file_select_count = 0;
+	int ranonce = 0;
+	Button_StateTypeDef button_state;
+	Card* towrite = NULL;
   /* Infinite loop */
   for(;;)
   {
@@ -694,7 +725,35 @@ void StartWriteCard(void *argument)
 	  	OLED_SCREEN(&SCRN_WriteCard, NORMAL);
 	  	ranonce++;
 	  }
-	  osDelay(1);
+
+	  if (xQueueReceive(UserInputHandle, &button_state, 0) == pdTRUE) {
+		  if (button_state == SHORT_PRESS) {
+			  if (entry_present(file_select_count) == RFS_OK) {
+				  towrite = read_card_entry(file_select_count);
+				  char* file_name = get_file_name(file_select_count);
+				  OLED_SCRNREF(&SCRN_WriteCard, WRITE_SRC_LOC, file_name);
+				  free(file_name);
+			  }
+		  } else if ((button_state == LONG_PRESS) && (towrite != NULL)) {
+			  	OLED_Clear();
+			  	OLED_Printlin(2, 20, "Writing...", NORMAL);
+			  	MFRC_ANTON();
+				UL_writecard(towrite);
+				MFRC_HALTA();
+				OLED_Printlin(4, 20, "Verifying...", NORMAL);
+				if (UL_verify(towrite) == PCD_OK) {
+					OLED_Printlin(6, 20, "Write verified :)", NORMAL);
+				}
+				MFRC_ANTOFF();
+				osDelay(1000);
+				ranonce = 0;
+				vTaskResume(HomeHandle);
+				vTaskSuspend(NULL);
+		  }
+	  }
+
+
+
   }
   /* USER CODE END StartWriteCard */
 }
@@ -823,7 +882,7 @@ void StartShowFiles(void *argument)
 
 		  } else if (button_state == LONG_PRESS) {
 
-			  if (select_index == SHOWFILE_EXIT_LOC) {
+			  if (select_index == SHOWFILES_EXIT_LOC) {
 				  vTaskResume(HomeHandle);
 				  ranonce = 0;
 				  vTaskSuspend(NULL);
@@ -870,7 +929,7 @@ void StartShowFileData(void *argument)
     	if (button_state == SHORT_PRESS) {
     		oled_move_selection(&SCRN_FileData, &select_index, OLED_NORESTORE);
     	} else if (button_state == LONG_PRESS) {
-    		if (select_index == 0) {
+    		if (select_index == SHOWFILE_DELETE_LOC) {
     			remove_card(entry_to_show);
     		}
     		vTaskResume(ShowFilesHandle);

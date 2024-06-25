@@ -184,7 +184,7 @@ HAL_StatusTypeDef OLED_INIT(void){
 							DISP_OFFSET , OSC_SET , OSC , PRE_CHRG_SET , PRE_CHRG , COM_SET , COM , VCOM_SET, VCOM};
 
 
-	for(int i=0;i<25;i++){
+	for(int i = 0; i < 25; i++){
 		OLED_cmd(config_data[i]);
 		HAL_Delay(1);
 	}
@@ -211,10 +211,10 @@ HAL_StatusTypeDef OLED_INIT(void){
  * @param result: Pointer to array to store the 5 inverted bytes that make up the character
  * */
 void OLED_InvChar(char character,uint8_t* result){
-	uint8_t* temp=malloc(5);
+	uint8_t temp[OLED_CHARSIZE];
 
-	for(int i=0;i<6;i++){
-			temp[i]=~(ASCII[(uint8_t)character-0x20][i]);
+	for(int i=0;i<=OLED_CHARSIZE;i++){
+			temp[i]=~(ASCII[(uint8_t)character-ASCII_START][i]);
 	}
 	memcpy(result,temp,5);
 	free(temp);
@@ -564,7 +564,12 @@ void oled_show_file(uint16_t entry) {
 	free(work);
 }
 
-/***/
+/**
+ * Move selection arrow for given screen
+ * @param screen - Screen to be modified
+ * @param arrow_index - Pointer to variable which keeps track of arrow index
+ * @param restore - Option to restore previous text or not
+ * */
 void oled_move_selection(const Screen* screen, uint8_t* arrow_index, uint8_t restore) {
 	uint8_t max_index = screen->selsize;
 
@@ -575,4 +580,13 @@ void oled_move_selection(const Screen* screen, uint8_t* arrow_index, uint8_t res
 
 	}
 	OLED_SELECT(screen, *arrow_index, restore);
+}
+
+/**
+ * Select by inverting the text on the screen
+ * @param screen - Screen to modify
+ * @param select_index - Pointer to variable that keeps track of selection index
+ * */
+void oled_select_invert(const Screen* screen, uint8_t* select_index) {
+
 }
