@@ -634,7 +634,7 @@ void Start_Init(void *argument)
 								0xF1, 0x48, 0x00,0x00,
     							0x00, 0x00, 0x00, 0x00,
     							0x01, 0x33, 0x00, 0x01,
-    							0xFE, 0xED, 0xBE, 0xEF,
+    							0x00, 0x01, 0x00, 0x01,
     							0x00, 0x01, 0x00, 0x01,
     							0x00, 0x00, 0x00, 0x00,
     							0x00, 0x00, 0x00, 0x00,
@@ -724,7 +724,6 @@ void StartWriteCard(void *argument)
 	  if (ranonce == 0){
 	  	OLED_SCREEN(&SCRN_WriteCard, NORMAL);
 	  	ranonce++;
-
 	  }
 
 	  if (xQueueReceive(UserInputHandle, &button_state, 0) == pdTRUE) {
@@ -735,30 +734,21 @@ void StartWriteCard(void *argument)
 				  OLED_SCRNREF(&SCRN_WriteCard, WRITE_SRC_LOC, file_name);
 				  free(file_name);
 			  }
-
 		  } else if ((button_state == LONG_PRESS) && (towrite != NULL)) {
 			  	OLED_Clear();
+			  	OLED_Printlin(2, 20, "Writing...", NORMAL);
 			  	MFRC_ANTON();
-				if (UL_writecard(towrite) == PCD_NO_PICC) {
-					OLED_Print("ERROR: Couldn't find card, aborting write");
-					MFRC_ANTOFF();
-					osDelay(1000);
-					ranonce = 0;
-					vTaskResume(HomeHandle);
-					vTaskSuspend(NULL);
-				} else {
-					OLED_Printlin(2, 20, "Writing...", NORMAL);
-					MFRC_HALTA();
-					OLED_Printlin(4, 20, "Verifying...", NORMAL);
-					if (UL_verify(towrite) == PCD_OK) {
-						OLED_Printlin(6, 20, "Write verified :)", NORMAL);
-					}
-					MFRC_ANTOFF();
-					osDelay(1000);
-					ranonce = 0;
-					vTaskResume(HomeHandle);
-					vTaskSuspend(NULL);
+				UL_writecard(towrite);
+				MFRC_HALTA();
+				OLED_Printlin(4, 20, "Verifying...", NORMAL);
+				if (UL_verify(towrite) == PCD_OK) {
+					OLED_Printlin(6, 20, "Write verified :)", NORMAL);
 				}
+				MFRC_ANTOFF();
+				osDelay(1000);
+				ranonce = 0;
+				vTaskResume(HomeHandle);
+				vTaskSuspend(NULL);
 		  }
 	  }
 

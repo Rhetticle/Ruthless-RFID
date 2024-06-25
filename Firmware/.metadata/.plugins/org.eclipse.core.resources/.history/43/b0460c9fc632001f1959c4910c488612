@@ -747,17 +747,19 @@ void StartWriteCard(void *argument)
 					vTaskResume(HomeHandle);
 					vTaskSuspend(NULL);
 				} else {
-					OLED_Printlin(2, 20, "Writing...", NORMAL);
-					MFRC_HALTA();
-					OLED_Printlin(4, 20, "Verifying...", NORMAL);
-					if (UL_verify(towrite) == PCD_OK) {
-						OLED_Printlin(6, 20, "Write verified :)", NORMAL);
-					}
-					MFRC_ANTOFF();
-					osDelay(1000);
-					ranonce = 0;
-					vTaskResume(HomeHandle);
-					vTaskSuspend(NULL);
+				OLED_Printlin(2, 20, "Writing...", NORMAL);
+				MFRC_HALTA();
+				OLED_Printlin(4, 20, "Verifying...", NORMAL);
+				if (UL_verify(towrite) == PCD_OK) {
+					OLED_Printlin(6, 20, "Write verified :)", NORMAL);
+				} else {
+					OLED_Printlin(6, 20, "Couldn't verify :(", NORMAL);
+				}
+				MFRC_ANTOFF();
+				osDelay(1000);
+				ranonce = 0;
+				vTaskResume(HomeHandle);
+				vTaskSuspend(NULL);
 				}
 		  }
 	  }

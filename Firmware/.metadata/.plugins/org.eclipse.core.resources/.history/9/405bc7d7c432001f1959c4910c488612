@@ -724,10 +724,9 @@ void StartWriteCard(void *argument)
 	  if (ranonce == 0){
 	  	OLED_SCREEN(&SCRN_WriteCard, NORMAL);
 	  	ranonce++;
-
 	  }
 
-	  if (xQueueReceive(UserInputHandle, &button_state, 0) == pdTRUE) {
+	  else if (xQueueReceive(UserInputHandle, &button_state, 0) == pdTRUE) {
 		  if (button_state == SHORT_PRESS) {
 			  if (entry_present(file_select_count) == RFS_OK) {
 				  towrite = read_card_entry(file_select_count);
@@ -746,19 +745,20 @@ void StartWriteCard(void *argument)
 					ranonce = 0;
 					vTaskResume(HomeHandle);
 					vTaskSuspend(NULL);
-				} else {
-					OLED_Printlin(2, 20, "Writing...", NORMAL);
-					MFRC_HALTA();
-					OLED_Printlin(4, 20, "Verifying...", NORMAL);
-					if (UL_verify(towrite) == PCD_OK) {
-						OLED_Printlin(6, 20, "Write verified :)", NORMAL);
-					}
-					MFRC_ANTOFF();
-					osDelay(1000);
-					ranonce = 0;
-					vTaskResume(HomeHandle);
-					vTaskSuspend(NULL);
 				}
+				OLED_Printlin(2, 20, "Writing...", NORMAL);
+				MFRC_HALTA();
+				OLED_Printlin(4, 20, "Verifying...", NORMAL);
+				if (UL_verify(towrite) == PCD_OK) {
+					OLED_Printlin(6, 20, "Write verified :)", NORMAL);
+				} else {
+					OLED_Printlin(6, 20, "Couldn't verify :(", NORMAL);
+				}
+				MFRC_ANTOFF();
+				osDelay(1000);
+				ranonce = 0;
+				vTaskResume(HomeHandle);
+				vTaskSuspend(NULL);
 		  }
 	  }
 

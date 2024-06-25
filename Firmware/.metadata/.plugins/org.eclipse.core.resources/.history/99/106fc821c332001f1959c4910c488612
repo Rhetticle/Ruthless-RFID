@@ -367,12 +367,11 @@ PCD_StatusTypeDef PICC_Select(void){
 	  uint8_t SELECT1[3];
 	  uint8_t ANTICOL2[5];
 	  uint8_t SELECT2[3];
-	  uint8_t ATQA[2];
 
 	  if (PICC_CHECK() != PCD_OK) {
 		  return PCD_COMM_ERR;
 	  }
-	  MFRC_WUPA(ATQA);
+	  MFRC_WUPA();
 	  MFRC_ANTICOL1(ANTICOL1);
 	  if(ANTICOL1[0]!=0x88){
 		  return(PCD_COMM_ERR);

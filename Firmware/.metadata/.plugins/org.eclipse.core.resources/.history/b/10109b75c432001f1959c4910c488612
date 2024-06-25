@@ -235,8 +235,7 @@ void OLED_drawChar(uint8_t page,uint8_t col, char character, uint8_t invert){
 	OLED_cmd(PAGE_ADDR+page);
 	OLED_cmd(col&0x0F);
 	OLED_cmd(0x10|(col>>4));
-	uint8_t data[6];
-
+	uint8_t* data=malloc(6);
 	if(invert==NORMAL){
 		memcpy(data,ASCII[(uint8_t)character-0x20],5);
 	}
@@ -244,9 +243,9 @@ void OLED_drawChar(uint8_t page,uint8_t col, char character, uint8_t invert){
 		OLED_InvChar(character,data);
 	}
 
-	data[5]=0x00;
+	*(data+5)=0x00;
 	OLED_data(data, 6);
-
+	free(data);
 	}
 
 /*Function to write string on a certain line of display
