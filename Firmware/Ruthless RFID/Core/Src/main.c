@@ -95,13 +95,20 @@ const osThreadAttr_t CardFound_attributes = {
 osThreadId_t ShowFilesHandle;
 const osThreadAttr_t ShowFiles_attributes = {
   .name = "ShowFiles",
-  .stack_size = 512 * 4,
+  .stack_size = 256 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for ShowFileData */
 osThreadId_t ShowFileDataHandle;
 const osThreadAttr_t ShowFileData_attributes = {
   .name = "ShowFileData",
+  .stack_size = 256 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for Clone */
+osThreadId_t CloneHandle;
+const osThreadAttr_t Clone_attributes = {
+  .name = "Clone",
   .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
@@ -144,6 +151,7 @@ void StartHome(void *argument);
 void CardFoundStart(void *argument);
 void StartShowFiles(void *argument);
 void StartShowFileData(void *argument);
+void StartClone(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -261,6 +269,9 @@ int main(void)
 
   /* creation of ShowFileData */
   ShowFileDataHandle = osThreadNew(StartShowFileData, NULL, &ShowFileData_attributes);
+
+  /* creation of Clone */
+  CloneHandle = osThreadNew(StartClone, NULL, &Clone_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -621,6 +632,7 @@ void Start_Init(void *argument)
     vTaskSuspend(CardFoundHandle);
     vTaskSuspend(ShowFilesHandle);
     vTaskSuspend(ShowFileDataHandle);
+    vTaskSuspend(CloneHandle);
 
     MFRC_INIT();
     MFRC_ANTOFF();
@@ -644,7 +656,7 @@ void Start_Init(void *argument)
     							0x00, 0x01, 0x00, 0x01,
     							0x00, 0x00, 0x00, 0x00,
     							0x00, 0x00, 0x00, 0x00,
-    							0xEE, 0x00, 0x00, 0x63};
+    							0x00, 0x00, 0x00, 0x63};
     uint8_t uid[7] = {0x04, 0x41, 0xBF, 0x72, 0x1A, 0x06, 0x6C};
 
     Card fake_card = {
@@ -804,6 +816,9 @@ void StartHome(void *argument)
 			  	  case 2:
 			  		  vTaskResume(ShowFilesHandle);
 			  		  break;
+			  	  case 3:
+			  		  vTaskResume(CloneHandle);
+			  		  break;
 			  }
 			  ranonce = 0;
 			  vTaskSuspend(NULL);
@@ -949,6 +964,45 @@ void StartShowFileData(void *argument)
     }
   }
   /* USER CODE END StartShowFileData */
+}
+
+/* USER CODE BEGIN Header_StartClone */
+/**
+* @brief Function implementing the Clone thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartClone */
+void StartClone(void *argument)
+{
+  /* USER CODE BEGIN StartClone */
+	int ranonce = 0;
+	Card* read_card = malloc(sizeof(Card)); //Store our read card here
+	read_card->contents = malloc(UL_MEMSIZE * sizeof(uint8_t));
+	read_card->uid = malloc(UL_UIDSIZE * sizeof(uint8_t));
+  /* Infinite loop */
+  for(;;)
+  {
+	MFRC_ANTON();
+    if (ranonce == 0) {
+    	OLED_SCREEN(&SCRN_Clone, NORMAL);
+    	ranonce++;
+    }
+
+    if (UL_readcard(read_card) == PCD_OK) {
+    	MFRC_HALTA();
+    	BUZZ();
+    	OLED_Clear();
+    	OLED_PrintCent(2, "PLACE CARD YOU WISH", NORMAL);
+    	OLED_PrintCent(4, "TO COPY TO", NORMAL);
+    	while(PICC_CHECK() == PCD_OK); //Hang until read card is removed
+    	UL_writecard(read_card);
+    	vTaskResume(HomeHandle);
+    	ranonce = 0;
+    	vTaskSuspend(NULL);
+    }
+  }
+  /* USER CODE END StartClone */
 }
 
 /**

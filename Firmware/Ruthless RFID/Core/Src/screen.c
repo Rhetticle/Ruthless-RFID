@@ -31,6 +31,10 @@ static const uint8_t SHOW_SEL[4][2] = {{2, START_COL}, {4,START_COL}, {6, START_
 static const char* FILEDATA_SCREEN[5] = {".", "IC:", "UID: ", "DELETE", "EXIT"};
 static const uint8_t FILEDATA_DATLOC[5][2] = {{0,MID_COL-12}, {2,START_COL},{4,START_COL},{6,START_COL + 12}, {6, END_COL - 24}};
 static const uint8_t FILEDATA_SEL[2][2] = {{6, START_COL},{6,END_COL - 36}};
+
+static const char* CLONE_SCREEN[4] = {"CLONE", "STANDARD: ISO 14443", "PLACE CARD YOU WISH", "TO COPY FROM"};
+static const uint8_t CLONE_DATLOC[4][2] = {{0,0}, {2, START_COL}, {4, START_COL}, {6, START_COL}};
+static const uint8_t CLONE_SEL[1][2] = {{0,0}};
 /**
  * Screens
  *
@@ -43,7 +47,6 @@ const Screen SCRN_Home = {
 		.data = HOME_SCREEN,
 		.dataloc = HOME_DATLOC,
 		.seldata = HOME_SEL,
-		.restore = OLED_RESTORE
 };
 
 //Read card
@@ -53,7 +56,6 @@ const Screen SCRN_ReadCard = {
 		.data = READ_SCREEN,
 		.dataloc = READ_DATLOC,
 		.seldata = READ_SEL,
-		.restore = OLED_NORESTORE
 };
 
 //Card found
@@ -63,7 +65,6 @@ const Screen SCRN_CardFound = {
 		.data = CARD_FOUNDSCREEN,
 		.dataloc = CARD_FOUNDATLOC,
 		.seldata = CARD_FOUNDSEL,
-		.restore = OLED_NORESTORE
 };
 
 const Screen SCRN_WriteCard = {
@@ -72,7 +73,6 @@ const Screen SCRN_WriteCard = {
 		.data = WRITE_SCREEN,
 		.dataloc = WRITE_DATLOC,
 		.seldata = WRITE_SEL,
-		.restore = OLED_RESTORE
 };
 
 //Show Files
@@ -82,7 +82,6 @@ const Screen SCRN_ShowFiles = {
 		.data = SHOW_FILESSCREEN,
 		.dataloc = SHOW_DATLOC,
 		.seldata = SHOW_SEL,
-		.restore = OLED_RESTORE
 };
 
 //Show File contents
@@ -92,5 +91,13 @@ const Screen SCRN_FileData = {
 		.data = FILEDATA_SCREEN,
 		.dataloc = FILEDATA_DATLOC,
 		.seldata = FILEDATA_SEL,
-		.restore = OLED_NORESTORE
+};
+
+//Clone card
+const Screen SCRN_Clone = {
+		.datsize = sizeof(CLONE_SCREEN)/sizeof(CLONE_SCREEN[0]),
+		.selsize = sizeof(CLONE_SEL)/sizeof(CLONE_SEL[0]),
+		.data = CLONE_SCREEN,
+		.dataloc = CLONE_DATLOC,
+		.seldata = CLONE_SEL,
 };
