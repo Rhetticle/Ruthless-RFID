@@ -13,3 +13,7 @@
 ../Core/Src/ruthlessfs.c:313:19:entry_present	24	static
 ../Core/Src/ruthlessfs.c:332:7:get_file_name	24	static
 ../Core/Src/ruthlessfs.c:352:6:remove_card	16	static
+../Core/Src/ruthlessfs.c:360:10:get_used_size	16	static
+../Core/Src/ruthlessfs.c:370:10:get_free_size	8	static
+../Core/Src/ruthlessfs.c:378:6:get_used_size_str	24	static
+../Core/Src/ruthlessfs.c:387:6:get_free_size_str	24	static

@@ -40,6 +40,8 @@
 #define PAGE_SIZE 2048 //2KiB
 #define BLOCK_PAGECOUNT 64 //64 pages in a 128kB sector
 #define BLOCK_COUNT 1024
+#define MEM_SIZE 1024 //Memory size in MiB
+#define BLOCK_SIZE 0.128 //Block size in MiB
 
 //Functions
 void READ_ID(uint8_t* rec);

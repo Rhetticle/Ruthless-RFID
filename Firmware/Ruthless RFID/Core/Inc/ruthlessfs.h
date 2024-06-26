@@ -49,4 +49,8 @@ RFS_StatusTypeDef get_all_files(char** result);
 RFS_StatusTypeDef entry_present(uint16_t entry);
 char* get_file_name(uint16_t entry);
 void remove_card(uint16_t entry);
+uint32_t get_used_size(void);
+uint32_t get_free_size(void);
+void get_used_size_str(char* result);
+void get_free_size_str(char* result);
 #endif /* INC_RUTHLESSFS_H_ */

@@ -13,3 +13,7 @@ ruthlessfs.c:289:19:get_all_files	3
 ruthlessfs.c:313:19:entry_present	3
 ruthlessfs.c:332:7:get_file_name	2
 ruthlessfs.c:352:6:remove_card	1
+ruthlessfs.c:360:10:get_used_size	1
+ruthlessfs.c:370:10:get_free_size	1
+ruthlessfs.c:378:6:get_used_size_str	1
+ruthlessfs.c:387:6:get_free_size_str	1

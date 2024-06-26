@@ -182,6 +182,8 @@ void write_card(Card* towrite) {
 		OLED_PrintCent(4,"Verifying...", NORMAL);
 		if (UL_verify(towrite) == PCD_OK) {
 			OLED_PrintCent(6, "Write verified :)", NORMAL);
+		} else {
+			OLED_PrintCent(6, "ERROR: COULDN'T VERIFY", NORMAL);
 		}
 		MFRC_ANTOFF();
 		osDelay(1000);
@@ -981,7 +983,7 @@ void StartClone(void *argument)
     }
 
     if (UL_readcard(read_card) == PCD_OK) {
-    	MFRC_HALTA();
+    	MFRC_HALTA(); //De-select card
     	BUZZ();
     	OLED_Clear();
     	OLED_PrintCent(2, "PLACE CARD YOU WISH", NORMAL);

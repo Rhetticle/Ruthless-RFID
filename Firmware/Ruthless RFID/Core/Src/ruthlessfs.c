@@ -352,3 +352,39 @@ char* get_file_name(uint16_t entry) {
 void remove_card(uint16_t entry) {
 	block_erase(entry);
 }
+
+/**
+ * Calculate the used size of memory in MiB
+ * @return size of memory used in MiB
+ * */
+uint32_t get_used_size(void) {
+	int file_count = get_number_files();
+
+	return (BLOCK_SIZE * file_count);
+}
+
+/**
+ * Get size of memory that is free
+ * @return size of memory that is free in MiB
+ * */
+uint32_t get_free_size(void) {
+	return MEM_SIZE - get_used_size();
+}
+
+/**
+ * Get used size as a string (Useful for printing to OLED)
+ * @param result - Pointer to string to write to
+ * */
+void get_used_size_str(char* result) {
+	uint32_t used = get_used_size();
+	sprintf(result,"%i", used);
+}
+
+/**
+ * Get free size as a string
+ * @param result - Pointer to string to write to
+ * */
+void get_free_size_str(char* result) {
+	uint32_t free = get_free_size();
+	sprintf(result, "%i", free);
+}

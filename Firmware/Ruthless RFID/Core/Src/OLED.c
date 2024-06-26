@@ -497,6 +497,14 @@ HAL_StatusTypeDef OLED_display_files(const Screen* screen, uint8_t page) {
 	uint16_t file_count = get_number_files();
 
 	char** file_names = malloc(file_count * sizeof(char*));
+	char used[5];
+	char free[5];
+
+	get_free_size_str(free);
+	get_used_size_str(used);
+
+	OLED_SCRNREF(&SCRN_ShowFiles, 4, free);
+	OLED_SCRNREF(&SCRN_ShowFiles, 5, used);
 
 	if (get_all_files(file_names) != RFS_OK) {
 		free_filenames(file_names, file_count);

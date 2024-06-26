@@ -45,4 +45,5 @@ extern const Screen SCRN_Home, SCRN_ReadCard, SCRN_CardFound, SCRN_WriteCard, SC
 
 //Show Files data locations
 #define SHOWFILES_EXIT_LOC 3
+
 #endif /* INC_SCREEN_H_ */

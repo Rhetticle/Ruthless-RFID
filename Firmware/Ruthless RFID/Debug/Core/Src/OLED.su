@@ -15,9 +15,9 @@
 ../Core/Src/OLED.c:425:6:OLED_FILL	24	static
 ../Core/Src/OLED.c:442:6:OLED_SELECT	48	static
 ../Core/Src/OLED.c:479:6:OLED_PWRDWN	16	static
-../Core/Src/OLED.c:493:19:OLED_display_files	32	static
-../Core/Src/OLED.c:519:6:free_filenames	24	static
-../Core/Src/OLED.c:533:9:find_restore_string	24	static
-../Core/Src/OLED.c:550:6:oled_show_file	24	static
-../Core/Src/OLED.c:574:6:oled_move_selection	32	static
-../Core/Src/OLED.c:591:6:oled_select_invert	16	static
+../Core/Src/OLED.c:493:19:OLED_display_files	48	static
+../Core/Src/OLED.c:527:6:free_filenames	24	static
+../Core/Src/OLED.c:541:9:find_restore_string	24	static
+../Core/Src/OLED.c:558:6:oled_show_file	24	static
+../Core/Src/OLED.c:582:6:oled_move_selection	32	static
+../Core/Src/OLED.c:599:6:oled_select_invert	16	static
