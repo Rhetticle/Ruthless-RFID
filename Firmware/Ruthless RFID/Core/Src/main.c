@@ -644,7 +644,7 @@ void Start_Init(void *argument)
     							0x00, 0x01, 0x00, 0x01,
     							0x00, 0x00, 0x00, 0x00,
     							0x00, 0x00, 0x00, 0x00,
-    							0x00, 0x00, 0x00, 0x63};
+    							0xEE, 0x00, 0x00, 0x63};
     uint8_t uid[7] = {0x04, 0x41, 0xBF, 0x72, 0x1A, 0x06, 0x6C};
 
     Card fake_card = {
@@ -747,11 +747,11 @@ void StartWriteCard(void *argument)
 					vTaskResume(HomeHandle);
 					vTaskSuspend(NULL);
 				} else {
-					OLED_Printlin(2, 20, "Writing...", NORMAL);
-					MFRC_HALTA();
-					OLED_Printlin(4, 20, "Verifying...", NORMAL);
+					OLED_PrintCent(2, "Writing...", NORMAL);
+					MFRC_HALTA(); //Deselect card
+					OLED_PrintCent(4,"Verifying...", NORMAL);
 					if (UL_verify(towrite) == PCD_OK) {
-						OLED_Printlin(6, 20, "Write verified :)", NORMAL);
+						OLED_PrintCent(6, "Write verified :)", NORMAL);
 					}
 					MFRC_ANTOFF();
 					osDelay(1000);

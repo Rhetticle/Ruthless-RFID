@@ -630,8 +630,8 @@ PCD_StatusTypeDef UL_writecard(Card* towrite) {
 		return PCD_NO_PICC;
 	}
 
-	for (int addr = UL_DATASTART; addr < UL_DATAEND; addr++) {
-		if (UL_WRITE(addr, data_to_write + (4 * (addr - UL_DATASTART))) != PCD_OK) {
+	for (int addr = UL_DATASTART; addr <= UL_DATAEND; addr++) {
+		if (UL_WRITE(addr, data_to_write + (UL_PAGESIZE * (addr - UL_DATASTART))) != PCD_OK) {
 			free(data_to_write);
 			return PCD_COMM_ERR;
 		}
