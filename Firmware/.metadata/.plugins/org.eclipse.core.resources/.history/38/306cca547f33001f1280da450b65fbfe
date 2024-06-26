@@ -167,7 +167,6 @@ void BUZZ(void){
 }
 
 void write_card(Card* towrite) {
-	OLED_Clear();
 	MFRC_ANTON();
 	OLED_PrintCent(2, "Writing...", NORMAL);
 	if (UL_writecard(towrite) == PCD_NO_PICC) {
@@ -760,6 +759,7 @@ void StartWriteCard(void *argument)
 			  }
 
 		  } else if ((button_state == LONG_PRESS) && (towrite != NULL)) {
+			  	OLED_Clear();
 			  	ranonce= 0;
 			  	write_card(towrite);
 		  }

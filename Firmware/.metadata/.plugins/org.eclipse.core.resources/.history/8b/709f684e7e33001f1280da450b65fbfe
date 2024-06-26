@@ -159,35 +159,24 @@ void StartClone(void *argument);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void FIFO_Check(void){
+	uint8_t data[3]={0x00,0x00,0x00};
+	uint8_t rec[3];
+	uint8_t lev;
+	MFRC_REGW(FIFO_LEV,0x80);
+	MFRC_FIFOW(data, 3);
+	MFRC_REGR(FIFO_LEV,&lev);
+	HAL_Delay(1);
+	MFRC_FIFOR(rec, 3);
+	CDC_Transmit_FS(rec, 3);
+	HAL_Delay(1);
+	CDC_Transmit_FS(&lev, 1);
+}
 
 void BUZZ(void){
 	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
 	HAL_Delay(1000);
 	HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_3);
-}
-
-void write_card(Card* towrite) {
-	OLED_Clear();
-	MFRC_ANTON();
-	OLED_PrintCent(2, "Writing...", NORMAL);
-	if (UL_writecard(towrite) == PCD_NO_PICC) {
-		OLED_PrintCent(4, "ERROR: Couldn't find", NORMAL);
-		OLED_PrintCent(6, "Card", NORMAL);
-		MFRC_ANTOFF();
-		osDelay(2000);
-		vTaskResume(HomeHandle);
-		vTaskSuspend(NULL);
-	} else {
-		MFRC_HALTA(); //Deselect card
-		OLED_PrintCent(4,"Verifying...", NORMAL);
-		if (UL_verify(towrite) == PCD_OK) {
-			OLED_PrintCent(6, "Write verified :)", NORMAL);
-		}
-		MFRC_ANTOFF();
-		osDelay(1000);
-		vTaskResume(HomeHandle);
-		vTaskSuspend(NULL);
-	}
 }
 
 
@@ -760,8 +749,28 @@ void StartWriteCard(void *argument)
 			  }
 
 		  } else if ((button_state == LONG_PRESS) && (towrite != NULL)) {
-			  	ranonce= 0;
-			  	write_card(towrite);
+			  	OLED_Clear();
+			  	MFRC_ANTON();
+				if (UL_writecard(towrite) == PCD_NO_PICC) {
+					OLED_Print("ERROR: Couldn't find card, aborting write");
+					MFRC_ANTOFF();
+					osDelay(1000);
+					ranonce = 0;
+					vTaskResume(HomeHandle);
+					vTaskSuspend(NULL);
+				} else {
+					OLED_PrintCent(2, "Writing...", NORMAL);
+					MFRC_HALTA(); //Deselect card
+					OLED_PrintCent(4,"Verifying...", NORMAL);
+					if (UL_verify(towrite) == PCD_OK) {
+						OLED_PrintCent(6, "Write verified :)", NORMAL);
+					}
+					MFRC_ANTOFF();
+					osDelay(1000);
+					ranonce = 0;
+					vTaskResume(HomeHandle);
+					vTaskSuspend(NULL);
+				}
 		  }
 	  }
 
@@ -987,9 +996,10 @@ void StartClone(void *argument)
     	OLED_PrintCent(2, "PLACE CARD YOU WISH", NORMAL);
     	OLED_PrintCent(4, "TO COPY TO", NORMAL);
     	while(PICC_CHECK() == PCD_OK); //Hang until read card is removed
-    	while(PICC_CHECK() != PCD_OK); //Hang until new card is placed
+    	UL_writecard(read_card);
+    	vTaskResume(HomeHandle);
     	ranonce = 0;
-    	write_card(read_card);
+    	vTaskSuspend(NULL);
     }
   }
   /* USER CODE END StartClone */

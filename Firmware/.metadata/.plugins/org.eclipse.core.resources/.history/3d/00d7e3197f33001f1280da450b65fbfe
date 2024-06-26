@@ -167,7 +167,6 @@ void BUZZ(void){
 }
 
 void write_card(Card* towrite) {
-	OLED_Clear();
 	MFRC_ANTON();
 	OLED_PrintCent(2, "Writing...", NORMAL);
 	if (UL_writecard(towrite) == PCD_NO_PICC) {
@@ -760,6 +759,7 @@ void StartWriteCard(void *argument)
 			  }
 
 		  } else if ((button_state == LONG_PRESS) && (towrite != NULL)) {
+			  	OLED_Clear();
 			  	ranonce= 0;
 			  	write_card(towrite);
 		  }
@@ -987,7 +987,6 @@ void StartClone(void *argument)
     	OLED_PrintCent(2, "PLACE CARD YOU WISH", NORMAL);
     	OLED_PrintCent(4, "TO COPY TO", NORMAL);
     	while(PICC_CHECK() == PCD_OK); //Hang until read card is removed
-    	while(PICC_CHECK() != PCD_OK); //Hang until new card is placed
     	ranonce = 0;
     	write_card(read_card);
     }
