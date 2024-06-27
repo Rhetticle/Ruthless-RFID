@@ -1,111 +1,11 @@
-17:11:29 **** Incremental Build of configuration Debug for project Ruthless RFID ****
-make -j8 all 
-arm-none-eabi-gcc "../Core/Src/MFRC.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/MFRC.d" -MT"Core/Src/MFRC.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/MFRC.o"
-arm-none-eabi-gcc "../Core/Src/OLED.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/OLED.d" -MT"Core/Src/OLED.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/OLED.o"
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc "../Core/Src/ruthlessfs.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/ruthlessfs.d" -MT"Core/Src/ruthlessfs.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/ruthlessfs.o"
-../Core/Src/MFRC.c: In function 'MFRC_TRANSCEIVE':
-../Core/Src/MFRC.c:201:14: warning: suggest parentheses around comparison in operand of '&' [-Wparentheses]
-  201 |  while(IRQval&0x30!=0x30){ //Hang here until RXIRQ and IDLEIRQ bits are set
-      |              ^
-../Core/Src/MFRC.c: In function 'DumpINFO':
-../Core/Src/MFRC.c:542:1: warning: control reaches end of non-void function [-Wreturn-type]
-  542 | }
-      | ^
-../Core/Src/ruthlessfs.c: In function 'get_used_size_str':
-../Core/Src/ruthlessfs.c:380:19: warning: format '%i' expects argument of type 'int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
-  380 |  sprintf(result,"%i", used);
-      |                  ~^   ~~~~
-      |                   |   |
-      |                   int uint32_t {aka long unsigned int}
-      |                  %li
-../Core/Src/ruthlessfs.c: In function 'get_free_size_str':
-../Core/Src/ruthlessfs.c:389:20: warning: format '%i' expects argument of type 'int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
-  389 |  sprintf(result, "%i", free);
-      |                   ~^   ~~~~
-      |                    |   |
-      |                    int uint32_t {aka long unsigned int}
-      |                   %li
-../Core/Src/OLED.c: In function 'OLED_InvChar':
-../Core/Src/OLED.c:220:2: warning: attempt to free a non-heap object 'temp' [-Wfree-nonheap-object]
-  220 |  free(temp);
-      |  ^~~~~~~~~~
-../Core/Src/main.c: In function 'write_card':
-../Core/Src/main.c:170:2: warning: implicit declaration of function 'OLED_Clear' [-Wimplicit-function-declaration]
-  170 |  OLED_Clear();
-      |  ^~~~~~~~~~
-arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: Ruthless RFID.elf
- 
-arm-none-eabi-size   Ruthless\ RFID.elf 
-arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
-   text	   data	    bss	    dec	    hex	filename
-  68796	   1684	  27580	  98060	  17f0c	Ruthless RFID.elf
-Finished building: default.size.stdout
- 
-Finished building: Ruthless RFID.list
- 
-17:11:40 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+11:43:45 **** Incremental Build of configuration Debug for project Ruthless RFID ****
 make -j8 all 
 arm-none-eabi-size   Ruthless\ RFID.elf 
    text	   data	    bss	    dec	    hex	filename
-  68796	   1684	  27580	  98060	  17f0c	Ruthless RFID.elf
+  68780	   1684	  32220	 102684	  1911c	Ruthless RFID.elf
 Finished building: default.size.stdout
  
-17:12:07 **** Incremental Build of configuration Debug for project Ruthless RFID ****
-make -j8 all 
-arm-none-eabi-size   Ruthless\ RFID.elf 
-   text	   data	    bss	    dec	    hex	filename
-  68796	   1684	  27580	  98060	  17f0c	Ruthless RFID.elf
-Finished building: default.size.stdout
- 
-17:14:25 **** Incremental Build of configuration Debug for project Ruthless RFID ****
-make -j8 all 
-arm-none-eabi-gcc "../Core/Src/OLED.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/OLED.d" -MT"Core/Src/OLED.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/OLED.o"
-../Core/Src/OLED.c: In function 'OLED_InvChar':
-../Core/Src/OLED.c:220:2: warning: attempt to free a non-heap object 'temp' [-Wfree-nonheap-object]
-  220 |  free(temp);
-      |  ^~~~~~~~~~
-arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: Ruthless RFID.elf
- 
-arm-none-eabi-size   Ruthless\ RFID.elf 
-arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
-   text	   data	    bss	    dec	    hex	filename
-  68796	   1684	  27580	  98060	  17f0c	Ruthless RFID.elf
-Finished building: default.size.stdout
- 
-Finished building: Ruthless RFID.list
- 
-17:16:17 **** Incremental Build of configuration Debug for project Ruthless RFID ****
-make -j8 all 
-arm-none-eabi-size   Ruthless\ RFID.elf 
-   text	   data	    bss	    dec	    hex	filename
-  68796	   1684	  27580	  98060	  17f0c	Ruthless RFID.elf
-Finished building: default.size.stdout
- 
-17:19:12 **** Incremental Build of configuration Debug for project Ruthless RFID ****
-make -j8 all 
-arm-none-eabi-size   Ruthless\ RFID.elf 
-   text	   data	    bss	    dec	    hex	filename
-  68796	   1684	  27580	  98060	  17f0c	Ruthless RFID.elf
-Finished building: default.size.stdout
- 
-17:29:14 **** Incremental Build of configuration Debug for project Ruthless RFID ****
-make -j8 all 
-arm-none-eabi-size   Ruthless\ RFID.elf 
-   text	   data	    bss	    dec	    hex	filename
-  68796	   1684	  27580	  98060	  17f0c	Ruthless RFID.elf
-Finished building: default.size.stdout
- 
-17:29:43 **** Incremental Build of configuration Debug for project Ruthless RFID ****
-make -j8 all 
-arm-none-eabi-size   Ruthless\ RFID.elf 
-   text	   data	    bss	    dec	    hex	filename
-  68796	   1684	  27580	  98060	  17f0c	Ruthless RFID.elf
-Finished building: default.size.stdout
- 
-17:31:34 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+11:43:56 **** Incremental Build of configuration Debug for project Ruthless RFID ****
 make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 ../Core/Src/main.c: In function 'write_card':
@@ -118,12 +18,19 @@ Finished building target: Ruthless RFID.elf
 arm-none-eabi-size   Ruthless\ RFID.elf 
 arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
    text	   data	    bss	    dec	    hex	filename
-  68748	   1684	  27580	  98012	  17edc	Ruthless RFID.elf
+  68780	   1684	  32220	 102684	  1911c	Ruthless RFID.elf
 Finished building: default.size.stdout
  
 Finished building: Ruthless RFID.list
  
-17:38:50 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+11:49:18 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+   text	   data	    bss	    dec	    hex	filename
+  68780	   1684	  32220	 102684	  1911c	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+12:16:29 **** Incremental Build of configuration Debug for project Ruthless RFID ****
 make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 ../Core/Src/main.c: In function 'write_card':
@@ -136,12 +43,12 @@ Finished building target: Ruthless RFID.elf
 arm-none-eabi-size   Ruthless\ RFID.elf 
 arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
    text	   data	    bss	    dec	    hex	filename
-  68796	   1684	  27580	  98060	  17f0c	Ruthless RFID.elf
+  68796	   1684	  32220	 102700	  1912c	Ruthless RFID.elf
 Finished building: default.size.stdout
  
 Finished building: Ruthless RFID.list
  
-17:39:35 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+12:19:45 **** Incremental Build of configuration Debug for project Ruthless RFID ****
 make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 ../Core/Src/main.c: In function 'write_card':
@@ -154,7 +61,215 @@ Finished building target: Ruthless RFID.elf
 arm-none-eabi-size   Ruthless\ RFID.elf 
 arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
    text	   data	    bss	    dec	    hex	filename
-  68796	   1684	  27580	  98060	  17f0c	Ruthless RFID.elf
+  68780	   1684	  32220	 102684	  1911c	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+12:21:10 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+   text	   data	    bss	    dec	    hex	filename
+  68780	   1684	  32220	 102684	  1911c	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+12:23:00 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+   text	   data	    bss	    dec	    hex	filename
+  68780	   1684	  32220	 102684	  1911c	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+12:24:50 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'write_card':
+../Core/Src/main.c:170:2: warning: implicit declaration of function 'OLED_Clear' [-Wimplicit-function-declaration]
+  170 |  OLED_Clear();
+      |  ^~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  68796	   1684	  32220	 102700	  1912c	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+13:26:25 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'write_card':
+../Core/Src/main.c:170:2: warning: implicit declaration of function 'OLED_Clear' [-Wimplicit-function-declaration]
+  170 |  OLED_Clear();
+      |  ^~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  68780	   1684	  32220	 102684	  1911c	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+13:28:26 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'write_card':
+../Core/Src/main.c:170:2: warning: implicit declaration of function 'OLED_Clear' [-Wimplicit-function-declaration]
+  170 |  OLED_Clear();
+      |  ^~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  68780	   1684	  32220	 102684	  1911c	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+13:29:44 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'write_card':
+../Core/Src/main.c:170:2: warning: implicit declaration of function 'OLED_Clear' [-Wimplicit-function-declaration]
+  170 |  OLED_Clear();
+      |  ^~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  68780	   1684	  32220	 102684	  1911c	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+13:33:57 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'write_card':
+../Core/Src/main.c:170:2: warning: implicit declaration of function 'OLED_Clear' [-Wimplicit-function-declaration]
+  170 |  OLED_Clear();
+      |  ^~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  68780	   1684	  32220	 102684	  1911c	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+13:34:23 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+   text	   data	    bss	    dec	    hex	filename
+  68780	   1684	  32220	 102684	  1911c	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+13:35:20 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'write_card':
+../Core/Src/main.c:170:2: warning: implicit declaration of function 'OLED_Clear' [-Wimplicit-function-declaration]
+  170 |  OLED_Clear();
+      |  ^~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  68780	   1684	  32220	 102684	  1911c	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+13:36:19 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+   text	   data	    bss	    dec	    hex	filename
+  68780	   1684	  32220	 102684	  1911c	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+13:39:16 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'write_card':
+../Core/Src/main.c:170:2: warning: implicit declaration of function 'OLED_Clear' [-Wimplicit-function-declaration]
+  170 |  OLED_Clear();
+      |  ^~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  68748	   1684	  32220	 102652	  190fc	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+13:43:25 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'write_card':
+../Core/Src/main.c:170:2: warning: implicit declaration of function 'OLED_Clear' [-Wimplicit-function-declaration]
+  170 |  OLED_Clear();
+      |  ^~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  68552	   1684	  32220	 102456	  19038	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+16:03:51 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'write_card':
+../Core/Src/main.c:170:2: warning: implicit declaration of function 'OLED_Clear' [-Wimplicit-function-declaration]
+  170 |  OLED_Clear();
+      |  ^~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  68780	   1684	  32220	 102684	  1911c	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
+16:07:02 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'write_card':
+../Core/Src/main.c:170:2: warning: implicit declaration of function 'OLED_Clear' [-Wimplicit-function-declaration]
+  170 |  OLED_Clear();
+      |  ^~~~~~~~~~
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  68780	   1684	  32220	 102684	  1911c	Ruthless RFID.elf
 Finished building: default.size.stdout
  
 Finished building: Ruthless RFID.list

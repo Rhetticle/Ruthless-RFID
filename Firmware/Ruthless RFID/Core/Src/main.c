@@ -95,21 +95,21 @@ const osThreadAttr_t CardFound_attributes = {
 osThreadId_t ShowFilesHandle;
 const osThreadAttr_t ShowFiles_attributes = {
   .name = "ShowFiles",
-  .stack_size = 256 * 4,
+  .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for ShowFileData */
 osThreadId_t ShowFileDataHandle;
 const osThreadAttr_t ShowFileData_attributes = {
   .name = "ShowFileData",
-  .stack_size = 256 * 4,
+  .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for Clone */
 osThreadId_t CloneHandle;
 const osThreadAttr_t Clone_attributes = {
   .name = "Clone",
-  .stack_size = 512 * 4,
+  .stack_size = 256 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for UidtoFound */
@@ -902,15 +902,15 @@ void StartShowFiles(void *argument)
 
 			  if (select_index == SHOWFILES_EXIT_LOC) {
 				  vTaskResume(HomeHandle);
-				  ranonce = 0;
-				  vTaskSuspend(NULL);
+
 			  } else if ((entry_present(select_index) == RFS_OK)) {
 				  uint16_t entry = select_index;
 				  xQueueSend(FileEntryHandle, &entry, 0);
 				  vTaskResume(ShowFileDataHandle);
-				  ranonce = 0;
-				  vTaskSuspend(NULL);
+
 			  }
+			  ranonce = 0;
+			  vTaskSuspend(NULL);
 
 		  }
 	  }
