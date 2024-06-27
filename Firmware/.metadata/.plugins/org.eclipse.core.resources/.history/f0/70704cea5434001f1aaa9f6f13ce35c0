@@ -986,7 +986,6 @@ void StartClone(void *argument)
     	MFRC_HALTA(); //De-select card
     	BUZZ();
     	OLED_Clear();
-    	read_card->contents[60] = 0xEE;
     	OLED_PrintCent(2, "PLACE CARD YOU WISH", NORMAL);
     	OLED_PrintCent(4, "TO COPY TO", NORMAL);
     	while(PICC_CHECK() == PCD_OK); //Hang until read card is removed
