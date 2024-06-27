@@ -491,7 +491,6 @@ HAL_StatusTypeDef HAL_I2C_Init(I2C_HandleTypeDef *hi2c)
 
   /*Reset I2C*/
   hi2c->Instance->CR1 |= I2C_CR1_SWRST;
-
   hi2c->Instance->CR1 &= ~I2C_CR1_SWRST;
 
   /* Get PCLK1 frequency */
