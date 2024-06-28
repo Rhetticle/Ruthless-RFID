@@ -32,7 +32,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 			button_state = SHORT_PRESS;
 		}
 		xQueueSendFromISR(UserInputHandle, &button_state, 0);
-	} else {
+	} else if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) == 0){
 		HAL_TIM_Base_Start(&htim3);
 	}
 }

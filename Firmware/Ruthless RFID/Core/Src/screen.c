@@ -35,6 +35,10 @@ static const uint8_t FILEDATA_SEL[2][2] = {{6, START_COL},{6,END_COL - 36}};
 static const char* CLONE_SCREEN[4] = {"CLONE", "STANDARD: ISO 14443", "PLACE CARD YOU WISH", "TO COPY FROM"};
 static const uint8_t CLONE_DATLOC[4][2] = {{0,0}, {2, START_COL}, {4, START_COL}, {6, START_COL}};
 static const uint8_t CLONE_SEL[1][2] = {{0,0}};
+
+//static const char* KEYBOARD_SCREEN[] = {" ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"
+//										"N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "DEL", "ENTER"};
+//static const uint8_t KEYBOARD_DATLOC[][2] = {{0,0}, {2, START_COL}, {2, START_COL + 12}, {2, START_COL + 24}}
 /**
  * Screens
  *

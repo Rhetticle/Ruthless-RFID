@@ -74,7 +74,7 @@ const osThreadAttr_t ReadCard_attributes = {
 osThreadId_t WriteCardHandle;
 const osThreadAttr_t WriteCard_attributes = {
   .name = "WriteCard",
-  .stack_size = 256 * 4,
+  .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for Home */
@@ -183,7 +183,7 @@ void write_card(Card* towrite) {
 		if (UL_verify(towrite) == PCD_OK) {
 			OLED_PrintCent(6, "Write verified :)", NORMAL);
 		} else {
-			OLED_PrintCent(6, "ERROR: COULDN'T VERIFY", NORMAL);
+			OLED_PrintCent(6, "COULDN'T VERIFY", NORMAL);
 		}
 		MFRC_ANTOFF();
 		osDelay(1000);
@@ -659,7 +659,7 @@ void Start_Init(void *argument)
 								0xF1, 0x48, 0x00,0x00,
     							0x00, 0x00, 0x00, 0x00,
     							0x01, 0x33, 0x00, 0x01,
-    							0xFE, 0xED, 0xBE, 0xEF,
+    							0x00, 0x01, 0x00, 0x01,
     							0x00, 0x01, 0x00, 0x01,
     							0x00, 0x00, 0x00, 0x00,
     							0x00, 0x00, 0x00, 0x00,
