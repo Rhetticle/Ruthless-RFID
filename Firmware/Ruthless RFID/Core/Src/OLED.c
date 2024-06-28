@@ -637,3 +637,21 @@ void oled_move_selection_inv(const Screen* screen, uint8_t* select_index) {
 
 	OLED_select_inv(screen, *select_index);
 }
+
+/**
+ * Update string displayed displayed in keyboard task as it's being written
+ * */
+void oled_keyboard_update (uint8_t char_index_selected, char* curr_name) {
+	uint8_t length;
+
+	if (curr_name == NULL) {
+		length = 0;
+	} else {
+		length = strlen(curr_name);
+	}
+
+	curr_name = realloc(curr_name, length + 2); //Increment by 2 since we want to store a new character as well as null
+	curr_name[length] = KEYBOARD_LUT[char_index_selected];
+	curr_name[length + 1] = '\0';
+	OLED_SCRNREF(&SCRN_Keyboard, 0, curr_name);
+}

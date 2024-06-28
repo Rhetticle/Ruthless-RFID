@@ -16,6 +16,6 @@ main.c:853:6:CardFoundStart	7
 main.c:903:6:StartShowFiles	7
 main.c:953:6:StartShowFileData	7
 main.c:993:6:StartClone	5
-main.c:1032:6:StartKeyboard	4
-main.c:1065:6:HAL_TIM_PeriodElapsedCallback	2
-main.c:1082:6:Error_Handler	1
+main.c:1032:6:StartKeyboard	5
+main.c:1068:6:HAL_TIM_PeriodElapsedCallback	2
+main.c:1085:6:Error_Handler	1

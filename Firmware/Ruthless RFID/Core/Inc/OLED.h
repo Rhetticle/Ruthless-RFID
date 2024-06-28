@@ -156,7 +156,6 @@ static const char ASCII[96][5] = {
 ,{0x00, 0x06, 0x09, 0x09, 0x06} // 7f ?
 }; // end char ASCII[96][5]
 
-
 extern SPI_HandleTypeDef hspi1; //Our SPI bus connected to OLED
 
 void OLED_OFF(void);

@@ -1035,6 +1035,7 @@ void StartKeyboard(void *argument)
 	uint8_t select_index = 0;
 	int ranonce = 0;
 	Button_StateTypeDef button_state;
+	char* file_name = NULL;
   /* Infinite loop */
   for(;;)
   {
@@ -1048,6 +1049,8 @@ void StartKeyboard(void *argument)
     if (xQueueReceive(UserInputHandle, &button_state, 0) == pdTRUE) {
     	if (button_state == SHORT_PRESS) {
     		oled_move_selection_inv(&SCRN_Keyboard, &select_index);
+    	} else if (button_state == LONG_PRESS) {
+    		oled_keyboard_update(select_index, file_name);
     	}
     }
   }

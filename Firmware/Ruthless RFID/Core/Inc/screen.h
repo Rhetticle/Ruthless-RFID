@@ -32,6 +32,8 @@ typedef struct{
 extern const Screen SCRN_Home, SCRN_ReadCard, SCRN_CardFound, SCRN_WriteCard, SCRN_ShowFiles,
 					SCRN_FileData, SCRN_Clone, SCRN_Keyboard; //Screens
 
+
+
 //Card found data locations
 #define FOUND_UID_LOC 1 //Location index for UID when calling OLED_SCRNREF
 #define FOUND_CARDTYPE_LOC 2 //Location index for PICC type
@@ -46,5 +48,8 @@ extern const Screen SCRN_Home, SCRN_ReadCard, SCRN_CardFound, SCRN_WriteCard, SC
 
 //Show Files data locations
 #define SHOWFILES_EXIT_LOC 3
+
+static const char KEYBOARD_LUT[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
+							   	   	  'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 
 #endif /* INC_SCREEN_H_ */
