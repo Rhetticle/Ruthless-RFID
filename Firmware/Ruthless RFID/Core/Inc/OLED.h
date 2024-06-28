@@ -23,7 +23,8 @@
 #define OLED_RESTORE 1
 
 //Character constants
-#define OLED_CHARSIZE 5 //Character is 5 columns long
+#define OLED_CHARSIZE 5 //Character is 5 columns wide
+#define OLED_INVCHARSIZE 7 //Inverted character is 7 columns wide
 #define ASCII_START 0x20
 
 //Commands
@@ -175,9 +176,11 @@ void OLED_SCREEN(const Screen* screen,uint8_t invert);
 void OLED_SCRNREF(const Screen* screen,uint8_t dataindx,char* data);
 void OLED_FILL(uint8_t* data,uint8_t page,uint8_t start_col, uint8_t length);
 void OLED_SELECT(const Screen* screen,uint8_t selopt,int restore);
+void OLED_select_inv(const Screen* screen, uint8_t selopt);
 HAL_StatusTypeDef OLED_display_files(const Screen* screen, uint8_t page);
 uint8_t find_restore_string(const Screen* screen, uint8_t prev_sel_opt);
 void oled_show_file(uint16_t entry);
 void free_filenames(char** file_names, int size);
 void oled_move_selection(const Screen* screen, uint8_t* arrow_index, uint8_t restore);
+void oled_move_selection_inv(const Screen* screen, uint8_t* select_index);
 #endif /* INC_OLED_H_ */

@@ -29,7 +29,8 @@ typedef struct{
     const uint8_t (*seldata)[2];
 }Screen;
 
-extern const Screen SCRN_Home, SCRN_ReadCard, SCRN_CardFound, SCRN_WriteCard, SCRN_ShowFiles, SCRN_FileData, SCRN_Clone; //Screens
+extern const Screen SCRN_Home, SCRN_ReadCard, SCRN_CardFound, SCRN_WriteCard, SCRN_ShowFiles,
+					SCRN_FileData, SCRN_Clone, SCRN_Keyboard; //Screens
 
 //Card found data locations
 #define FOUND_UID_LOC 1 //Location index for UID when calling OLED_SCRNREF

@@ -112,6 +112,13 @@ const osThreadAttr_t Clone_attributes = {
   .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for Keyboard */
+osThreadId_t KeyboardHandle;
+const osThreadAttr_t Keyboard_attributes = {
+  .name = "Keyboard",
+  .stack_size = 512 * 4,
+  .priority = (osPriority_t) osPriorityLow,
+};
 /* Definitions for UidtoFound */
 osMessageQueueId_t UidtoFoundHandle;
 const osMessageQueueAttr_t UidtoFound_attributes = {
@@ -126,6 +133,11 @@ const osMessageQueueAttr_t UserInput_attributes = {
 osMessageQueueId_t FileEntryHandle;
 const osMessageQueueAttr_t FileEntry_attributes = {
   .name = "FileEntry"
+};
+/* Definitions for KeyboardOut */
+osMessageQueueId_t KeyboardOutHandle;
+const osMessageQueueAttr_t KeyboardOut_attributes = {
+  .name = "KeyboardOut"
 };
 /* USER CODE BEGIN PV */
 char TC[]="HVE strongly condemns malicious use of it's products.The Ruthless RFID is sold as an educational device. HVE is not liable for damages caused by misuse.";
@@ -152,6 +164,7 @@ void CardFoundStart(void *argument);
 void StartShowFiles(void *argument);
 void StartShowFileData(void *argument);
 void StartClone(void *argument);
+void StartKeyboard(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -257,6 +270,9 @@ int main(void)
   /* creation of FileEntry */
   FileEntryHandle = osMessageQueueNew (1, sizeof(uint16_t), &FileEntry_attributes);
 
+  /* creation of KeyboardOut */
+  KeyboardOutHandle = osMessageQueueNew (1, sizeof(char*), &KeyboardOut_attributes);
+
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
@@ -285,6 +301,9 @@ int main(void)
 
   /* creation of Clone */
   CloneHandle = osThreadNew(StartClone, NULL, &Clone_attributes);
+
+  /* creation of Keyboard */
+  KeyboardHandle = osThreadNew(StartKeyboard, NULL, &Keyboard_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -646,6 +665,7 @@ void Start_Init(void *argument)
     vTaskSuspend(ShowFilesHandle);
     vTaskSuspend(ShowFileDataHandle);
     vTaskSuspend(CloneHandle);
+    vTaskSuspend(KeyboardHandle);
 
     MFRC_INIT();
     MFRC_ANTOFF();
@@ -857,7 +877,11 @@ void CardFoundStart(void *argument)
  			oled_move_selection(&SCRN_CardFound, &select_index, OLED_NORESTORE);
  		} else if (button_state == LONG_PRESS) {
  			if (select_index == 0) {
- 				enter_card(read_card, mem_find_free_block());
+ 				//enter_card(read_card, mem_find_free_block());
+ 				vTaskResume(KeyboardHandle);
+
+ 				//while(xQueueReceive(KeyboardOutHandle, &name, 0) != pdTRUE);
+ 				vTaskSuspend(NULL);
  			 }
  			vTaskResume(HomeHandle);
  			ranonce = 0;
@@ -996,6 +1020,38 @@ void StartClone(void *argument)
     }
   }
   /* USER CODE END StartClone */
+}
+
+/* USER CODE BEGIN Header_StartKeyboard */
+/**
+* @brief Function implementing the Keyboard thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartKeyboard */
+void StartKeyboard(void *argument)
+{
+  /* USER CODE BEGIN StartKeyboard */
+	uint8_t select_index = 0;
+	int ranonce = 0;
+	Button_StateTypeDef button_state;
+  /* Infinite loop */
+  for(;;)
+  {
+    if (ranonce == 0) {
+    	OLED_Clear();
+    	OLED_SCREEN(&SCRN_Keyboard, NORMAL);
+    	OLED_select_inv(&SCRN_Keyboard, select_index);
+    	ranonce++;
+    }
+
+    if (xQueueReceive(UserInputHandle, &button_state, 0) == pdTRUE) {
+    	if (button_state == SHORT_PRESS) {
+    		oled_move_selection_inv(&SCRN_Keyboard, &select_index);
+    	}
+    }
+  }
+  /* USER CODE END StartKeyboard */
 }
 
 /**

@@ -238,12 +238,14 @@ void OLED_drawChar(uint8_t page,uint8_t col, char character, uint8_t invert){
 
 	if(invert==NORMAL){
 		memcpy(data,ASCII[(uint8_t)character-0x20],5);
+		data[5]=0x00;
 	}
 	else{
-		OLED_InvChar(character,data);
+		data[0]=0xFF;
+		OLED_InvChar(character,data + 1);
+
 	}
 
-	data[5]=0x00;
 	OLED_data(data, 6);
 
 	}
@@ -385,11 +387,11 @@ void OLED_Print(char* string){
  * @param invert: Option to invert entire screen
  * */
 
-void OLED_SCREEN(const Screen* screen,uint8_t invert){
+void OLED_SCREEN(const Screen* screen,uint8_t invert) {
 	OLED_Clear();
 	OLED_PrintCent(0, (char*)screen->data[0], invert);
 
-	for(int i=0;i<screen->datsize-1;i++){
+	for(int i = 0; i < screen->datsize - 1; i++) {
 		OLED_Printlin((uint8_t)screen->dataloc[i+1][0],(uint8_t) screen->dataloc[i+1][1],(char*) screen->data[i+1], invert);
 	}
 }
@@ -445,31 +447,60 @@ void OLED_SELECT(const Screen* screen,uint8_t selopt, int restore){
 	uint8_t prevpage,prevcol,thispage,thiscol,index;
 	char* rest;
 
-	    if(selopt == 0){
-	    	index = screen->selsize - 1;
-	    }
-		else{
-			index = selopt - 1;
-	    }
+	if(selopt == 0){
+	    index = screen->selsize - 1;
+	} else {
+		index = selopt - 1;
+	}
 
-	    prevpage=screen->seldata[index][0];
-	    prevcol=screen->seldata[index][1];
-	    thispage=screen->seldata[selopt][0];
-	    thiscol=screen->seldata[selopt][1];
+	prevpage=screen->seldata[index][0];
+	prevcol=screen->seldata[index][1];
+	thispage=screen->seldata[selopt][0];
+	thiscol=screen->seldata[selopt][1];
 
-	    if(restore == OLED_RESTORE){
-	    	if (selopt == 0) {
-	    		rest=(char*)screen->data[find_restore_string(screen, screen->selsize - 1)]; //Here we may be wrapping around so we must restore the last select option
-	    	} else {
-	    		rest=(char*)screen->data[find_restore_string(screen, selopt - 1)];
-	    	}
+	if(restore == OLED_RESTORE){
+	    if (selopt == 0) {
+	    	rest=(char*)screen->data[find_restore_string(screen, screen->selsize - 1)]; //Here we may be wrapping around so we must restore the last select option
 	    } else {
-	    	rest = "  ";
+	    	rest=(char*)screen->data[find_restore_string(screen, selopt - 1)];
 	    }
+	} else {
+	    rest = "  ";
+	}
 
 	    OLED_Printlin(prevpage, prevcol, rest, NORMAL); //This restores the line of the previous (now deselected) select option
 	    OLED_Printlin(thispage, thiscol, arrow, NORMAL);
 
+}
+
+/**
+ * Select option by inverting the character which is selected
+ * @param screen - Screen currently displayed
+ * @param selopt - Selected select option
+ * */
+void OLED_select_inv(const Screen* screen, uint8_t selopt) {
+	uint8_t index, prevpage, prevcol, thispage, thiscol;
+	char* restore;
+
+	if(selopt == 0){
+		index = screen->selsize - 1;
+	} else {
+		index = selopt - 1;
+	}
+
+	prevpage=screen->seldata[index][0];
+	prevcol=screen->seldata[index][1];
+	thispage=screen->seldata[selopt][0];
+	thiscol=screen->seldata[selopt][1];
+
+	if (selopt == 0) {
+		restore=(char*)screen->data[find_restore_string(screen, screen->selsize - 1)]; //Here we may be wrapping around so we must restore the last select option
+	} else {
+		restore=(char*)screen->data[find_restore_string(screen, selopt - 1)];
+	}
+
+	OLED_Printlin(prevpage, prevcol, restore, NORMAL);
+	OLED_Printlin(thispage, thiscol, screen->data[selopt + 1], INVERT);
 }
 
 /*Function to perform the display's power down sequence
@@ -595,6 +626,14 @@ void oled_move_selection(const Screen* screen, uint8_t* arrow_index, uint8_t res
  * @param screen - Screen to modify
  * @param select_index - Pointer to variable that keeps track of selection index
  * */
-void oled_select_invert(const Screen* screen, uint8_t* select_index) {
+void oled_move_selection_inv(const Screen* screen, uint8_t* select_index) {
+	uint8_t max_index = screen->selsize;
 
+	if (*select_index >= max_index - 1) {
+		*select_index = 0;
+	} else {
+		*select_index += 1;
+	}
+
+	OLED_select_inv(screen, *select_index);
 }
