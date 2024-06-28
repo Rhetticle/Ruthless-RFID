@@ -22,4 +22,4 @@
 ../Core/Src/OLED.c:588:6:oled_show_file	24	static
 ../Core/Src/OLED.c:612:6:oled_move_selection	32	static
 ../Core/Src/OLED.c:629:6:oled_move_selection_inv	24	static
-../Core/Src/OLED.c:644:6:oled_keyboard_update	24	static
+../Core/Src/OLED.c:647:6:oled_keyboard_insert	24	static
