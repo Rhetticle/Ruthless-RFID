@@ -701,7 +701,7 @@ void Start_Init(void *argument)
 		.type = "MIFARE Ultralight",
 		.read_protected = 0
     };
-    enter_card(&fake_card, 0);
+    enter_card(&fake_card, 0, "fake");
     while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) != 0);
     osDelay(10);
     uint8_t clear = NO_PRESS;
@@ -857,6 +857,7 @@ void CardFoundStart(void *argument)
 	int ranonce = 0;
 	Button_StateTypeDef button_state;
 	Card* read_card;
+	char* card_name = NULL;
   /* Infinite loop */
   for(;;)
   {
@@ -877,12 +878,15 @@ void CardFoundStart(void *argument)
  			oled_move_selection(&SCRN_CardFound, &select_index, OLED_NORESTORE);
  		} else if (button_state == LONG_PRESS) {
  			if (select_index == 0) {
- 				//enter_card(read_card, mem_find_free_block());
+
  				vTaskResume(KeyboardHandle);
 
- 				//while(xQueueReceive(KeyboardOutHandle, &name, 0) != pdTRUE);
- 				vTaskSuspend(NULL);
- 			 }
+ 				while(xQueueReceive(KeyboardOutHandle, &card_name, 0) != pdTRUE) {
+ 					osDelay(1); //wait until keyboard is finished
+ 				}
+ 				enter_card(read_card, mem_find_free_block(), card_name);
+ 				free(card_name);
+ 			}
  			vTaskResume(HomeHandle);
  			ranonce = 0;
  			vTaskSuspend(NULL);
@@ -1010,7 +1014,6 @@ void StartClone(void *argument)
     	MFRC_HALTA(); //De-select card
     	BUZZ();
     	OLED_Clear();
-    	read_card->contents[60] = 0xEE;
     	OLED_PrintCent(2, "PLACE CARD YOU WISH", NORMAL);
     	OLED_PrintCent(4, "TO COPY TO", NORMAL);
     	while(PICC_CHECK() == PCD_OK); //Hang until read card is removed
@@ -1050,7 +1053,16 @@ void StartKeyboard(void *argument)
     	if (button_state == SHORT_PRESS) {
     		oled_move_selection_inv(&SCRN_Keyboard, &select_index);
     	} else if (button_state == LONG_PRESS) {
-    		oled_keyboard_insert(select_index, &input);
+    		if ((select_index <= 25) && (select_index >= 0)) {
+    			oled_keyboard_insertChar(select_index, &input);
+    		} else if (select_index == 26) {
+    			oled_keyboard_removeChar(&input);
+    		} else if (select_index == 27) {
+    			xQueueSend(KeyboardOutHandle, &input, 0); //See the name user has inputted to queue for other tasks to use
+    			ranonce = 0;
+    			vTaskSuspend(NULL); //exit task
+    		}
+
     	}
     }
   }

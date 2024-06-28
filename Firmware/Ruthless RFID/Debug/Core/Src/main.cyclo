@@ -12,10 +12,10 @@ main.c:653:6:Start_Init	2
 main.c:722:6:StartReadCard	3
 main.c:759:6:StartWriteCard	7
 main.c:803:6:StartHome	9
-main.c:853:6:CardFoundStart	7
-main.c:903:6:StartShowFiles	7
-main.c:953:6:StartShowFileData	7
-main.c:993:6:StartClone	5
-main.c:1032:6:StartKeyboard	5
-main.c:1068:6:HAL_TIM_PeriodElapsedCallback	2
-main.c:1085:6:Error_Handler	1
+main.c:853:6:CardFoundStart	8
+main.c:907:6:StartShowFiles	7
+main.c:957:6:StartShowFileData	7
+main.c:997:6:StartClone	5
+main.c:1035:6:StartKeyboard	8
+main.c:1080:6:HAL_TIM_PeriodElapsedCallback	2
+main.c:1097:6:Error_Handler	1

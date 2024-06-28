@@ -644,7 +644,7 @@ void oled_move_selection_inv(const Screen* screen, uint8_t* select_index) {
  * @param curr_name - Pointer to pointer that stores the current name which has been created by the user.
  * 					  This name will grow as the user continues to write characters
  * */
-void oled_keyboard_insert (uint8_t char_index, char** curr_name) {
+void oled_keyboard_insertChar (uint8_t char_index, char** curr_name) {
 	uint8_t length;
 
 	if (*curr_name == NULL) {
@@ -656,5 +656,29 @@ void oled_keyboard_insert (uint8_t char_index, char** curr_name) {
 	*curr_name = realloc(*curr_name, (length + 2) * sizeof(char)); //Increment by 2 since we want to store a new character as well as null
 	(*curr_name)[length] = KEYBOARD_LUT[char_index];
 	(*curr_name)[length + 1] = '\0';
+	OLED_SCRNREF(&SCRN_Keyboard, 0, *curr_name);
+}
+
+/**
+ * Remove character from user inputted string
+ * @param curr_name - Current state of user string
+ * */
+void oled_keyboard_removeChar (char** curr_name) {
+	uint8_t length;
+
+	if (*curr_name == NULL) {
+		return; //No name, don't do anything
+	}
+
+	length = strlen(*curr_name);
+
+	*curr_name = realloc(*curr_name, length * sizeof(char));
+	(*curr_name)[length - 1] = '\0';
+
+	char clear[length + 1];
+	memset(clear, ' ', length);
+	clear[length] = '\0';
+
+	OLED_SCRNREF(&SCRN_Keyboard, 0 ,clear);
 	OLED_SCRNREF(&SCRN_Keyboard, 0, *curr_name);
 }

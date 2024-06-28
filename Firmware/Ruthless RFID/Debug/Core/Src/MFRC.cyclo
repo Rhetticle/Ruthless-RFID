@@ -26,7 +26,7 @@ MFRC.c:484:19:DumpINFO	8
 MFRC.c:550:19:UL_getuid	2
 MFRC.c:567:19:UL_getuidstr	2
 MFRC.c:584:19:UL_getalldata	3
-MFRC.c:602:19:UL_readcard	4
-MFRC.c:624:19:UL_writecard	4
-MFRC.c:650:7:uid_tostring	3
-MFRC.c:669:19:UL_verify	4
+MFRC.c:604:19:UL_readcard	4
+MFRC.c:625:19:UL_writecard	4
+MFRC.c:651:7:uid_tostring	3
+MFRC.c:670:19:UL_verify	4

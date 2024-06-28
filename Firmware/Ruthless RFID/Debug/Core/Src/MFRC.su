@@ -26,7 +26,7 @@
 ../Core/Src/MFRC.c:550:19:UL_getuid	32	static
 ../Core/Src/MFRC.c:567:19:UL_getuidstr	64	static
 ../Core/Src/MFRC.c:584:19:UL_getalldata	24	static
-../Core/Src/MFRC.c:602:19:UL_readcard	16	static
-../Core/Src/MFRC.c:624:19:UL_writecard	24	static
-../Core/Src/MFRC.c:650:7:uid_tostring	24	static
-../Core/Src/MFRC.c:669:19:UL_verify	24	static
+../Core/Src/MFRC.c:604:19:UL_readcard	16	static
+../Core/Src/MFRC.c:625:19:UL_writecard	24	static
+../Core/Src/MFRC.c:651:7:uid_tostring	24	static
+../Core/Src/MFRC.c:670:19:UL_verify	24	static

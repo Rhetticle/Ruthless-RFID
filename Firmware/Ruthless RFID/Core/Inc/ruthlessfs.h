@@ -34,7 +34,7 @@ typedef struct {
 #define READ_PROTECTED  1
 
 //Functions
-RFS_StatusTypeDef enter_card(Card* card, uint16_t entry);
+RFS_StatusTypeDef enter_card(Card* card, uint16_t entry, char* name);
 RFS_StatusTypeDef enter_metadata(Card* card, uint16_t block_num);
 Card* read_card_name (char* name);
 Card* read_card_entry(uint16_t entry);

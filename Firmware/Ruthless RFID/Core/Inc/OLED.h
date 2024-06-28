@@ -182,5 +182,6 @@ void oled_show_file(uint16_t entry);
 void free_filenames(char** file_names, int size);
 void oled_move_selection(const Screen* screen, uint8_t* arrow_index, uint8_t restore);
 void oled_move_selection_inv(const Screen* screen, uint8_t* select_index);
-void oled_keyboard_insert (uint8_t char_index_selected, char** curr_name);
+void oled_keyboard_insertChar (uint8_t char_index_selected, char** curr_name);
+void oled_keyboard_removeChar (char** curr_name);
 #endif /* INC_OLED_H_ */

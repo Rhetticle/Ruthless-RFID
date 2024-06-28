@@ -30,10 +30,11 @@
  * @param entry - Entry (Block number) to store card
  * @return RFS_OK if card was successfully stored
  * */
-RFS_StatusTypeDef enter_card(Card* card, uint16_t entry) {
+RFS_StatusTypeDef enter_card(Card* card, uint16_t entry, char* name) {
 	uint16_t block_startaddr = entry * BLOCK_PAGECOUNT;
 	block_erase(entry); //Erase entire block ready for new data
 	enter_metadata(card, entry);
+	card->name = name;
 
 	if (MEM_WRITE(block_startaddr + NAMEPAGE_OFFSET, 0x0000, (uint8_t*)card->name, strlen(card->name)) != HAL_OK) {
 		return RFS_WRITE_ERROR;

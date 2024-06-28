@@ -596,13 +596,14 @@ PCD_StatusTypeDef UL_getalldata(uint8_t* data) {
 /**
  * Read MIFARE Ultralight card data into card struct
  *
+ * !!Name of card is set by user after being read!!
+ *
  * @param result - Card to store data into
  * @return PCD_OK if data was successfully read
  * */
 PCD_StatusTypeDef UL_readcard(Card* result) {
 
 	result->type = "MIFARE Ultralight";
-	result->name = "Test1";
 	result->uidsize = UL_UIDSIZE;
 	result->contents_size = UL_MEMSIZE;
 	result->read_protected = 0;
