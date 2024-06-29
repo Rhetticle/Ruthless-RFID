@@ -688,3 +688,13 @@ void oled_keyboard_removeChar (char** curr_name) {
 	OLED_SCRNREF(&SCRN_Keyboard, 0 ,clear);
 	OLED_SCRNREF(&SCRN_Keyboard, 0, *curr_name);
 }
+
+/**
+ * Set the constrast of oled display
+ * @param value - 8 bit value to set contrast to
+ * */
+void oled_set_contrast (uint8_t value) {
+	OLED_cmd(CNTRST_SET);
+	HAL_Delay(1);
+	OLED_cmd(value);
+}

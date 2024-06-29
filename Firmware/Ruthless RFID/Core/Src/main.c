@@ -1106,6 +1106,7 @@ void StartDisplaySettings(void *argument)
 	uint8_t select_index = 0;
 	int ranonce = 0;
 	Button_StateTypeDef button_state;
+	uint16_t current_contrast = 0xFF; //max contrast by default
   /* Infinite loop */
   for(;;)
   {
@@ -1118,6 +1119,26 @@ void StartDisplaySettings(void *argument)
     if (xQueueReceive(UserInputHandle, &button_state, 0) == pdTRUE) {
     	if (button_state == SHORT_PRESS) {
     		oled_move_selection_inv(&SCRN_Display, &select_index);
+    	} else if (button_state == LONG_PRESS) {
+    		if (select_index == 0) {
+
+    			if (current_contrast + 50 <= 0xFF) {
+    				current_contrast += 50;
+    			}
+    			oled_set_contrast(current_contrast);
+
+    		} else if (select_index == 1) {
+
+    			if (current_contrast >= 50) {
+    				current_contrast -= 50;
+    			}
+    			oled_set_contrast(current_contrast);
+
+    		} else if (select_index == 2) {
+    			vTaskResume(HomeHandle);
+    			ranonce = 0;
+    			vTaskSuspend(NULL);
+    		}
     	}
     }
   }

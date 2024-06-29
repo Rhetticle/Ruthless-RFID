@@ -187,4 +187,5 @@ void oled_move_selection(const Screen* screen, uint8_t* arrow_index, uint8_t res
 void oled_move_selection_inv(const Screen* screen, uint8_t* select_index);
 void oled_keyboard_insertChar (uint8_t char_index_selected, char** curr_name);
 void oled_keyboard_removeChar (char** curr_name);
+void oled_set_contrast (uint8_t value);
 #endif /* INC_OLED_H_ */
