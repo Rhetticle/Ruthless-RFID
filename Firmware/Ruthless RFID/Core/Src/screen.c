@@ -52,6 +52,9 @@ static const uint8_t KEYBOARD_SEL[28][2] = {{2, START_COL}, {2, START_COL + 12},
 											{4, START_COL + 84}, {4, START_COL + 96}, {4, START_COL + 108}, {4, START_COL + 120},{6, START_COL},
 											{6, START_COL + 12}, {6, START_COL + 24}, {6, START_COL + 36}, {6, START_COL +48}, {6, START_COL + 84}};
 
+static const char* DISP_SCREEN [5] = {"DISPLAY", "CONTRAST: ", "+", "-", "EXIT"};
+static const uint8_t DISP_DATLOC [5][2] = {{0,0}, {2, START_COL}, {2, MID_COL}, {2, MID_COL + 24}, {7, END_COL - 24}};
+static const uint8_t DISP_SEL [3][2] = {{2, MID_COL}, {2, MID_COL + 24}, {7, END_COL - 24}};
 
 /**
  * Screens
@@ -127,4 +130,13 @@ const Screen SCRN_Keyboard = {
 		.data = KEYBOARD_SCREEN,
 		.dataloc = KEYBOARD_DATLOC,
 		.seldata = KEYBOARD_SEL,
+};
+
+//Display settings
+const Screen SCRN_Display = {
+		.datsize = sizeof(DISP_SCREEN)/sizeof(DISP_SCREEN[0]),
+		.selsize = sizeof(DISP_SEL)/sizeof(DISP_SEL[0]),
+		.data = DISP_SCREEN,
+		.dataloc = DISP_DATLOC,
+		.seldata = DISP_SEL,
 };

@@ -489,7 +489,8 @@ PCD_StatusTypeDef UL_getuid(uint8_t* uid) {
 		return PCD_COMM_ERR;
 	}
 
-	memcpy(uid, read, UL_UIDSIZE);
+	memcpy(uid, read, UL_UIDPART1);
+	memcpy(uid + UL_UIDPART1, read + UL_UIDPART2, UL_UIDPART2);
 	return PCD_OK;
 }
 
@@ -636,9 +637,15 @@ PCD_StatusTypeDef dump_card_serial (Card* card, uint8_t pagesize) {
 
 	printf("Type: %s\r\n", card->type);
 	printf("UID: %s\r\n", uid);
-	free(uid);
 	printf("Page    Byte\r\n");
-	printf("     0  1  2  3\r\n");
+	free(uid);
+
+	printf("     "); //filler
+	for (int i = 0; i < pagesize; i++) {
+		printf("%i  ", i);
+	}
+	printf("\r\n");
+
 	for (int i = 0; i < card->contents_size/pagesize; i++) {
 		printf("%i    ", i);
 		for (int j = 0; j < pagesize; j++) {

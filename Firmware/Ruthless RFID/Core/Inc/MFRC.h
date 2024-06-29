@@ -39,12 +39,15 @@ typedef enum{
 
 #define UL_MEMSIZE 64 //16 pages each containing 4 bytes
 #define UL_UIDSIZE 7 //7 Byte UID
+#define UL_UIDPART1 3
+#define UL_UIDPART2 4
 #define UL_DATASIZE 48 //44 bytes of user data (Pages 4 to 15)
 #define UL_READSIZE 16 //A UL read will give 16 bytes back (excluding 2 CRC bytes)
 #define UL_WRITESIZE 4 //A UL write can only do 4 bytes at a time
 #define UL_PAGESIZE 4 //4 bytes in a page
 #define UL_DATASTART 0x04 //Start address of data memory
 #define UL_DATAEND 0x0F //last page
+
 //Register Addresses
 
 #define CMD_REG 0x01

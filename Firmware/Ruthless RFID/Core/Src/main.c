@@ -119,6 +119,13 @@ const osThreadAttr_t Keyboard_attributes = {
   .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityLow,
 };
+/* Definitions for DisplaySettings */
+osThreadId_t DisplaySettingsHandle;
+const osThreadAttr_t DisplaySettings_attributes = {
+  .name = "DisplaySettings",
+  .stack_size = 512 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
 /* Definitions for UidtoFound */
 osMessageQueueId_t UidtoFoundHandle;
 const osMessageQueueAttr_t UidtoFound_attributes = {
@@ -165,6 +172,7 @@ void StartShowFiles(void *argument);
 void StartShowFileData(void *argument);
 void StartClone(void *argument);
 void StartKeyboard(void *argument);
+void StartDisplaySettings(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -304,6 +312,9 @@ int main(void)
 
   /* creation of Keyboard */
   KeyboardHandle = osThreadNew(StartKeyboard, NULL, &Keyboard_attributes);
+
+  /* creation of DisplaySettings */
+  DisplaySettingsHandle = osThreadNew(StartDisplaySettings, NULL, &DisplaySettings_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -670,6 +681,7 @@ void Start_Init(void *argument)
     vTaskSuspend(ShowFileDataHandle);
     vTaskSuspend(CloneHandle);
     vTaskSuspend(KeyboardHandle);
+    vTaskSuspend(DisplaySettingsHandle);
 
     MFRC_INIT();
     MFRC_ANTOFF();
@@ -679,21 +691,21 @@ void Start_Init(void *argument)
     memory_reset();
 
     uint8_t fake_contents[64] = {0x04, 0x41, 0xBF, 0x72,
-    							0x1A, 0x06, 0x6C, 0x81,
-								0xF1, 0x48, 0x00,0x00,
-    							0x00, 0x00, 0x00, 0x00,
-    							0x01, 0x33, 0x00, 0x01,
-    							0x00, 0x01, 0x00, 0x01,
-    							0x00, 0x01, 0x00, 0x01,
-    							0x00, 0x00, 0x00, 0x00,
-    							0x00, 0x00, 0x00, 0x00,
-    							0x00, 0x00, 0x00 ,0x63,
-    							0x01, 0x33, 0x00, 0x01,
-    							0x00, 0x01, 0x00, 0x01,
-    							0x00, 0x01, 0x00, 0x01,
-    							0x00, 0x00, 0x00, 0x00,
-    							0x00, 0x00, 0x00, 0x00,
-    							0x00, 0x00, 0x00, 0x63};
+    							 0x1A, 0x06, 0x6C, 0x81,
+								 0xF1, 0x48, 0x00, 0x00,
+    							 0x00, 0x00, 0x00, 0x00,
+    							 0x01, 0x33, 0x00, 0x01,
+    							 0x00, 0x01, 0x00, 0x01,
+    							 0x00, 0x01, 0x00, 0x01,
+    							 0x00, 0x00, 0x00, 0x00,
+    							 0x00, 0x00, 0x00, 0x00,
+    							 0x00, 0x00, 0x00, 0x63,
+    							 0x01, 0x33, 0x00, 0x01,
+    							 0x00, 0x01, 0x00, 0x01,
+    							 0x00, 0x01, 0x00, 0x01,
+    							 0x00, 0x00, 0x00, 0x00,
+    							 0x00, 0x00, 0x00, 0x00,
+    							 0x00, 0x00, 0x00, 0x63};
     uint8_t uid[7] = {0x04, 0x41, 0xBF, 0x72, 0x1A, 0x06, 0x6C};
 
     Card fake_card = {
@@ -836,6 +848,9 @@ void StartHome(void *argument)
 			  		  break;
 			  	  case 3:
 			  		  vTaskResume(CloneHandle);
+			  		  break;
+			  	  case 4:
+			  		  vTaskResume(DisplaySettingsHandle);
 			  		  break;
 			  }
 			  ranonce = 0;
@@ -1076,6 +1091,37 @@ void StartKeyboard(void *argument)
     }
   }
   /* USER CODE END StartKeyboard */
+}
+
+/* USER CODE BEGIN Header_StartDisplaySettings */
+/**
+* @brief Function implementing the DisplaySettings thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartDisplaySettings */
+void StartDisplaySettings(void *argument)
+{
+  /* USER CODE BEGIN StartDisplaySettings */
+	uint8_t select_index = 0;
+	int ranonce = 0;
+	Button_StateTypeDef button_state;
+  /* Infinite loop */
+  for(;;)
+  {
+    if (ranonce == 0) {
+    	OLED_SCREEN(&SCRN_Display, NORMAL);
+    	OLED_select_inv(&SCRN_Display, select_index);
+    	ranonce++;
+    }
+
+    if (xQueueReceive(UserInputHandle, &button_state, 0) == pdTRUE) {
+    	if (button_state == SHORT_PRESS) {
+    		oled_move_selection_inv(&SCRN_Display, &select_index);
+    	}
+    }
+  }
+  /* USER CODE END StartDisplaySettings */
 }
 
 /**

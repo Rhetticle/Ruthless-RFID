@@ -500,7 +500,7 @@ void OLED_select_inv(const Screen* screen, uint8_t selopt) {
 	}
 
 	OLED_Printlin(prevpage, prevcol, restore, NORMAL);
-	OLED_Printlin(thispage, thiscol, screen->data[selopt + 1], INVERT);
+	OLED_Printlin(thispage, thiscol, screen->data[find_restore_string(screen, selopt)], INVERT);
 }
 
 /*Function to perform the display's power down sequence
