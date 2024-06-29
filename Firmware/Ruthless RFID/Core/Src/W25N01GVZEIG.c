@@ -193,7 +193,7 @@ HAL_StatusTypeDef MEM_WRITE(uint16_t page_addr,uint16_t col_addr,uint8_t* data,u
  * */
 
 HAL_StatusTypeDef MEM_READPAGE(uint16_t page_addr,uint16_t col_addr,uint8_t* data,uint32_t bytes){ //Read one 2KiB page. Data will be put into internal buffer which can then be read. Wait at least tDR or until busy bit is clear
-	uint8_t transaction[]={READ_PAGE, DUMMY, page_addr>>8, page_addr};
+	uint8_t transaction[]={READ_PAGE, DUMMY, page_addr >> 8, page_addr};
 	uint8_t transaction_size = sizeof(transaction)/sizeof(transaction[0]);
 	uint8_t* read_command = malloc(bytes+transaction_size); //Must allocate here since array may be too big for FreeRTOS task stack
 	uint8_t* rec_data = malloc(bytes+transaction_size);

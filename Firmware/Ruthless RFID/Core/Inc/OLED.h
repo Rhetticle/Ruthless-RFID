@@ -30,6 +30,9 @@
 //File related constants
 #define FILES_PERSCREEN 3
 
+//Display settings constants
+#define CONTRAST_STEPSIZE 50
+
 //Commands
 #define LOWER_COL 0x02 //Lower nibble op code for column start (0x02)
 #define UPPER_COL 0x10 //Upper nibble op code of column start (0x02)
@@ -188,4 +191,5 @@ void oled_move_selection_inv(const Screen* screen, uint8_t* select_index);
 void oled_keyboard_insertChar (uint8_t char_index_selected, char** curr_name);
 void oled_keyboard_removeChar (char** curr_name);
 void oled_set_contrast (uint8_t value);
+void oled_show_stats(void);
 #endif /* INC_OLED_H_ */

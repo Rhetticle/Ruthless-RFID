@@ -25,3 +25,4 @@
 ../Core/Src/OLED.c:653:6:oled_keyboard_insertChar	24	static
 ../Core/Src/OLED.c:672:6:oled_keyboard_removeChar	56	dynamic
 ../Core/Src/OLED.c:696:6:oled_set_contrast	16	static
+../Core/Src/OLED.c:705:6:oled_show_stats	16	static

@@ -56,6 +56,10 @@ static const char* DISP_SCREEN [5] = {"DISPLAY", "CONTRAST: ", "+", "-", "EXIT"}
 static const uint8_t DISP_DATLOC [5][2] = {{0,0}, {2, START_COL}, {2, MID_COL}, {2, MID_COL + 24}, {7, END_COL - 24}};
 static const uint8_t DISP_SEL [3][2] = {{2, MID_COL}, {2, MID_COL + 24}, {7, END_COL - 24}};
 
+static const char* STATS_SCREEN [4] = {"STATS", "WRITES: ", "READS: ", "EXIT"};
+static const uint8_t STATS_DATLOC [4][2] = {{0,0}, {2, START_COL}, {4, START_COL}, {7, END_COL - 24}};
+static const uint8_t STATS_SEL [1][2] = {{7, END_COL - 36}};
+
 /**
  * Screens
  *
@@ -139,4 +143,13 @@ const Screen SCRN_Display = {
 		.data = DISP_SCREEN,
 		.dataloc = DISP_DATLOC,
 		.seldata = DISP_SEL,
+};
+
+//Stats
+const Screen SCRN_Stats = {
+		.datsize = sizeof(STATS_SCREEN)/sizeof(STATS_SCREEN[0]),
+		.selsize = sizeof(STATS_SEL)/sizeof(STATS_SEL[0]),
+		.data = STATS_SCREEN,
+		.dataloc = STATS_DATLOC,
+		.seldata = STATS_SEL,
 };

@@ -19,3 +19,9 @@
 ../Core/Src/ruthlessfs.c:391:10:get_free_size	8	static
 ../Core/Src/ruthlessfs.c:399:6:get_used_size_str	24	static
 ../Core/Src/ruthlessfs.c:408:6:get_free_size_str	24	static
+../Core/Src/ruthlessfs.c:417:19:inc_write_count	16	static
+../Core/Src/ruthlessfs.c:433:19:inc_read_count	16	static
+../Core/Src/ruthlessfs.c:449:10:get_total_writes	16	static
+../Core/Src/ruthlessfs.c:462:10:get_total_reads	16	static
+../Core/Src/ruthlessfs.c:475:7:get_total_writes_str	16	static
+../Core/Src/ruthlessfs.c:486:7:get_total_reads_str	16	static

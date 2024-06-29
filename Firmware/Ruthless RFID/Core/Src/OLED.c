@@ -698,3 +698,17 @@ void oled_set_contrast (uint8_t value) {
 	HAL_Delay(1);
 	OLED_cmd(value);
 }
+
+/**
+ * Display the statistics for stats task (total writes and reads)
+ * */
+void oled_show_stats(void) {
+	char* reads = get_total_reads_str();
+	char* writes = get_total_writes_str();
+
+	OLED_SCRNREF(&SCRN_Stats, 1, writes);
+	OLED_SCRNREF(&SCRN_Stats, 2, reads);
+
+	free(reads);
+	free(writes);
+}

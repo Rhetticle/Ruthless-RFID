@@ -126,6 +126,13 @@ const osThreadAttr_t DisplaySettings_attributes = {
   .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for Stats */
+osThreadId_t StatsHandle;
+const osThreadAttr_t Stats_attributes = {
+  .name = "Stats",
+  .stack_size = 512 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
 /* Definitions for UidtoFound */
 osMessageQueueId_t UidtoFoundHandle;
 const osMessageQueueAttr_t UidtoFound_attributes = {
@@ -173,6 +180,7 @@ void StartShowFileData(void *argument);
 void StartClone(void *argument);
 void StartKeyboard(void *argument);
 void StartDisplaySettings(void *argument);
+void StartStats(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -315,6 +323,9 @@ int main(void)
 
   /* creation of DisplaySettings */
   DisplaySettingsHandle = osThreadNew(StartDisplaySettings, NULL, &DisplaySettings_attributes);
+
+  /* creation of Stats */
+  StatsHandle = osThreadNew(StartStats, NULL, &Stats_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -682,6 +693,7 @@ void Start_Init(void *argument)
     vTaskSuspend(CloneHandle);
     vTaskSuspend(KeyboardHandle);
     vTaskSuspend(DisplaySettingsHandle);
+    vTaskSuspend(StatsHandle);
 
     MFRC_INIT();
     MFRC_ANTOFF();
@@ -721,6 +733,9 @@ void Start_Init(void *argument)
     while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) != 0);
     osDelay(10);
     dump_card_serial(&fake_card, 4);
+    uint8_t zeros[4] = {0x00};
+    MEM_WRITE(BLOCK_PAGECOUNT * WRITE_NUM_BLOCK, 0x0000, zeros, 4);
+    MEM_WRITE(BLOCK_PAGECOUNT * READ_NUM_BLOCK, 0x0000, zeros, 4);
     uint8_t clear = NO_PRESS;
     xQueueSend(UserInputHandle, &clear, 0);
     vTaskResume(HomeHandle);
@@ -755,6 +770,7 @@ void StartReadCard(void *argument)
 	if(UL_readcard(read_card) == PCD_OK){
 			BUZZ();
 			MFRC_ANTOFF();
+			inc_read_count();
 			xQueueSend(UidtoFoundHandle,&read_card,0);
 			vTaskResume(CardFoundHandle);
 			ranonce = 0;
@@ -800,6 +816,7 @@ void StartWriteCard(void *argument)
 
 		  } else if ((button_state == LONG_PRESS) && (towrite != NULL)) {
 			  	ranonce= 0;
+			  	inc_write_count();
 			  	write_card(towrite);
 		  }
 	  }
@@ -851,6 +868,9 @@ void StartHome(void *argument)
 			  		  break;
 			  	  case 4:
 			  		  vTaskResume(DisplaySettingsHandle);
+			  		  break;
+			  	  case 5:
+			  		  vTaskResume(StatsHandle);
 			  		  break;
 			  }
 			  ranonce = 0;
@@ -1122,15 +1142,15 @@ void StartDisplaySettings(void *argument)
     	} else if (button_state == LONG_PRESS) {
     		if (select_index == 0) {
 
-    			if (current_contrast + 50 <= 0xFF) {
-    				current_contrast += 50;
+    			if (current_contrast + CONTRAST_STEPSIZE <= 0xFF) {
+    				current_contrast += CONTRAST_STEPSIZE;
     			}
     			oled_set_contrast(current_contrast);
 
     		} else if (select_index == 1) {
 
-    			if (current_contrast >= 50) {
-    				current_contrast -= 50;
+    			if (current_contrast >= CONTRAST_STEPSIZE) {
+    				current_contrast -= CONTRAST_STEPSIZE;
     			}
     			oled_set_contrast(current_contrast);
 
@@ -1143,6 +1163,40 @@ void StartDisplaySettings(void *argument)
     }
   }
   /* USER CODE END StartDisplaySettings */
+}
+
+/* USER CODE BEGIN Header_StartStats */
+/**
+* @brief Function implementing the Stats thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartStats */
+void StartStats(void *argument)
+{
+  /* USER CODE BEGIN StartStats */
+	uint8_t select_index = 0;
+	int ranonce = 0;
+	Button_StateTypeDef button_state;
+  /* Infinite loop */
+  for(;;)
+  {
+    if (ranonce == 0) {
+    	OLED_SCREEN(&SCRN_Stats, NORMAL);
+    	OLED_SELECT(&SCRN_Stats, select_index, OLED_NORESTORE);
+    	oled_show_stats();
+    	ranonce++;
+    }
+
+    if (xQueueReceive(UserInputHandle, &button_state, 0) == pdTRUE) {
+    	if (button_state == LONG_PRESS) {
+    		vTaskResume(HomeHandle);
+    		ranonce = 0;
+    		vTaskSuspend(NULL);
+    	}
+    }
+  }
+  /* USER CODE END StartStats */
 }
 
 /**

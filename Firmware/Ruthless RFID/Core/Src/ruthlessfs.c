@@ -398,7 +398,7 @@ uint32_t get_free_size(void) {
  * */
 void get_used_size_str(char* result) {
 	uint32_t used = get_used_size();
-	sprintf(result,"%i", used);
+	sprintf(result, "%i", used);
 }
 
 /**
@@ -408,4 +408,84 @@ void get_used_size_str(char* result) {
 void get_free_size_str(char* result) {
 	uint32_t free = get_free_size();
 	sprintf(result, "%i", free);
+}
+
+/**
+ * Increment the total write count by 1
+ * @return RFS_OK if value was successfully incremented
+ * */
+RFS_StatusTypeDef inc_write_count(void) {
+	uint32_t new_total = get_total_writes() + 1;
+	uint8_t new_writes[sizeof(uint32_t)] = {new_total, new_total >> 8, new_total >> 16, new_total >> 24};
+
+	block_erase(WRITE_NUM_BLOCK);
+	if (MEM_WRITE(BLOCK_PAGECOUNT * WRITE_NUM_BLOCK, 0x0000, new_writes, sizeof(uint32_t)) != HAL_OK) {
+		return RFS_WRITE_ERROR;
+	}
+
+	return RFS_OK;
+}
+
+/**
+ * Increment the total read count by 1
+ * @return RFS_OK if value was successfully incremented
+ * */
+RFS_StatusTypeDef inc_read_count(void) {
+	uint32_t new_total = get_total_reads() + 1;
+	uint8_t new_writes[sizeof(uint32_t)] = {new_total, new_total >> 8, new_total >> 16, new_total >> 24};
+
+	block_erase(READ_NUM_BLOCK);
+	if (MEM_WRITE(BLOCK_PAGECOUNT * READ_NUM_BLOCK, 0x0000, new_writes, sizeof(uint32_t)) != HAL_OK) {
+		return RFS_WRITE_ERROR;
+	}
+
+	return RFS_OK;
+}
+
+/**
+ * Get total number of writes made to FS (Used in stats task)
+ * @return Total number of writes made to mem (Stored at block number WRITE_NUM_BLOCK)
+ * */
+uint32_t get_total_writes(void) {
+	uint8_t writes[sizeof(uint32_t)];
+
+	MEM_READPAGE(BLOCK_PAGECOUNT * WRITE_NUM_BLOCK, 0x0000, writes, sizeof(uint32_t));
+
+	uint32_t writes_u32 = writes[3] << 24 | writes[2] << 16 | writes[1] << 8 | writes[0];
+	return writes_u32;
+}
+
+/**
+ * Get total number of reads made of phyiscaly cards (Used in stats task)
+ * @return Total number of reads(Stored at block number READ_NUM_BLOCK)
+ * */
+uint32_t get_total_reads(void) {
+	uint8_t reads[sizeof(uint32_t)];
+
+	MEM_READPAGE(BLOCK_PAGECOUNT * READ_NUM_BLOCK, 0x0000, reads, sizeof(uint32_t));
+
+	uint32_t reads_u32 = reads[3] << 24 | reads[2] << 16 | reads[1] << 8 | reads[0];
+	return reads_u32;
+}
+
+/**
+ * Get total writes as a string
+ * @return String of total writes
+ * */
+char* get_total_writes_str(void) {
+	char* result = malloc(sizeof(uint32_t) * sizeof(char));
+
+	sprintf(result, "%i", get_total_writes());
+	return(result);
+}
+
+/**
+ * Get total reads as a string
+ * @return String of total reads
+ * */
+char* get_total_reads_str(void) {
+	char* result = malloc(sizeof(uint32_t) * sizeof(char));
+
+	sprintf(result, "%i", get_total_reads());
+	return(result);
 }

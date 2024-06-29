@@ -30,7 +30,7 @@ typedef struct{
 }Screen;
 
 extern const Screen SCRN_Home, SCRN_ReadCard, SCRN_CardFound, SCRN_WriteCard, SCRN_ShowFiles,
-					SCRN_FileData, SCRN_Clone, SCRN_Keyboard, SCRN_Display; //Screens
+					SCRN_FileData, SCRN_Clone, SCRN_Keyboard, SCRN_Display, SCRN_Stats; //Screens
 
 
 

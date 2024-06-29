@@ -33,6 +33,9 @@ typedef struct {
 #define DATAPAGE_OFFSET 2
 #define READ_PROTECTED  1
 
+#define WRITE_NUM_BLOCK 1022 //Stores total number of written cards (32-bit to allow measuring up to 4 billion cards)
+#define READ_NUM_BLOCK 1023 //Stores total number of read cards (32-bit to allow measuring up to 4 billion cards)
+
 //Functions
 RFS_StatusTypeDef enter_card(Card* card, uint16_t entry, char* name);
 RFS_StatusTypeDef enter_metadata(Card* card, uint16_t block_num);
@@ -55,4 +58,10 @@ uint32_t get_used_size(void);
 uint32_t get_free_size(void);
 void get_used_size_str(char* result);
 void get_free_size_str(char* result);
+RFS_StatusTypeDef inc_write_count(void);
+RFS_StatusTypeDef inc_read_count(void);
+uint32_t get_total_writes(void);
+uint32_t get_total_reads(void);
+char* get_total_writes_str(void);
+char* get_total_reads_str(void);
 #endif /* INC_RUTHLESSFS_H_ */

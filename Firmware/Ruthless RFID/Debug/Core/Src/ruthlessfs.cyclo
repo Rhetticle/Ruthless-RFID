@@ -19,3 +19,9 @@ ruthlessfs.c:381:10:get_used_size	1
 ruthlessfs.c:391:10:get_free_size	1
 ruthlessfs.c:399:6:get_used_size_str	1
 ruthlessfs.c:408:6:get_free_size_str	1
+ruthlessfs.c:417:19:inc_write_count	2
+ruthlessfs.c:433:19:inc_read_count	2
+ruthlessfs.c:449:10:get_total_writes	1
+ruthlessfs.c:462:10:get_total_reads	1
+ruthlessfs.c:475:7:get_total_writes_str	1
+ruthlessfs.c:486:7:get_total_reads_str	1
