@@ -468,77 +468,12 @@ PCD_StatusTypeDef UL_WRITE(uint8_t addr,uint8_t* data){
 	}
 }
 
-void Print(char* mess){
-	char send[strlen(mess)];
-	memcpy(send,mess,strlen(mess));
+void USB_print(char* mess){
+	char send[strlen(mess) + 1];
+	strcpy(send, mess);
+
 	CDC_Transmit_FS((uint8_t*)send, strlen(mess));
 	HAL_Delay(10);
-}
-
-/*
- * Function to dump data to serial terminal
- *
- * @param data: Destination array for card data
- * */
-uint8_t WUPA=0;
-PCD_StatusTypeDef DumpINFO(uint8_t* data){
-	  uint8_t ATQA[2];
-	  if(WUPA==1){
-		 if(PICC_Select()!=PCD_OK){
-			 Print("ERROR No PICC Found\r\n");
-			 WUPA=0;
-			 return(PCD_COMM_ERR);
-		 }
-		 else{
-			 HAL_Delay(10);
-				Print("    BYTE\r\n");
-				Print("0 1 2 3\r\n");
-				Print("        \r\n");
-				for(int i = 0; i < 13; i+= 4){
-					UL_READ(i, data);
-					for(int j = 0; j < 13; j += 4){
-						char mess[20];
-						sprintf(mess,"%X, %X, %X, %X\r\n",data[j],data[j+1],data[j+2],data[j+3]);
-						Print(mess);
-						return(PCD_OK);
-					}
-				}
-
-			 MFRC_HALTA();
-			 MFRC_WUPA(ATQA);
-			 WUPA=1;
-		 }
-
-	  }
-	  else{
-		  if(PICC_CHECK()!=PCD_OK){
-		  		  Print("ERROR No PICC Found\r\n");
-		  		  WUPA=0;
-		  		return(PCD_COMM_ERR);
-		  }
-
-	  else{
-		HAL_Delay(10);
-		PICC_Select();
-		HAL_Delay(10);
-		Print("    BYTE\r\n");
-		Print("0 1 2 3\r\n");
-		Print("        \r\n");
-		for(int i=0;i<13;i+=4){
-			UL_READ(i, data);
-			for(int j=0;j<13;j+=4){
-				char mess[20];
-				sprintf(mess,"%X, %X, %X, %X\r\n",data[j],data[j+1],data[j+2],data[j+3]);
-				Print(mess);
-				return(PCD_OK);
-			}
-		}
-
-		 MFRC_HALTA();
-		 MFRC_WUPA(ATQA);
-		 WUPA=1;
-		  }
-	  }
 }
 
 /**
@@ -687,6 +622,35 @@ PCD_StatusTypeDef UL_verify(Card* check) {
 	free(read->contents);
 	free(read->uid);
 	free(read);
+	return PCD_OK;
+}
+
+/**
+ * Print relevant info of card to terminal over USB
+ * @param card - Card to print details of
+ * @param pagesize - Number of bytes in each page of memory for given card
+ * @return PCD_OK if card details were successfully printed
+ * */
+PCD_StatusTypeDef dump_card_serial (Card* card, uint8_t pagesize) {
+	char* uid = uid_tostring(card->uid, card->uidsize);
+
+	printf("Type: %s\r\n", card->type);
+	printf("UID: %s\r\n", uid);
+	free(uid);
+	printf("Page    Byte\r\n");
+	printf("     0  1  2  3\r\n");
+	for (int i = 0; i < card->contents_size/pagesize; i++) {
+		printf("%i    ", i);
+		for (int j = 0; j < pagesize; j++) {
+			if (card->contents[(i * pagesize) + j] <= 0xF) {
+				printf("0%X ", card->contents[(i * pagesize) + j]);
+			} else {
+				printf("%X ", card->contents[(i * pagesize) + j]);
+			}
+
+		}
+		printf("\r\n");
+	}
 	return PCD_OK;
 }
 

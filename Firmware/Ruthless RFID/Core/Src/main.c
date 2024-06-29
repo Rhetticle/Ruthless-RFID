@@ -640,7 +640,11 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+int _write(int file, char *ptr, int len) {
+    CDC_Transmit_FS((uint8_t*) ptr, len);
+    HAL_Delay(1);
+    return len;
+}
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_Start_Init */
@@ -704,6 +708,7 @@ void Start_Init(void *argument)
     enter_card(&fake_card, 0, "fake");
     while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) != 0);
     osDelay(10);
+    dump_card_serial(&fake_card, 4);
     uint8_t clear = NO_PRESS;
     xQueueSend(UserInputHandle, &clear, 0);
     vTaskResume(HomeHandle);
