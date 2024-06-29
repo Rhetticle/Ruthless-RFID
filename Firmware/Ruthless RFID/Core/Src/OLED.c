@@ -521,14 +521,16 @@ void OLED_PWRDWN(void){
  * @return HAL_OK if files were successfully displayed
  * */
 HAL_StatusTypeDef OLED_display_files(const Screen* screen, uint8_t page) {
-	if (get_number_files() == 0) {
+	if (get_number_files_section(FILES_PERSCREEN * page, FILES_PERSCREEN) == 0) {
 		return HAL_ERROR;
 	}
-	uint16_t file_count = get_number_files();
+	uint32_t file_count = get_number_files_section(FILES_PERSCREEN * page, FILES_PERSCREEN);
 
 	char** file_names = malloc(file_count * sizeof(char*));
 	char used[5];
 	char free[5];
+	uint32_t file_index = 0;
+	uint32_t location_index = 0;
 
 	get_free_size_str(free);
 	get_used_size_str(used);
@@ -536,13 +538,17 @@ HAL_StatusTypeDef OLED_display_files(const Screen* screen, uint8_t page) {
 	OLED_SCRNREF(&SCRN_ShowFiles, 4, free);
 	OLED_SCRNREF(&SCRN_ShowFiles, 5, used);
 
-	if (get_all_files(file_names) != RFS_OK) {
+	if (get_files_section(file_names, FILES_PERSCREEN * page, FILES_PERSCREEN) != RFS_OK) {
 		free_filenames(file_names, file_count);
 		return HAL_ERROR;
 	}
 
-	for (int i = 0; i < file_count; i++) {
-		OLED_SCRNREF(&SCRN_ShowFiles, i + 1, file_names[i]);
+	while(location_index < FILES_PERSCREEN) {
+		if (entry_present(location_index) == RFS_OK) {
+			OLED_SCRNREF(&SCRN_ShowFiles, location_index + 1, file_names[file_index]);
+			file_index++;
+		}
+		location_index++;
 	}
 
 	free_filenames(file_names, file_count);

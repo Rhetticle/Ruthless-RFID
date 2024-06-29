@@ -17,10 +17,10 @@
 ../Core/Src/OLED.c:481:6:OLED_select_inv	40	static
 ../Core/Src/OLED.c:509:6:OLED_PWRDWN	16	static
 ../Core/Src/OLED.c:523:19:OLED_display_files	48	static
-../Core/Src/OLED.c:557:6:free_filenames	24	static
-../Core/Src/OLED.c:571:9:find_restore_string	24	static
-../Core/Src/OLED.c:588:6:oled_show_file	24	static
-../Core/Src/OLED.c:612:6:oled_move_selection	32	static
-../Core/Src/OLED.c:629:6:oled_move_selection_inv	24	static
-../Core/Src/OLED.c:647:6:oled_keyboard_insertChar	24	static
-../Core/Src/OLED.c:666:6:oled_keyboard_removeChar	56	dynamic
+../Core/Src/OLED.c:563:6:free_filenames	24	static
+../Core/Src/OLED.c:577:9:find_restore_string	24	static
+../Core/Src/OLED.c:594:6:oled_show_file	24	static
+../Core/Src/OLED.c:618:6:oled_move_selection	32	static
+../Core/Src/OLED.c:635:6:oled_move_selection_inv	24	static
+../Core/Src/OLED.c:653:6:oled_keyboard_insertChar	24	static
+../Core/Src/OLED.c:672:6:oled_keyboard_removeChar	56	dynamic

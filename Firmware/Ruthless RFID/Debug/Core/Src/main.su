@@ -14,8 +14,8 @@
 ../Core/Src/main.c:803:6:StartHome	24	static
 ../Core/Src/main.c:853:6:CardFoundStart	48	static
 ../Core/Src/main.c:907:6:StartShowFiles	24	static
-../Core/Src/main.c:957:6:StartShowFileData	24	static
-../Core/Src/main.c:997:6:StartClone	24	static
-../Core/Src/main.c:1035:6:StartKeyboard	32	static
-../Core/Src/main.c:1080:6:HAL_TIM_PeriodElapsedCallback	16	static
-../Core/Src/main.c:1097:6:Error_Handler	4	static,ignoring_inline_asm
+../Core/Src/main.c:960:6:StartShowFileData	24	static
+../Core/Src/main.c:1000:6:StartClone	24	static
+../Core/Src/main.c:1038:6:StartKeyboard	32	static
+../Core/Src/main.c:1084:6:HAL_TIM_PeriodElapsedCallback	16	static
+../Core/Src/main.c:1101:6:Error_Handler	4	static,ignoring_inline_asm

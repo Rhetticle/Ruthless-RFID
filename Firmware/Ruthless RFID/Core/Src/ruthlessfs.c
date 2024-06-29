@@ -262,23 +262,57 @@ void print_card_to_serial(uint16_t entry) {
 	free(msg);
 }
 
+
+/**
+ * Get number of files in given section of memory
+ * @param start - Start block
+ * @param count - Number of block to check ahead of start
+ * @return number of files present in section
+ * */
+uint32_t get_number_files_section (uint16_t start, uint32_t count) {
+	int file_count = 0;
+
+	for (int i = start; i < start + count; i++) {
+		if (entry_present(i) == RFS_OK) {
+			file_count++;
+		}
+	}
+
+	return file_count;
+}
+
 /**
  * Get number of files currently stored
  * @return number of files stored
  * */
-int get_number_files(void) {
-	int count = 0;
+uint32_t get_number_files_all(void) {
+	return get_number_files_section(0, BLOCK_COUNT);
+}
 
-	for (int i = 0; i < BLOCK_COUNT; i++) {
+/**
+ * Get the names of currently stored cards for given section of memory
+ *
+ * @param start - Start block number
+ * @param count - Number of files to read
+ * @param result - Array to store file names
+ * @return RFS_OK if files were successfully read
+ * */
+RFS_StatusTypeDef get_files_section (char** result, uint16_t start, uint32_t count) {
+	Card* work;
+	uint32_t file_index = 0;
+
+	for (int i = start; i < start + count; i++) {
 		if (entry_present(i) == RFS_OK) {
-			count++;
-		} else {
-			break;
+			work = read_card_entry(i);
+			result[file_index] = malloc(strlen(work->name) + 1);
+			memcpy(result[file_index], work->name, strlen(work->name));
+			result[file_index][strlen(work->name)] = '\0';
+			file_index++;
 		}
-
 	}
 
-	return count;
+	free(work);
+	return RFS_OK;
 }
 
 /**
@@ -288,21 +322,7 @@ int get_number_files(void) {
  * @return RFS_OK if all file names were read correctly
  * */
 RFS_StatusTypeDef get_all_files(char** result) {
-	Card* work;
-
-	for (int i = 0; i < BLOCK_COUNT; i++) {
-		if (entry_present(i) == RFS_OK) {
-			work = read_card_entry(i);
-			result[i] = malloc(strlen(work->name) + 1);
-			memcpy(result[i], work->name, strlen(work->name));
-			result[i][strlen(work->name)] = '\0';
-		} else {
-			break;
-		}
-	}
-
-	free(work);
-	return RFS_OK;
+	return get_files_section(result, 0, BLOCK_COUNT);
 }
 
 /**
@@ -359,7 +379,7 @@ void remove_card(uint16_t entry) {
  * @return size of memory used in MiB
  * */
 uint32_t get_used_size(void) {
-	int file_count = get_number_files();
+	int file_count = get_number_files_all();
 
 	return (BLOCK_SIZE * file_count);
 }

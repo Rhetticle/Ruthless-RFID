@@ -27,6 +27,9 @@
 #define OLED_INVCHARSIZE 7 //Inverted character is 7 columns wide
 #define ASCII_START 0x20
 
+//File related constants
+#define FILES_PERSCREEN 3
+
 //Commands
 #define LOWER_COL 0x02 //Lower nibble op code for column start (0x02)
 #define UPPER_COL 0x10 //Upper nibble op code of column start (0x02)

@@ -930,15 +930,18 @@ void StartShowFiles(void *argument)
 
 			  if (select_index == SHOWFILES_EXIT_LOC) {
 				  vTaskResume(HomeHandle);
+				  ranonce = 0;
+				  vTaskSuspend(NULL);
 
 			  } else if ((entry_present(select_index) == RFS_OK)) {
 				  uint16_t entry = select_index;
 				  xQueueSend(FileEntryHandle, &entry, 0);
 				  vTaskResume(ShowFileDataHandle);
+				  ranonce = 0;
+				  vTaskSuspend(NULL);
 
 			  }
-			  ranonce = 0;
-			  vTaskSuspend(NULL);
+
 
 		  }
 	  }
@@ -1060,6 +1063,7 @@ void StartKeyboard(void *argument)
     		} else if (select_index == 27) {
     			xQueueSend(KeyboardOutHandle, &input, 0); //See the name user has inputted to queue for other tasks to use
     			ranonce = 0;
+    			input = NULL;
     			vTaskSuspend(NULL); //exit task
     		}
 
