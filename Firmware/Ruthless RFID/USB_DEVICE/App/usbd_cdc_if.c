@@ -22,7 +22,9 @@
 #include "usbd_cdc_if.h"
 
 /* USER CODE BEGIN INCLUDE */
-
+#include "FreeRTOS.h"
+#include "queue.h"
+#include "cmsis_os2.h"
 /* USER CODE END INCLUDE */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -31,7 +33,7 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-
+extern osMessageQueueId_t USBInputHandle;
 /* USER CODE END PV */
 
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
@@ -261,7 +263,8 @@ static int8_t CDC_Control_FS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
 static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
 {
   /* USER CODE BEGIN 6 */
-	CDC_Transmit_FS(Buf, *Len); //Echo back
+	CDC_Transmit_FS(Buf, *Len);
+  xQueueSendFromISR(USBInputHandle, &Buf[0], 0);
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
   USBD_CDC_ReceivePacket(&hUsbDeviceFS);
   return (USBD_OK);
@@ -270,7 +273,7 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
 
 /**
   * @brief  CDC_Transmit_FS
-  *         Data to send over USB IN endpoint are sent over CDC interface
+  *         Data to send over USB IN endpoint are sent ove r CDC interface
   *         through this function.
   *         @note
   *

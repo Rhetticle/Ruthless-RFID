@@ -133,6 +133,13 @@ const osThreadAttr_t Stats_attributes = {
   .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for USBListen */
+osThreadId_t USBListenHandle;
+const osThreadAttr_t USBListen_attributes = {
+  .name = "USBListen",
+  .stack_size = 512 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
 /* Definitions for UidtoFound */
 osMessageQueueId_t UidtoFoundHandle;
 const osMessageQueueAttr_t UidtoFound_attributes = {
@@ -152,6 +159,11 @@ const osMessageQueueAttr_t FileEntry_attributes = {
 osMessageQueueId_t KeyboardOutHandle;
 const osMessageQueueAttr_t KeyboardOut_attributes = {
   .name = "KeyboardOut"
+};
+/* Definitions for USBInput */
+osMessageQueueId_t USBInputHandle;
+const osMessageQueueAttr_t USBInput_attributes = {
+  .name = "USBInput"
 };
 /* USER CODE BEGIN PV */
 char TC[]="HVE strongly condemns malicious use of it's products.The Ruthless RFID is sold as an educational device. HVE is not liable for damages caused by misuse.";
@@ -181,6 +193,7 @@ void StartClone(void *argument);
 void StartKeyboard(void *argument);
 void StartDisplaySettings(void *argument);
 void StartStats(void *argument);
+void StartUSBListen(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -289,6 +302,9 @@ int main(void)
   /* creation of KeyboardOut */
   KeyboardOutHandle = osMessageQueueNew (1, sizeof(char*), &KeyboardOut_attributes);
 
+  /* creation of USBInput */
+  USBInputHandle = osMessageQueueNew (16, sizeof(char), &USBInput_attributes);
+
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
@@ -326,6 +342,9 @@ int main(void)
 
   /* creation of Stats */
   StatsHandle = osThreadNew(StartStats, NULL, &Stats_attributes);
+
+  /* creation of USBListen */
+  USBListenHandle = osThreadNew(StartUSBListen, NULL, &USBListen_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -663,8 +682,8 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 int _write(int file, char *ptr, int len) {
+	osDelay(1); //Need delay here
     CDC_Transmit_FS((uint8_t*) ptr, len);
-    HAL_Delay(1);
     return len;
 }
 /* USER CODE END 4 */
@@ -735,6 +754,7 @@ void StartReadCard(void *argument)
 		ranonce++;
 	}
 	if(UL_readcard(read_card) == PCD_OK){
+			dump_card_serial(read_card, 4);
 			BUZZ();
 			MFRC_ANTOFF();
 			inc_read_count();
@@ -1164,6 +1184,28 @@ void StartStats(void *argument)
     }
   }
   /* USER CODE END StartStats */
+}
+
+/* USER CODE BEGIN Header_StartUSBListen */
+/**
+* @brief Function implementing the USBListen thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartUSBListen */
+void StartUSBListen(void *argument)
+{
+  /* USER CODE BEGIN StartUSBListen */
+	char* command = NULL;
+	char input;
+  /* Infinite loop */
+  for(;;)
+  {
+	  if (xQueueReceive(USBInputHandle, &input, 0) == pdTRUE) {
+		  printf("\nHere");
+	  }
+  }
+  /* USER CODE END StartUSBListen */
 }
 
 /**
