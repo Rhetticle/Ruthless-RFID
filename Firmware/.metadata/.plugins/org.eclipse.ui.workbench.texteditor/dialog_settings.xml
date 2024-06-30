@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value=""/>
+		<item key="selection" value="USER CODE"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="USER CODE"/>
 			<item value="xSemaphoreTake"/>
 			<item value="ff_req_grant"/>
 			<item value="lock_fs"/>
@@ -22,7 +23,6 @@
 			<item value="disk_write"/>
 			<item value="GET_BLOCK_SIZE"/>
 			<item value="mkfs"/>
-			<item value="mk"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
