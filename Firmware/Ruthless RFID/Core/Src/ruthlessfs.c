@@ -367,6 +367,18 @@ char* get_file_name(uint16_t entry) {
 }
 
 /**
+ * Free list of file names
+ * @param file_names - File names
+ * @param size -  Number of file names
+ * */
+void free_filenames(char** file_names, int size) {
+	for (int i = 0; i < size; i++) {
+		free(file_names[i]);
+	}
+	free(file_names);
+}
+
+/**
  * Remove card from file system
  * @param entry - Entry to remove
  * */

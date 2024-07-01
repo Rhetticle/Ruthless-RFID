@@ -30,6 +30,7 @@
 #include "W25N01GVZEIG.h"
 #include "ruthlessfs.h"
 #include "button.h"
+#include "commands.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -303,7 +304,7 @@ int main(void)
   KeyboardOutHandle = osMessageQueueNew (1, sizeof(char*), &KeyboardOut_attributes);
 
   /* creation of USBInput */
-  USBInputHandle = osMessageQueueNew (16, sizeof(char), &USBInput_attributes);
+  USBInputHandle = osMessageQueueNew (1, sizeof(char), &USBInput_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -682,7 +683,7 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 int _write(int file, char *ptr, int len) {
-	osDelay(1); //Need delay here
+	HAL_Delay(1); //Need delay here
     CDC_Transmit_FS((uint8_t*) ptr, len);
     return len;
 }
@@ -714,13 +715,17 @@ void Start_Init(void *argument)
     vTaskSuspend(DisplaySettingsHandle);
     vTaskSuspend(StatsHandle);
 
+    setbuf(stdout, NULL);
+
     MFRC_INIT();
     MFRC_ANTOFF();
     OLED_INIT();
     OLED_Print(TC);
     MEM_INIT();
 
-    while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) != 0);
+    while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) != 0) {
+    	osDelay(1);
+    }
     osDelay(10);
     uint8_t clear = NO_PRESS;
     xQueueSend(UserInputHandle, &clear, 0);
@@ -1202,7 +1207,13 @@ void StartUSBListen(void *argument)
   for(;;)
   {
 	  if (xQueueReceive(USBInputHandle, &input, 0) == pdTRUE) {
-		  printf("\nHere");
+		  if ((uint8_t)input == 0x0D) {
+			  cmd_parse(command);
+			  command = NULL;
+			  printf("\n\ruser@ruthless/ ");
+		  } else {
+			  cmd_build(&command, input);
+		  }
 	  }
   }
   /* USER CODE END StartUSBListen */

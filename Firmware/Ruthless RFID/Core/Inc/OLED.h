@@ -185,7 +185,6 @@ void OLED_select_inv(const Screen* screen, uint8_t selopt);
 HAL_StatusTypeDef OLED_display_files(const Screen* screen, uint8_t page);
 uint8_t find_restore_string(const Screen* screen, uint8_t prev_sel_opt);
 void oled_show_file(uint16_t entry);
-void free_filenames(char** file_names, int size);
 void oled_move_selection(const Screen* screen, uint8_t* arrow_index, uint8_t restore);
 void oled_move_selection_inv(const Screen* screen, uint8_t* select_index);
 void oled_keyboard_insertChar (uint8_t char_index_selected, char** curr_name);

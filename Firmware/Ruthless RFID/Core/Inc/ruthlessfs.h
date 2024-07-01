@@ -8,6 +8,8 @@
 #ifndef INC_RUTHLESSFS_H_
 #define INC_RUTHLESSFS_H_
 
+#include <stdint.h>
+
 typedef enum {
 	RFS_OK = 0x00,
 	RFS_NO_CARD = 0x01,
@@ -53,6 +55,7 @@ RFS_StatusTypeDef get_files_section (char** result, uint16_t start, uint32_t cou
 RFS_StatusTypeDef get_all_files(char** result);
 RFS_StatusTypeDef entry_present(uint16_t entry);
 char* get_file_name(uint16_t entry);
+void free_filenames(char** file_names, int size);
 void remove_card(uint16_t entry);
 uint32_t get_used_size(void);
 uint32_t get_free_size(void);

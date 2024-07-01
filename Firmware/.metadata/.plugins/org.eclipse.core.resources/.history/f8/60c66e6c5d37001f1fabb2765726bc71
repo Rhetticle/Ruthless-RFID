@@ -1,0 +1,24 @@
+/*
+ * commands.c
+ *
+ *  Created on: 30 Jun. 2024
+ *      Author: rhett
+ */
+
+#include "commands.h"
+#include "ruthlessfs.h"
+#include "stm32f4xx.h"
+#include <stdint.h>
+#include <stdio.h>
+
+CMD_StatusTypeDef cmd_ls () {
+	char** file_names = NULL;
+	if (get_files_section(file_names, 0, 3) != RFS_OK) {
+		return CMD_LS_ERROR;
+	}
+
+	for (int i = 0; i < 2; i++) {
+		printf("\n\r%s", file_names[i]);
+	}
+	return CMD_OK;
+}
