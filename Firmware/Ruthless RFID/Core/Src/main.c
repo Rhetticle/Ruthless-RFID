@@ -1203,17 +1203,24 @@ void StartUSBListen(void *argument)
   /* USER CODE BEGIN StartUSBListen */
 	char* command = NULL;
 	char input;
+	uint8_t initialised = 0;
   /* Infinite loop */
   for(;;)
   {
 	  if (xQueueReceive(USBInputHandle, &input, 0) == pdTRUE) {
-		  if ((uint8_t)input == 0x0D) {
-			  cmd_parse(command);
-			  command = NULL;
-			  printf("\n\ruser@ruthless/ ");
-		  } else {
-			  cmd_build(&command, input);
+		  if (((uint8_t)input == 0x0D) && initialised) {
+		  		cmd_parse(command);
+		  		command = NULL;
+		  		printf("\n\ruser@ruthless/ ");
+		  } else if (initialised){
+		  		cmd_build(&command, input);
 		  }
+
+		  if ((input == 'i') && (initialised == 0)) {
+			  initialised++;
+			  printf("\n\ruser@ruthless/ ");
+		  }
+
 	  }
   }
   /* USER CODE END StartUSBListen */

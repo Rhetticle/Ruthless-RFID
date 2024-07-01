@@ -6,11 +6,13 @@
  */
 
 #include "commands.h"
+#include "terminal.h"
 #include "ruthlessfs.h"
 #include "stm32f4xx.h"
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 /**
  * List all files currently stored on device
@@ -37,6 +39,9 @@ CMD_StatusTypeDef cmd_ls () {
 CMD_StatusTypeDef cmd_parse(char* cmd) {
 	if (strcmp(cmd, "ls") == 0) {
 		cmd_ls();
+	} else if (strcmp(cmd, "clear") == 0) {
+		clear_terminal();
+		move_terminal_cursor(0, 0);
 	} else {
 		printf("\n\rcommand not found: %s", cmd);
 	}

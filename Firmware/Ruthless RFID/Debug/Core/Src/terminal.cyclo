@@ -1,0 +1,4 @@
+terminal.c:17:6:move_terminal_cursor	1
+terminal.c:24:6:clear_terminal	1
+terminal.c:31:6:clear_to_end_of_line	1
+terminal.c:39:6:set_colour	1

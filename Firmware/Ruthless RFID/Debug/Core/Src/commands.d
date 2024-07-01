@@ -1,5 +1,5 @@
 Core/Src/commands.o: ../Core/Src/commands.c ../Core/Inc/commands.h \
- ../Core/Inc/ruthlessfs.h \
+ ../Core/Inc/terminal.h ../Core/Inc/ruthlessfs.h \
  ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h \
  ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xc.h \
  ../Drivers/CMSIS/Include/core_cm4.h \
@@ -34,6 +34,7 @@ Core/Src/commands.o: ../Core/Src/commands.c ../Core/Inc/commands.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h
 ../Core/Inc/commands.h:
+../Core/Inc/terminal.h:
 ../Core/Inc/ruthlessfs.h:
 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h:
 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xc.h:

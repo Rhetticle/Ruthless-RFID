@@ -20,6 +20,6 @@ main.c:1032:6:StartClone	5
 main.c:1070:6:StartKeyboard	8
 main.c:1115:6:StartDisplaySettings	10
 main.c:1167:6:StartStats	4
-main.c:1201:6:StartUSBListen	3
-main.c:1230:6:HAL_TIM_PeriodElapsedCallback	2
-main.c:1247:6:Error_Handler	1
+main.c:1201:6:StartUSBListen	7
+main.c:1237:6:HAL_TIM_PeriodElapsedCallback	2
+main.c:1254:6:Error_Handler	1
