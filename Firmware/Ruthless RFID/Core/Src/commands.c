@@ -55,12 +55,48 @@ CMD_StatusTypeDef cmd_rm(char* arg) {
 }
 
 /**
+ * Upload/program a file into the device
+ * @param tokens - Arguments from user
+ * @return CMD_OK if file was successfully uploaded
+ * */
+CMD_StatusTypeDef cmd_pg(char** args, uint8_t size) {
+	Card to_program;
+
+	if (strcmp(args[1], "--help") == 0) {
+		pg_show_help();
+		return CMD_OK;
+	}
+
+	for (int i = 1; i < size; i++) {
+
+		if (strcmp(args[i], "-name") == 0) {
+			to_program.name = args[i + 1];
+		}
+
+		if (strcmp(args[i], "-uid") == 0) {
+			pg_parse_str(&to_program.uid, args[i + 1]);
+		}
+
+		if (strcmp(args[i], "-mem") == 0) {
+			pg_parse_str(&to_program.contents, args[i + 1]);
+		}
+
+		if (strcmp(args[i], "-type") == 0) {
+			to_program.type = args[i + 1];
+		}
+
+	}
+
+}
+
+/**
  * Parse a string representation of command
  * @param cmd - String representation of command e.g. ls
  * @return CMD_OK if command was successfully parsed and executed
  * */
 CMD_StatusTypeDef cmd_parse(char* cmd) {
 	char** tokens = cmd_split(cmd, ' ');
+	uint32_t count = get_token_count(cmd, ' ');
 
 	if (strcmp(tokens[0], "ls") == 0) {
 
@@ -75,7 +111,10 @@ CMD_StatusTypeDef cmd_parse(char* cmd) {
 
 		cmd_rm(tokens[1]);
 
-	} else {
+	} else if (strcmp(tokens[0], "pg") == 0) {
+		cmd_pg(tokens, count);
+	}
+	else {
 		printf("\n\rcommand not found: %s", cmd);
 	}
 
@@ -189,3 +228,35 @@ void free_tokens(char** tokens, uint32_t size) {
 	}
 	free(tokens);
 }
+
+/**
+ * Show help options for pg command (Shown using pg --help)
+ * */
+void pg_show_help() {
+	printf("\n\r-name - Specifies file name");
+	printf("\n\r-type - Specifies card IC type");
+	printf("\n\r-mem - Specifies contents of card (comma separated, hexadecimal)");
+	printf("\n\r-uid - Specifies card UID (comma separated, hexadecimal)");
+}
+
+/**
+ * Parse a comma separated string of hex values to byte array
+ * @param dest - Destination array
+ * @param data_str - String input of data
+ * @return CMD_OK if data was successfully parsed
+ * */
+CMD_StatusTypeDef pg_parse_str(uint8_t** dest, char* data_str) {
+	char** nums = cmd_split(data_str, ',');
+	uint32_t count = get_token_count(data_str, ',');
+	*dest = malloc(count * sizeof(uint8_t));
+
+	for (int i = 0; i < count; i++) {
+		(*dest)[i] = strtol(nums[i], NULL, 16);
+	}
+
+	return CMD_OK;
+}
+
+
+
+
