@@ -1,10 +1,10 @@
-16:46:27 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+17:08:51 **** Incremental Build of configuration Debug for project Ruthless RFID ****
 make -j8 all 
 arm-none-eabi-size   Ruthless\ RFID.elf 
    text	   data	    bss	    dec	    hex	filename
-  77664	   1860	  42244	 121768	  1dba8	Ruthless RFID.elf
+  77760	   1860	  42244	 121864	  1dc08	Ruthless RFID.elf
 Finished building: default.size.stdout
  
 
-16:46:29 Build Finished. 0 errors, 0 warnings. (took 2s.249ms)
+17:08:52 Build Finished. 0 errors, 0 warnings. (took 806ms)
 

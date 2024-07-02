@@ -40,12 +40,7 @@ CMD_StatusTypeDef cmd_ls () {
 CMD_StatusTypeDef cmd_rm(char* arg) {
 	char** file_name_split = cmd_split(arg, '.'); //Split into name and extension
 
-	if ((strcmp(file_name_split[1], "rfid") != 0)) {
-		printf("\n\rfile not found: %s", arg);
-		free_tokens(file_name_split, 2);
-		return CMD_RM_ERROR;
-	}
-	if (remove_card_byname(file_name_split[0]) != RFS_OK) {
+	if ((remove_card_byname(file_name_split[0]) != RFS_OK) || (strcmp(file_name_split[1], "rfid") != 0)) {
 		printf("\n\rfile not found: %s", arg);
 		free_tokens(file_name_split, 2);
 		return CMD_RM_ERROR;

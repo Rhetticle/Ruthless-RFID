@@ -1,8 +1,8 @@
 ../Core/Src/commands.c:21:19:cmd_ls	24	static
 ../Core/Src/commands.c:40:19:cmd_rm	24	static
-../Core/Src/commands.c:55:19:cmd_parse	24	static
-../Core/Src/commands.c:84:6:cmd_build	24	static
-../Core/Src/commands.c:110:8:cmd_split	32	static
-../Core/Src/commands.c:133:10:get_token_count	32	static
-../Core/Src/commands.c:153:7:cmd_strip	32	static
-../Core/Src/commands.c:180:6:free_tokens	24	static
+../Core/Src/commands.c:62:19:cmd_parse	24	static
+../Core/Src/commands.c:91:6:cmd_build	24	static
+../Core/Src/commands.c:117:8:cmd_split	32	static
+../Core/Src/commands.c:140:10:get_token_count	32	static
+../Core/Src/commands.c:159:7:cmd_strip	32	static
+../Core/Src/commands.c:186:6:free_tokens	24	static

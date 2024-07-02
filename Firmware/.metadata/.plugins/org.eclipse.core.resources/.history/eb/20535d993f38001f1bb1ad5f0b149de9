@@ -39,19 +39,12 @@ CMD_StatusTypeDef cmd_ls () {
  * */
 CMD_StatusTypeDef cmd_rm(char* arg) {
 	char** file_name_split = cmd_split(arg, '.'); //Split into name and extension
-
-	if ((strcmp(file_name_split[1], "rfid") != 0)) {
-		printf("\n\rfile not found: %s", arg);
+	if (remove_card_byname(file_name_split[0]) == RFS_OK) {
 		free_tokens(file_name_split, 2);
-		return CMD_RM_ERROR;
-	}
-	if (remove_card_byname(file_name_split[0]) != RFS_OK) {
-		printf("\n\rfile not found: %s", arg);
-		free_tokens(file_name_split, 2);
-		return CMD_RM_ERROR;
+		return CMD_OK;
 	}
 	free_tokens(file_name_split, 2);
-	return CMD_OK;
+	return CMD_RM_ERROR;
 }
 
 /**
@@ -139,11 +132,12 @@ char** cmd_split(char* cmd, char split) {
  * */
 uint32_t get_token_count(char* cmd, char split) {
 	uint32_t count = 0;
+	uint32_t start_index = 0;
 	char* cmd_stripped = cmd_strip(cmd);
 
 
-	for(int i = 0; i <= strlen(cmd); i++) {
-		if (cmd_stripped[i] == split) {
+	for(int i = start_index; i <= strlen(cmd); i++) {
+		if (cmd[i] == split) {
 			count++;
 		}
 	}
