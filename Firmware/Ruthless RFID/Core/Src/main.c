@@ -31,6 +31,7 @@
 #include "ruthlessfs.h"
 #include "button.h"
 #include "commands.h"
+#include "terminal.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -1093,7 +1094,7 @@ void StartKeyboard(void *argument)
     		} else if (select_index == 26) {
     			oled_keyboard_removeChar(&input);
     		} else if (select_index == 27) {
-    			xQueueSend(KeyboardOutHandle, &input, 0); //See the name user has inputted to queue for other tasks to use
+    			xQueueSend(KeyboardOutHandle, &input, 0); //Send the name user has inputted to queue for other tasks to use
     			ranonce = 0;
     			input = NULL;
     			vTaskSuspend(NULL); //exit task
@@ -1211,7 +1212,9 @@ void StartUSBListen(void *argument)
 		  if (((uint8_t)input == 0x0D) && initialised) {
 		  		cmd_parse(command);
 		  		command = NULL;
+		  		set_colour(FG_BRIGHTGREEN);
 		  		printf("\n\ruser@ruthless/ ");
+		  		set_colour(FG_WHITE);
 		  } else if (initialised){
 		  		cmd_build(&command, input);
 		  }
@@ -1219,7 +1222,9 @@ void StartUSBListen(void *argument)
 		  if ((input == 'i') && (initialised == 0)) {
 			  initialised++;
 			  terminal_init();
+			  set_colour(FG_BRIGHTGREEN);
 			  printf("\n\ruser@ruthless/ ");
+			  set_colour(FG_WHITE);
 		  }
 
 	  }
