@@ -245,7 +245,6 @@ void free_card(Card* card) {
 	free(card->name);
 	free(card->type);
 	free(card->uid);
-	free(card);
 }
 
 /**
@@ -261,7 +260,6 @@ void print_card_to_serial(uint16_t entry) {
 
 	Print(msg);
 	free(msg);
-	free_card(card);
 }
 
 
@@ -313,7 +311,7 @@ RFS_StatusTypeDef get_files_section (char** result, uint16_t start, uint32_t cou
 		}
 	}
 
-	free_card(work);
+	free(work);
 	return RFS_OK;
 }
 
@@ -360,7 +358,7 @@ RFS_StatusTypeDef file_exists(char* name) {
 		if (entry_present(block) == RFS_OK) {
 			work = read_card_entry(block);
 			if (strcmp(name, work->name) == 0) {
-				free_card(work);
+				free(work);
 				return RFS_OK;
 			}
 		}
@@ -368,7 +366,7 @@ RFS_StatusTypeDef file_exists(char* name) {
 			break;
 		}
 		block++;
-		free_card(work);
+		free(work);
 	}
 	return RFS_NO_CARD;
 }
@@ -389,7 +387,7 @@ char* get_file_name(uint16_t entry) {
 
 	char* name = malloc((strlen(work->name) + 1) * sizeof(char));
 	strcpy(name, work->name);
-	free_card(work);
+	free(work);
 
 	return name;
 }
@@ -432,11 +430,11 @@ RFS_StatusTypeDef remove_card_byname(char* name) {
 			work = read_card_entry(block);
 			if (strcmp(name, work->name) == 0) {
 				remove_card(block);
-				free_card(work);
+				free(work);
 				return RFS_OK;
 			}
 		}
-		free_card(work);
+		free(work);
 	}
 
 	return RFS_NO_CARD;
