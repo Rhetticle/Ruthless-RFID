@@ -1218,6 +1218,7 @@ void StartUSBListen(void *argument)
 
 		  if ((input == 'i') && (initialised == 0)) {
 			  initialised++;
+			  terminal_init();
 			  printf("\n\ruser@ruthless/ ");
 		  }
 

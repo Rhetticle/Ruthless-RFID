@@ -1,0 +1,81 @@
+/*
+ * commands.c
+ *
+ *  Created on: 30 Jun. 2024
+ *      Author: rhett
+ */
+
+#include "commands.h"
+#include "terminal.h"
+#include "ruthlessfs.h"
+#include "stm32f4xx.h"
+#include <stdint.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+/**
+ * List all files currently stored on device
+ * @return CMD_OK if command was successfully executed
+ * */
+CMD_StatusTypeDef cmd_ls () {
+	char** file_names = malloc(get_number_files_section(0, 3) * sizeof(char*));
+	if (get_files_section(file_names, 0, 3) != RFS_OK) {
+		return CMD_LS_ERROR;
+	}
+
+	for (int i = 0; i < 2; i++) {
+		printf("\n\r%s.rfid", file_names[i]);
+	}
+	free_filenames(file_names, 2);
+	return CMD_OK;
+}
+
+CMD_StatusTypeDef cmd_rm(char* arg) {
+	if (file_exists(arg) == RFS_OK) {
+		return CMD_OK;
+	}
+}
+
+/**
+ * Parse a string representation of command
+ * @param cmd - String representation of command e.g. ls
+ * @return CMD_OK if command was successfully parsed and executed
+ * */
+CMD_StatusTypeDef cmd_parse(char* cmd) {
+	if (strcmp(cmd, "ls") == 0) {
+		cmd_ls();
+	} else if (strcmp(cmd, "clear") == 0) {
+		clear_terminal();
+		move_terminal_cursor(0, 0);
+	} else {
+		printf("\n\rcommand not found: %s", cmd);
+	}
+	return CMD_OK;
+}
+
+/**
+ * Build a string from user input characters
+ * @param currnet - Current state of string
+ * @param input - User input character to be concatenated
+ * */
+void cmd_build(char** current, char input) {
+	uint8_t length;
+
+	if (*current == NULL) {
+		length = 0;
+	} else {
+		length = strlen(*current);
+	}
+
+	if ((uint8_t) input == 0x7F) { //Backspace
+		*current = realloc(*current, length);
+		(*current)[length - 1] = '\0';
+	} else {
+		*current = realloc(*current, length + 2);
+		(*current)[length] = input;
+		(*current)[length + 1] = '\0';
+	}
+
+}
+

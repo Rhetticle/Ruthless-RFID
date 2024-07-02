@@ -346,6 +346,32 @@ RFS_StatusTypeDef entry_present(uint16_t entry) {
 }
 
 /**
+ * Check if file exists by name
+ * @param name - File name
+ * @return RFS_OK if file exists
+ * */
+RFS_StatusTypeDef file_exists(char* name) {
+	Card* work;
+	uint16_t block = 0;
+
+	while(1) {
+		if (entry_present(block) == RFS_OK) {
+			work = read_card_entry(block);
+			if (strcmp(name, work->name) == 0) {
+				free(work);
+				return RFS_OK;
+			}
+		}
+		if (block == BLOCK_COUNT - 1) {
+			break;
+		}
+		block++;
+		free(work);
+	}
+	return RFS_NO_CARD;
+}
+
+/**
  * Get the file name of a given entry
  * @param entry - Entry to get name of
  * @return pointer to name
@@ -367,6 +393,11 @@ char* get_file_name(uint16_t entry) {
 }
 
 /**
+ * Get entry number of given file name
+ * @param name
+ * */
+
+/**
  * Free list of file names
  * @param file_names - File names
  * @param size -  Number of file names
@@ -384,6 +415,29 @@ void free_filenames(char** file_names, int size) {
  * */
 void remove_card(uint16_t entry) {
 	block_erase(entry);
+}
+
+/**
+ * Remove card by name
+ * @param name - Name of card
+ * @return RFS_OK if card was successfully removed
+ * */
+RFS_StatusTypeDef remove_card_byname(char* name) {
+	Card* work;
+
+	for (int block = 0; block < BLOCK_COUNT; block++) {
+		if (entry_present(block) == RFS_OK) {
+			work = read_card_entry(block);
+			if (strcmp(name, work->name) == 0) {
+				remove_card(block);
+				free(work);
+				return RFS_OK;
+			}
+		}
+		free(work);
+	}
+
+	return RFS_NO_CARD;
 }
 
 /**

@@ -9,6 +9,15 @@
 #include "terminal.h"
 #include <stdio.h>
 
+
+/**
+ * Initialise terminal with ASCII art
+ * */
+void terminal_init(void) {
+	for (int i = 0; i < 6; i++) {
+		printf("%s\r\n",RR_TERMINALART[i]);
+	}
+}
 /**
  * Move terminal cursor
  * @param x - X location to move to

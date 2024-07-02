@@ -31,6 +31,14 @@ typedef enum {
 	BG_WHITE = 47
 }TerminalColour;
 
+static const char* RR_TERMINALART[] = {
+		 "_____       _   _     _                 _____  ______ _____ _____" ,
+		 "|  __ \\     | | | |   | |               |  __ \\|  ____|_   _|  __ \\ ",
+		 "| |__) |   _| |_| |__ | | ___  ___ ___  | |__) | |__    | | | |  | | ",
+		 "|  _  / | | | __| '_ \\| |/ _ \\/ __/ __| |  _  /|  __|   | | | |  | | ",
+		 "| | \\ \\ |_| | |_| | | | |  __/\\__ \\__ \\ | | \\ \\| |     _| |_| |__| | ",
+		 "|_|  \\_\\__,_|\\__|_| |_|_|\\___||___/___/ |_|  \\_\\_|    |_____|_____/ "};
+void terminal_init(void);
 void move_terminal_cursor(int x, int y);
 void clear_terminal(void);
 void clear_to_end_of_line(void);

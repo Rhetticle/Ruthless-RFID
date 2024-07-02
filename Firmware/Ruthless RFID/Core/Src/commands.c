@@ -32,19 +32,37 @@ CMD_StatusTypeDef cmd_ls () {
 }
 
 /**
+ * Remove a file
+ * @param arg - File name to remove
+ * @return CMD_OK if file was successfully removed
+ * */
+CMD_StatusTypeDef cmd_rm(char* arg) {
+	if (remove_card_byname(arg) == RFS_OK) {
+		return CMD_OK;
+	}
+	return CMD_RM_ERROR;
+}
+
+/**
  * Parse a string representation of command
  * @param cmd - String representation of command e.g. ls
  * @return CMD_OK if command was successfully parsed and executed
  * */
 CMD_StatusTypeDef cmd_parse(char* cmd) {
-	if (strcmp(cmd, "ls") == 0) {
+	char** tokens = cmd_split(cmd, ' ');
+
+	if (strcmp(tokens[0], "ls") == 0) {
 		cmd_ls();
-	} else if (strcmp(cmd, "clear") == 0) {
+	} else if (strcmp(tokens[0], "clear") == 0) {
 		clear_terminal();
 		move_terminal_cursor(0, 0);
+	} else if (strcmp(tokens[0], "rm") == 0) {
+		cmd_rm(tokens[1]);
 	} else {
 		printf("\n\rcommand not found: %s", cmd);
 	}
+
+	free_tokens(tokens, get_token_count(cmd));
 	return CMD_OK;
 }
 
@@ -62,7 +80,95 @@ void cmd_build(char** current, char input) {
 		length = strlen(*current);
 	}
 
-	*current = realloc(*current, length + 2);
-	(*current)[length] = input;
-	(*current)[length + 1] = '\0';
+	if ((uint8_t) input == 0x7F) { //Backspace
+		*current = realloc(*current, length);
+		(*current)[length - 1] = '\0';
+	} else {
+		*current = realloc(*current, length + 2);
+		(*current)[length] = input;
+		(*current)[length + 1] = '\0';
+	}
+
+}
+
+/**
+ * Split a command into tokens
+ * @param cmd - Command to split
+ * @param split - Character to split on
+ * @return pointer to tokens
+ * */
+char** cmd_split(char* cmd, char split) {
+	uint32_t token_count = get_token_count(cmd);
+	uint32_t string_index = 0;
+
+	char** tokens = calloc(token_count, sizeof(char*));
+
+	for (int i = 0; i < token_count; i++) {
+		while (cmd[string_index] != split) {
+			cmd_build(&(tokens[i]), cmd[string_index]);
+			string_index++;
+		}
+		string_index++;
+	}
+
+	return tokens;
+}
+
+/**
+ * Get number of tokens in given command
+ * @param cmd - Command
+ * @return number of tokens within command
+ * */
+uint32_t get_token_count(char* cmd) {
+	uint32_t count = 0;
+	uint32_t start_index = 0;
+	char* cmd_stripped = cmd_strip(cmd);
+
+
+	for(int i = start_index; i <= strlen(cmd); i++) {
+		if (cmd[i] == ' ') {
+			count++;
+		}
+	}
+	free(cmd_stripped);
+	return count + 1;
+}
+
+/**
+ * Strip command of leading and trailing whitespace
+ * @param cmd - Command
+ * @return stripped command
+ * */
+char* cmd_strip(char* cmd) {
+	uint32_t start_index = 0;
+	uint32_t end_index = strlen(cmd);
+
+	while (cmd[start_index] == ' ') {
+		start_index++;
+	}
+
+	while (cmd[end_index] == ' ') {
+		end_index--;
+	}
+
+	char* result = malloc((end_index - start_index + 1) * sizeof(char));
+
+	for (int i = start_index; i < end_index; i++) {
+		result[i] = cmd[i];
+	}
+
+	result[end_index] = '\0';
+	return result;
+}
+
+/**
+ * Free token array
+ * @param tokens - Tokens
+ * @param size - Number of tokens
+ * */
+void free_tokens(char** tokens, uint32_t size) {
+	for (int i = 0; i < size; i++) {
+		free(tokens[i]);
+	}
+	free(tokens);
 }

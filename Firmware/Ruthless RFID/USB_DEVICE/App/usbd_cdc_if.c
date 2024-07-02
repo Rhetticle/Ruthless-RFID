@@ -263,6 +263,7 @@ static int8_t CDC_Control_FS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
 static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
 {
   /* USER CODE BEGIN 6 */
+	uint8_t check = Buf[0];
   CDC_Transmit_FS(Buf, *Len); //Echo input back to user
   xQueueSendFromISR(USBInputHandle, &Buf[0], 0);
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
