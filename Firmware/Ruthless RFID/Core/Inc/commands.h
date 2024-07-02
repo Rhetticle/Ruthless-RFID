@@ -20,7 +20,7 @@ CMD_StatusTypeDef cmd_ls(void);
 CMD_StatusTypeDef cmd_parse(char* cmd);
 void cmd_build(char** current, char input);
 char** cmd_split(char* cmd, char split);
-uint32_t get_token_count(char* cmd);
+uint32_t get_token_count(char* cmd, char split);
 char* cmd_strip(char* cmd);
 void free_tokens(char** tokens, uint32_t size);
 

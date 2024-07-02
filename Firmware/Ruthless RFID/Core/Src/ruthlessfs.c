@@ -286,7 +286,7 @@ uint32_t get_number_files_section (uint16_t start, uint32_t count) {
  * @return number of files stored
  * */
 uint32_t get_number_files_all(void) {
-	return get_number_files_section(0, BLOCK_COUNT);
+	return get_number_files_section(0, BLOCK_COUNT - 2); //-2 since last two blocks are for read and write count stats
 }
 
 /**
@@ -322,7 +322,7 @@ RFS_StatusTypeDef get_files_section (char** result, uint16_t start, uint32_t cou
  * @return RFS_OK if all file names were read correctly
  * */
 RFS_StatusTypeDef get_all_files(char** result) {
-	return get_files_section(result, 0, BLOCK_COUNT);
+	return get_files_section(result, 0, BLOCK_COUNT - 2); //-2 since last two blocks are for read and write count stats
 }
 
 /**

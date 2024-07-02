@@ -19,15 +19,16 @@
  * @return CMD_OK if command was successfully executed
  * */
 CMD_StatusTypeDef cmd_ls () {
-	char** file_names = malloc(get_number_files_section(0, 3) * sizeof(char*));
-	if (get_files_section(file_names, 0, 3) != RFS_OK) {
+	uint32_t file_count = get_number_files_all();
+	char** file_names = malloc(file_count * sizeof(char*));
+	if (get_all_files(file_names) != RFS_OK) {
 		return CMD_LS_ERROR;
 	}
 
-	for (int i = 0; i < 2; i++) {
+	for (int i = 0; i < file_count; i++) {
 		printf("\n\r%s.rfid", file_names[i]);
 	}
-	free_filenames(file_names, 2);
+	free_filenames(file_names, file_count);
 	return CMD_OK;
 }
 
@@ -37,7 +38,7 @@ CMD_StatusTypeDef cmd_ls () {
  * @return CMD_OK if file was successfully removed
  * */
 CMD_StatusTypeDef cmd_rm(char* arg) {
-	char** file_name_split = cmd_split(arg, '.');
+	char** file_name_split = cmd_split(arg, '.'); //Split into name and extension
 	if (remove_card_byname(file_name_split[0]) == RFS_OK) {
 		free_tokens(file_name_split, 2);
 		return CMD_OK;
@@ -71,7 +72,7 @@ CMD_StatusTypeDef cmd_parse(char* cmd) {
 		printf("\n\rcommand not found: %s", cmd);
 	}
 
-	free_tokens(tokens, get_token_count(cmd));
+	free_tokens(tokens, get_token_count(cmd, ' '));
 	return CMD_OK;
 }
 
@@ -107,7 +108,7 @@ void cmd_build(char** current, char input) {
  * @return pointer to tokens
  * */
 char** cmd_split(char* cmd, char split) {
-	uint32_t token_count = get_token_count(cmd);
+	uint32_t token_count = get_token_count(cmd, split);
 	uint32_t string_index = 0;
 
 	char** tokens = calloc(token_count, sizeof(char*));
@@ -126,16 +127,17 @@ char** cmd_split(char* cmd, char split) {
 /**
  * Get number of tokens in given command
  * @param cmd - Command
+ * @param split - Character to split on
  * @return number of tokens within command
  * */
-uint32_t get_token_count(char* cmd) {
+uint32_t get_token_count(char* cmd, char split) {
 	uint32_t count = 0;
 	uint32_t start_index = 0;
 	char* cmd_stripped = cmd_strip(cmd);
 
 
 	for(int i = start_index; i <= strlen(cmd); i++) {
-		if (cmd[i] == ' ') {
+		if (cmd[i] == split) {
 			count++;
 		}
 	}
