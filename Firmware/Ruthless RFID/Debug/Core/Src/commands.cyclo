@@ -1,8 +1,8 @@
 commands.c:21:19:cmd_ls	3
 commands.c:39:19:cmd_rm	2
-commands.c:51:19:cmd_parse	4
-commands.c:74:6:cmd_build	3
-commands.c:100:8:cmd_split	4
-commands.c:122:10:get_token_count	3
-commands.c:142:7:cmd_strip	4
-commands.c:169:6:free_tokens	2
+commands.c:54:19:cmd_parse	4
+commands.c:83:6:cmd_build	3
+commands.c:109:8:cmd_split	4
+commands.c:131:10:get_token_count	3
+commands.c:151:7:cmd_strip	4
+commands.c:178:6:free_tokens	2

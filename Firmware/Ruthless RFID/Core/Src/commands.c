@@ -37,9 +37,12 @@ CMD_StatusTypeDef cmd_ls () {
  * @return CMD_OK if file was successfully removed
  * */
 CMD_StatusTypeDef cmd_rm(char* arg) {
-	if (remove_card_byname(arg) == RFS_OK) {
+	char** file_name_split = cmd_split(arg, '.');
+	if (remove_card_byname(file_name_split[0]) == RFS_OK) {
+		free_tokens(file_name_split, 2);
 		return CMD_OK;
 	}
+	free_tokens(file_name_split, 2);
 	return CMD_RM_ERROR;
 }
 
@@ -52,12 +55,18 @@ CMD_StatusTypeDef cmd_parse(char* cmd) {
 	char** tokens = cmd_split(cmd, ' ');
 
 	if (strcmp(tokens[0], "ls") == 0) {
+
 		cmd_ls();
+
 	} else if (strcmp(tokens[0], "clear") == 0) {
+
 		clear_terminal();
 		move_terminal_cursor(0, 0);
+
 	} else if (strcmp(tokens[0], "rm") == 0) {
+
 		cmd_rm(tokens[1]);
+
 	} else {
 		printf("\n\rcommand not found: %s", cmd);
 	}
