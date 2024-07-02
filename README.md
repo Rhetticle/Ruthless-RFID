@@ -5,3 +5,25 @@
 </p>
 
 ISO/IEC 14443 compliant homemade RFID reader and writer for MIFARE Ultralight cards.
+
+# Hardware Details
+* RF Transceiver - NXP Semicondutors MFRC522 (QFN32)
+* Microcontroller - ST Microelectronics STM32F401CBU6 (QFN48)
+* OLED Display - Adafruit 5228
+* Flash memory - Winbond W25N01GVZEIG (1 GBit) (8WSON)
+
+Check out Ruthless RFID Altium for PCB design and layout.
+
+# Firmware Details
+## Drivers
+* RF Transceiver - [MFRC.c](https://github.com/TheZ0/Ruthless-RFID/blob/master/Firmware/Ruthless%20RFID/Core/Src/MFRC.c) , [MFRC.h](https://github.com/TheZ0/Ruthless-RFID/blob/master/Firmware/Ruthless%20RFID/Core/Inc/MFRC.h)
+* OLED Display - [OLED.c](https://github.com/TheZ0/Ruthless-RFID/blob/master/Firmware/Ruthless%20RFID/Core/Src/OLED.c) , [OLED.h](https://github.com/TheZ0/Ruthless-RFID/blob/master/Firmware/Ruthless%20RFID/Core/Inc/OLED.h)
+* Flash memory - [W25N01GVZEIG.c](https://github.com/TheZ0/Ruthless-RFID/blob/master/Firmware/Ruthless%20RFID/Core/Src/W25N01GVZEIG.c) , [W25N01GVZEIG.h](https://github.com/TheZ0/Ruthless-RFID/blob/master/Firmware/Ruthless%20RFID/Core/Inc/W25N01GVZEIG.h)
+
+## RuthlessFS
+The Ruthless RFID uses a basic file system RuthlessFS to store and organise data read from a physical card or uploaded via USB by user. Each file occupies a 128KiB block (smallest erasable block size) and contains data such as PICC type, UID and raw contents. Checkout [ruthlessfs.c](https://github.com/TheZ0/Ruthless-RFID/blob/master/Firmware/Ruthless%20RFID/Core/Inc/ruthlessfs.h) , [ruthlessfs.h](https://github.com/TheZ0/Ruthless-RFID/blob/master/Firmware/Ruthless%20RFID/Core/Inc/ruthlessfs.h) for more info.
+
+## Terminal
+![image](https://github.com/TheZ0/Ruthless-RFID/assets/142558812/430e7127-eaa6-4c12-acae-25d772863536)
+
+Ruthless RFID has a basic command line interface which the user can interact with using a terminal emulator such as PuTTy or similar. This interface supports common commands such as `ls` and `rm` as well as a custom command `pg` (program) to allow for the user to upload their own files to the device.
