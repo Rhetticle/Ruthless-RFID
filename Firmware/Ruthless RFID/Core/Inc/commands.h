@@ -13,7 +13,9 @@
 typedef enum {
 	CMD_OK = 0x00,
 	CMD_LS_ERROR = 0x01,
-	CMD_RM_ERROR = 0x02
+	CMD_RM_ERROR = 0x02,
+	CMD_PG_ERROR = 0x03,
+	CMD_CAT_ERROR = 0x04
 }CMD_StatusTypeDef;
 
 CMD_StatusTypeDef cmd_ls(void);

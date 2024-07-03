@@ -56,6 +56,7 @@ RFS_StatusTypeDef get_all_files(char** result);
 RFS_StatusTypeDef entry_present(uint16_t entry);
 RFS_StatusTypeDef file_exists(char* name);
 char* get_file_name(uint16_t entry);
+int get_file_entry(char* name);
 void free_filenames(char** file_names, int size);
 void remove_card(uint16_t entry);
 RFS_StatusTypeDef remove_card_byname(char* name);

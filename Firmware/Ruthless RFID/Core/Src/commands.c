@@ -9,6 +9,7 @@
 #include "terminal.h"
 #include "ruthlessfs.h"
 #include "W25N01GVZEIG.h"
+#include "MFRC.h"
 #include "stm32f4xx.h"
 #include <stdint.h>
 #include <string.h>
@@ -97,6 +98,28 @@ CMD_StatusTypeDef cmd_pg(char** args, uint8_t size) {
 }
 
 /**
+ * Print contents of file (cat)
+ * @param file - File name input from user
+ * @return CMD_OK if file was successfully printed to terminal
+ * */
+CMD_StatusTypeDef cmd_cat(char* file) {
+	char** file_no_ext = cmd_split(file, '.');
+	int block_num = get_file_entry(file_no_ext[0]);
+	Card* toprint = read_card_entry(block_num);
+
+	if (toprint == NULL) {
+		free_tokens(file_no_ext, 2);
+		return CMD_CAT_ERROR;
+	}
+
+	printf("\n\r"); //setup new line
+	dump_card_serial(toprint, UL_PAGESIZE);
+	free_tokens(file_no_ext, 2);
+	free_card(toprint);
+	return CMD_OK;
+}
+
+/**
  * Parse a string representation of command
  * @param cmd - String representation of command e.g. ls
  * @return CMD_OK if command was successfully parsed and executed
@@ -119,9 +142,14 @@ CMD_StatusTypeDef cmd_parse(char* cmd) {
 		cmd_rm(tokens[1]);
 
 	} else if (strcmp(tokens[0], "pg") == 0) {
+
 		cmd_pg(tokens, count);
-	}
-	else {
+
+	} else if (strcmp(tokens[0], "cat") == 0) {
+
+		cmd_cat(tokens[1]);
+
+	} else {
 		printf("\n\rcommand not found: %s", cmd);
 	}
 

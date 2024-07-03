@@ -395,6 +395,27 @@ char* get_file_name(uint16_t entry) {
 }
 
 /**
+ * Get entry number of file with given name
+ * @param name - File name to look for
+ * @return Entry number (-1 if file doesn't exist)
+ * */
+int get_file_entry(char* name) {
+	Card* work;
+
+	for (int i = 0; i < BLOCK_COUNT - 2; i++) {
+		if (entry_present(i) == RFS_OK) {
+			work = read_card_entry(i);
+			if (strcmp(work->name, name) == 0) {
+				free_card(work);
+				return i;
+			}
+		}
+	}
+	free_card(work);
+	return -1; //shouldn't get here
+}
+
+/**
  * Get entry number of given file name
  * @param name
  * */
