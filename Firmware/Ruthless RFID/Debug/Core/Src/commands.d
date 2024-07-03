@@ -1,5 +1,6 @@
 Core/Src/commands.o: ../Core/Src/commands.c ../Core/Inc/commands.h \
  ../Core/Inc/terminal.h ../Core/Inc/ruthlessfs.h \
+ ../Core/Inc/W25N01GVZEIG.h \
  ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h \
  ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xc.h \
  ../Drivers/CMSIS/Include/core_cm4.h \
@@ -36,6 +37,7 @@ Core/Src/commands.o: ../Core/Src/commands.c ../Core/Inc/commands.h \
 ../Core/Inc/commands.h:
 ../Core/Inc/terminal.h:
 ../Core/Inc/ruthlessfs.h:
+../Core/Inc/W25N01GVZEIG.h:
 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h:
 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xc.h:
 ../Drivers/CMSIS/Include/core_cm4.h:

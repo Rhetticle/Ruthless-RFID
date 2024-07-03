@@ -8,6 +8,7 @@
 #include "commands.h"
 #include "terminal.h"
 #include "ruthlessfs.h"
+#include "W25N01GVZEIG.h"
 #include "stm32f4xx.h"
 #include <stdint.h>
 #include <string.h>
@@ -61,6 +62,7 @@ CMD_StatusTypeDef cmd_rm(char* arg) {
  * */
 CMD_StatusTypeDef cmd_pg(char** args, uint8_t size) {
 	Card to_program;
+	char* name;
 
 	if (strcmp(args[1], "--help") == 0) {
 		pg_show_help();
@@ -70,15 +72,17 @@ CMD_StatusTypeDef cmd_pg(char** args, uint8_t size) {
 	for (int i = 1; i < size; i++) {
 
 		if (strcmp(args[i], "-name") == 0) {
-			to_program.name = args[i + 1];
+			name = args[i + 1];
 		}
 
 		if (strcmp(args[i], "-uid") == 0) {
 			pg_parse_str(&to_program.uid, args[i + 1]);
+			to_program.uidsize = get_token_count(args[i + 1], ',');
 		}
 
 		if (strcmp(args[i], "-mem") == 0) {
 			pg_parse_str(&to_program.contents, args[i + 1]);
+			to_program.contents_size = get_token_count(args[i + 1], ',');
 		}
 
 		if (strcmp(args[i], "-type") == 0) {
@@ -86,6 +90,9 @@ CMD_StatusTypeDef cmd_pg(char** args, uint8_t size) {
 		}
 
 	}
+	to_program.read_protected = 0;
+	enter_card(&to_program, mem_find_free_block(), name);
+	return CMD_OK;
 
 }
 
@@ -136,7 +143,7 @@ void cmd_build(char** current, char input) {
 		length = strlen(*current);
 	}
 
-	if ((uint8_t) input == 0x7F) { //Backspace
+	if ((((uint8_t) input == 0x7F)) && (length > 0)) { //Backspace
 		*current = realloc(*current, length);
 		(*current)[length - 1] = '\0';
 	} else {
