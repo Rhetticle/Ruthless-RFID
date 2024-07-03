@@ -491,7 +491,7 @@ RFS_StatusTypeDef modify_card(char* file_to_mod, int page, uint8_t* data, char* 
 		enter_card(old, entry, old->name);
 	}
 
-	free_card(old);
+	//free_card(old);
 	return RFS_OK;
 }
 
