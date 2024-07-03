@@ -15,6 +15,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 /**
  * List all files currently stored on device
@@ -126,14 +127,17 @@ CMD_StatusTypeDef cmd_cat(char* file) {
  * @return CMD_OK if file was successfully modified
  * */
 CMD_StatusTypeDef cmd_mod(char** args, uint32_t size) {
-	uint32_t page_to_modify;
-	uint8_t* data;
+	int page_to_modify = -1;
+	uint8_t* data = NULL;
 	char* new_name = NULL;
+
 
 	if (strcmp(args[1], "--help") == 0) {
 		mod_show_help();
 		return CMD_OK;
 	}
+
+	char** file_and_ext = cmd_split(args[1], '.');
 
 	for (int i = 1; i < size; i++) {
 
@@ -146,12 +150,37 @@ CMD_StatusTypeDef cmd_mod(char** args, uint32_t size) {
 		}
 
 		if (strcmp(args[i], "-name") == 0) {
+			str_toupper(args[i + 1]);
 			new_name = args[i + 1];
 		}
 	}
 
-	modify_card(args[1], page_to_modify, data, new_name); //args[1] will be file name
+	if ((data != NULL) && (page_to_modify == -1)) {
+		printf("\n\rplease specify the page you wish to modify");
+		free_filenames(file_and_ext, 2);
+		return CMD_MOD_ERROR;
+	}
+
+	if ((data == NULL) && (page_to_modify != -1)) {
+		printf("\n\rplease specify the data you wish to input");
+		free_filenames(file_and_ext, 2);
+		return CMD_MOD_ERROR;
+	}
+
+	if(modify_card(file_and_ext[0], page_to_modify, data, new_name) != RFS_OK) { //args[1] will be file name
+		return CMD_MOD_ERROR;
+	}
 	return CMD_OK;
+}
+
+/**
+ * Convert string to upper case
+ * @param str - String to convert
+ * */
+void str_toupper(char* str) {
+	for (int i = 0; i < strlen(str); i++) {
+		str[i] = toupper(str[i]);
+	}
 }
 
 /**

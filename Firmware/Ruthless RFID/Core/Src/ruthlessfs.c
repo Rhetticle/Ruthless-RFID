@@ -99,8 +99,10 @@ Card* read_card_name (char* name) {
 		block_addr++;
 	}
 	if (block_addr == BLOCK_COUNT) {
+		free(read_name);
 		return NULL; //We couldn't find the name
 	}
+	free(read_name);
 	return read_card_entry(block_addr);
 
 }
@@ -471,21 +473,25 @@ RFS_StatusTypeDef remove_card_byname(char* name) {
  * @param name - New name for file (Optional)
  * @return RFS_OK if file was successfully modified
  * */
-RFS_StatusTypeDef modify_card(char* file_to_mod, uint16_t page, uint8_t* data, char* new_name) {
+RFS_StatusTypeDef modify_card(char* file_to_mod, int page, uint8_t* data, char* new_name) {
 	int entry = get_file_entry(file_to_mod);
 
 	if (entry == -1) {
 		return RFS_READ_ERROR;
 	}
 	Card* old = read_card_entry(entry);
-	memcpy(old->contents + (UL_PAGESIZE * page), data, UL_PAGESIZE);
+
+	if ((page != -1) && (data != NULL)) {
+		memcpy(old->contents + (UL_PAGESIZE * page), data, UL_PAGESIZE);
+	}
 
 	if (new_name != NULL) {
 		enter_card(old, entry, new_name);
 	} else {
 		enter_card(old, entry, old->name);
 	}
-	free_card(old);
+
+	//free_card(old);
 	return RFS_OK;
 }
 
