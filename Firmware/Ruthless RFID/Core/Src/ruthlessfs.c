@@ -464,6 +464,32 @@ RFS_StatusTypeDef remove_card_byname(char* name) {
 }
 
 /**
+ * Modify contents of entry (Done though mod command)
+ * @param file_to_mod - Name of file to modify
+ * @param page - Card page number to modify
+ * @param data - New data for page
+ * @param name - New name for file (Optional)
+ * @return RFS_OK if file was successfully modified
+ * */
+RFS_StatusTypeDef modify_card(char* file_to_mod, uint16_t page, uint8_t* data, char* new_name) {
+	int entry = get_file_entry(file_to_mod);
+
+	if (entry == -1) {
+		return RFS_READ_ERROR;
+	}
+	Card* old = read_card_entry(entry);
+	memcpy(old->contents + (UL_PAGESIZE * page), data, UL_PAGESIZE);
+
+	if (new_name != NULL) {
+		enter_card(old, entry, new_name);
+	} else {
+		enter_card(old, entry, old->name);
+	}
+	free_card(old);
+	return RFS_OK;
+}
+
+/**
  * Calculate the used size of memory in MiB
  * @return size of memory used in MiB
  * */

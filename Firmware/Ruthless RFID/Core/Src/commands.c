@@ -120,6 +120,41 @@ CMD_StatusTypeDef cmd_cat(char* file) {
 }
 
 /**
+ * Modify command (Modify contents of exist file)
+ * @param args - Arguments passed by user
+ * @param size - Number of arguments
+ * @return CMD_OK if file was successfully modified
+ * */
+CMD_StatusTypeDef cmd_mod(char** args, uint32_t size) {
+	uint32_t page_to_modify;
+	uint8_t* data;
+	char* new_name = NULL;
+
+	if (strcmp(args[1], "--help") == 0) {
+		mod_show_help();
+		return CMD_OK;
+	}
+
+	for (int i = 1; i < size; i++) {
+
+		if(strcmp(args[i], "-page") == 0) {
+			page_to_modify = atoi(args[i + 1]);
+		}
+
+		if (strcmp(args[i], "-data") == 0) {
+			pg_parse_str(&data, args[i + 1]);
+		}
+
+		if (strcmp(args[i], "-name") == 0) {
+			new_name = args[i + 1];
+		}
+	}
+
+	modify_card(args[1], page_to_modify, data, new_name); //args[1] will be file name
+	return CMD_OK;
+}
+
+/**
  * Parse a string representation of command
  * @param cmd - String representation of command e.g. ls
  * @return CMD_OK if command was successfully parsed and executed
@@ -148,6 +183,10 @@ CMD_StatusTypeDef cmd_parse(char* cmd) {
 	} else if (strcmp(tokens[0], "cat") == 0) {
 
 		cmd_cat(tokens[1]);
+
+	} else if (strcmp(tokens[0], "mod") == 0) {
+
+		cmd_mod(tokens, count);
 
 	} else {
 		printf("\n\rcommand not found: %s", cmd);
@@ -272,6 +311,15 @@ void pg_show_help() {
 	printf("\n\r-type - Specifies card IC type");
 	printf("\n\r-mem - Specifies contents of card (comma separated, hexadecimal)");
 	printf("\n\r-uid - Specifies card UID (comma separated, hexadecimal)");
+}
+
+/**
+ * Show help options for mod command (Shown using mod --help)
+ * */
+void mod_show_help() {
+	printf("\n\r-page - Specifies page number to modify (Decimal)");
+	printf("\n\r-data - Speicifes data to place in page (Comma separated, hexadecimal)");
+	printf("\n\r-name - Specifies a new name for file (optional)");
 }
 
 /**

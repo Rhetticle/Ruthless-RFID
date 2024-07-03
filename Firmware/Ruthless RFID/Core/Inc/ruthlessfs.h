@@ -60,6 +60,7 @@ int get_file_entry(char* name);
 void free_filenames(char** file_names, int size);
 void remove_card(uint16_t entry);
 RFS_StatusTypeDef remove_card_byname(char* name);
+RFS_StatusTypeDef modify_card(char* file_to_mod, uint16_t page, uint8_t* data, char* name);
 uint32_t get_used_size(void);
 uint32_t get_free_size(void);
 void get_used_size_str(char* result);
