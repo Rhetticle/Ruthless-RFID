@@ -21,7 +21,7 @@ Check out Ruthless RFID Altium for PCB design and layout.
 * Flash memory - [W25N01GVZEIG.c](https://github.com/TheZ0/Ruthless-RFID/blob/master/Firmware/Ruthless%20RFID/Core/Src/W25N01GVZEIG.c) , [W25N01GVZEIG.h](https://github.com/TheZ0/Ruthless-RFID/blob/master/Firmware/Ruthless%20RFID/Core/Inc/W25N01GVZEIG.h)
 
 ## RuthlessFS
-The Ruthless RFID uses a basic file system RuthlessFS to store and organise data read from a physical card or uploaded via USB by user. Each file occupies a 128KiB block (smallest erasable block size) and contains data such as PICC type, UID and raw contents. Checkout [ruthlessfs.c](https://github.com/TheZ0/Ruthless-RFID/blob/master/Firmware/Ruthless%20RFID/Core/Inc/ruthlessfs.h) , [ruthlessfs.h](https://github.com/TheZ0/Ruthless-RFID/blob/master/Firmware/Ruthless%20RFID/Core/Inc/ruthlessfs.h) for more info.
+The Ruthless RFID uses a basic file system RuthlessFS to store and organise data read from a physical card or uploaded via USB by user. Each file occupies a 128KiB block (smallest erasable block size) and contains data such as PICC type, UID and raw contents. Checkout [ruthlessfs.c](https://github.com/TheZ0/Ruthless-RFID/blob/master/Firmware/Ruthless%20RFID/Core/Src/ruthlessfs.c) , [ruthlessfs.h](https://github.com/TheZ0/Ruthless-RFID/blob/master/Firmware/Ruthless%20RFID/Core/Inc/ruthlessfs.h) for more info.
 
 ## Terminal
 Ruthless RFID has a basic command line interface which the user can interact with using a terminal emulator such as PuTTy or similar. This interface supports common commands such as `ls`, `rm` and `cat` as well as two custom commands `pg` (program) for user to input their own file and `mod` for user to modify an existing file (See below).
