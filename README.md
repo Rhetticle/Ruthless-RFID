@@ -12,7 +12,7 @@ ISO/IEC 14443 compliant homemade RFID reader and writer for MIFARE Ultralight ca
 * OLED Display - Adafruit 5228
 * Flash memory - Winbond W25N01GVZEIG (1 GBit) (8WSON)
 
-Check out Ruthless RFID Altium for PCB design and layout.
+Check out [Ruthless RFID Altium](https://github.com/TheZ0/Ruthless-RFID/tree/master/Ruthless%20RFID%20Altium) for PCB design and layout.
 
 # Firmware Details
 ## Drivers
