@@ -942,6 +942,7 @@ void StartShowFiles(void *argument)
 	uint8_t select_index = 0;
 	int ranonce = 0;
 	Button_StateTypeDef button_state;
+	uint16_t current_page = 0;
 	/* Infinite loop */
   for(;;)
   {
@@ -949,7 +950,7 @@ void StartShowFiles(void *argument)
 	  if (ranonce == 0) {
 		  OLED_SCREEN(&SCRN_ShowFiles, NORMAL);
 		  OLED_SELECT(&SCRN_ShowFiles, select_index, OLED_RESTORE);
-		  OLED_display_files(&SCRN_ShowFiles, 0);
+		  OLED_display_files(&SCRN_ShowFiles, current_page);
 		  ranonce++;
 	  }
 
@@ -963,10 +964,15 @@ void StartShowFiles(void *argument)
 			  if (select_index == SHOWFILES_EXIT_LOC) {
 				  vTaskResume(HomeHandle);
 				  ranonce = 0;
+				  current_page = 0;
 				  vTaskSuspend(NULL);
 
-			  } else if ((entry_present(select_index) == RFS_OK)) {
-				  uint16_t entry = select_index;
+			  } else if ((select_index == SHOWFILES_NEXT_LOC) && (get_number_files_section(FILES_PERSCREEN * (current_page + 1), FILES_PERSCREEN) != 0)) {
+				  OLED_SCREEN(&SCRN_ShowFiles, NORMAL);
+				  OLED_SELECT(&SCRN_ShowFiles, select_index, OLED_RESTORE);
+				  OLED_display_files(&SCRN_ShowFiles, ++current_page);
+			  } else if ((entry_present(select_index + (FILES_PERSCREEN * current_page)) == RFS_OK)) {
+				  uint16_t entry = select_index + (FILES_PERSCREEN * current_page);
 				  xQueueSend(FileEntryHandle, &entry, 0);
 				  vTaskResume(ShowFileDataHandle);
 				  ranonce = 0;

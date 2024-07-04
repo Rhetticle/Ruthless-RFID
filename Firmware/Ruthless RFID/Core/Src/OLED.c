@@ -538,13 +538,13 @@ HAL_StatusTypeDef OLED_display_files(const Screen* screen, uint8_t page) {
 	OLED_SCRNREF(&SCRN_ShowFiles, 4, free);
 	OLED_SCRNREF(&SCRN_ShowFiles, 5, used);
 
-	if (get_files_section(file_names, FILES_PERSCREEN * page, FILES_PERSCREEN) != RFS_OK) {
+	if (get_files_section(file_names, FILES_PERSCREEN * page, file_count) != RFS_OK) {
 		free_filenames(file_names, file_count);
 		return HAL_ERROR;
 	}
 
 	while(location_index < FILES_PERSCREEN) {
-		if (entry_present(location_index) == RFS_OK) {
+		if (entry_present(location_index + (page * FILES_PERSCREEN)) == RFS_OK) {
 			OLED_SCRNREF(&SCRN_ShowFiles, location_index + 1, file_names[file_index]);
 			file_index++;
 		}

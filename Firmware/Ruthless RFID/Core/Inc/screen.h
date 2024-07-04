@@ -47,6 +47,7 @@ extern const Screen SCRN_Home, SCRN_ReadCard, SCRN_CardFound, SCRN_WriteCard, SC
 #define SHOWFILE_DELETE_LOC 0
 
 //Show Files data locations
+#define SHOWFILES_NEXT_LOC 3
 #define SHOWFILES_EXIT_LOC 4
 
 static const char KEYBOARD_LUT[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
