@@ -15,6 +15,7 @@ ISO/IEC 14443 compliant homemade RFID reader and writer for MIFARE Ultralight ca
 Check out [Ruthless RFID Altium](https://github.com/TheZ0/Ruthless-RFID/tree/master/Ruthless%20RFID%20Altium) for PCB design and layout.
 
 # Firmware Details
+Firmware for the Ruthless RFID was created using the STM32CubeIDE. The Ruthless RFID is running FreeRTOS to separate each functionality shown on the home screen into it's own task as well as some background tasks such as listening for USB input.
 ## Drivers
 * RF Transceiver - [MFRC.c](https://github.com/TheZ0/Ruthless-RFID/blob/master/Firmware/Ruthless%20RFID/Core/Src/MFRC.c) , [MFRC.h](https://github.com/TheZ0/Ruthless-RFID/blob/master/Firmware/Ruthless%20RFID/Core/Inc/MFRC.h)
 * OLED Display - [OLED.c](https://github.com/TheZ0/Ruthless-RFID/blob/master/Firmware/Ruthless%20RFID/Core/Src/OLED.c) , [OLED.h](https://github.com/TheZ0/Ruthless-RFID/blob/master/Firmware/Ruthless%20RFID/Core/Inc/OLED.h)
