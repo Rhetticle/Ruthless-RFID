@@ -805,7 +805,7 @@ void StartWriteCard(void *argument)
 			  if (entry_present(file_select_count) == RFS_OK) {
 				  towrite = read_card_entry(file_select_count);
 				  char* file_name = get_file_name(file_select_count);
-				  OLED_SCRNREF(&SCRN_WriteCard, WRITE_SRC_LOC, "         ");
+				  OLED_SCRN_REF(&SCRN_WriteCard, WRITE_SRC_LOC, "         ");
 				  OLED_SCRNREF(&SCRN_WriteCard, WRITE_SRC_LOC, file_name);
 				  free(file_name);
 				  file_select_count++;

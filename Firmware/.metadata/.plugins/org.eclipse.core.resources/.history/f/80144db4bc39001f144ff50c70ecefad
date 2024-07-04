@@ -799,17 +799,13 @@ void StartWriteCard(void *argument)
 
 	  if (xQueueReceive(UserInputHandle, &button_state, 0) == pdTRUE) {
 		  if (button_state == SHORT_PRESS) {
-			  if ((file_select_count > 0) && (entry_present(file_select_count) != RFS_OK)) {
-				  file_select_count = 0;
-			  }
 			  if (entry_present(file_select_count) == RFS_OK) {
 				  towrite = read_card_entry(file_select_count);
 				  char* file_name = get_file_name(file_select_count);
-				  OLED_SCRNREF(&SCRN_WriteCard, WRITE_SRC_LOC, "         ");
 				  OLED_SCRNREF(&SCRN_WriteCard, WRITE_SRC_LOC, file_name);
 				  free(file_name);
-				  file_select_count++;
 			  }
+
 		  } else if ((button_state == LONG_PRESS) && (towrite != NULL)) {
 			  	ranonce= 0;
 			  	inc_write_count();
