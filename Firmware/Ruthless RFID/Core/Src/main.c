@@ -760,7 +760,6 @@ void StartReadCard(void *argument)
 		ranonce++;
 	}
 	if(UL_readcard(read_card) == PCD_OK){
-			dump_card_serial(read_card, 4);
 			BUZZ();
 			MFRC_ANTOFF();
 			inc_read_count();

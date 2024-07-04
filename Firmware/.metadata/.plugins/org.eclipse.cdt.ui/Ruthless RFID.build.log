@@ -1,50 +1,24 @@
-20:33:38 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+10:50:43 **** Incremental Build of configuration Debug for project Ruthless RFID ****
 make -j8 all 
-arm-none-eabi-gcc "../Core/Src/ruthlessfs.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/ruthlessfs.d" -MT"Core/Src/ruthlessfs.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/ruthlessfs.o"
-../Core/Src/ruthlessfs.c: In function 'print_card_to_serial':
-../Core/Src/ruthlessfs.c:264:2: warning: implicit declaration of function 'Print'; did you mean 'printf'? [-Wimplicit-function-declaration]
-  264 |  Print(msg);
-      |  ^~~~~
-      |  printf
-../Core/Src/ruthlessfs.c: In function 'get_used_size_str':
-../Core/Src/ruthlessfs.c:522:20: warning: format '%i' expects argument of type 'int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
-  522 |  sprintf(result, "%i", used);
-      |                   ~^   ~~~~
-      |                    |   |
-      |                    int uint32_t {aka long unsigned int}
-      |                   %li
-../Core/Src/ruthlessfs.c: In function 'get_free_size_str':
-../Core/Src/ruthlessfs.c:531:20: warning: format '%i' expects argument of type 'int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
-  531 |  sprintf(result, "%i", free);
-      |                   ~^   ~~~~
-      |                    |   |
-      |                    int uint32_t {aka long unsigned int}
-      |                   %li
-../Core/Src/ruthlessfs.c: In function 'get_total_writes_str':
-../Core/Src/ruthlessfs.c:599:20: warning: format '%i' expects argument of type 'int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
-  599 |  sprintf(result, "%i", get_total_writes());
-      |                   ~^   ~~~~~~~~~~~~~~~~~~
-      |                    |   |
-      |                    int uint32_t {aka long unsigned int}
-      |                   %li
-../Core/Src/ruthlessfs.c: In function 'get_total_reads_str':
-../Core/Src/ruthlessfs.c:610:20: warning: format '%i' expects argument of type 'int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
-  610 |  sprintf(result, "%i", get_total_reads());
-      |                   ~^   ~~~~~~~~~~~~~~~~~
-      |                    |   |
-      |                    int uint32_t {aka long unsigned int}
-      |                   %li
+arm-none-eabi-gcc "../Core/Src/OLED.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/OLED.d" -MT"Core/Src/OLED.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/OLED.o"
+../Core/Src/OLED.c: In function 'OLED_select_inv':
+../Core/Src/OLED.c:503:47: warning: passing argument 3 of 'OLED_Printlin' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  503 |  OLED_Printlin(thispage, thiscol, screen->data[find_restore_string(screen, selopt)], INVERT);
+      |                                   ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/OLED.c:264:51: note: expected 'char *' but argument is of type 'const char *'
+  264 | void OLED_Printlin(uint8_t page,uint8_t col,char* string,uint8_t invert){
+      |                                             ~~~~~~^~~~~~
 arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: Ruthless RFID.elf
  
 arm-none-eabi-size   Ruthless\ RFID.elf 
 arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
    text	   data	    bss	    dec	    hex	filename
-  80844	   1860	  42244	 124948	  1e814	Ruthless RFID.elf
+  80848	   1864	  42240	 124952	  1e818	Ruthless RFID.elf
 Finished building: default.size.stdout
  
 Finished building: Ruthless RFID.list
  
 
-20:33:40 Build Finished. 0 errors, 5 warnings. (took 2s.53ms)
+10:50:45 Build Finished. 0 errors, 1 warnings. (took 1s.902ms)
 

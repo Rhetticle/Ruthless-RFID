@@ -442,10 +442,10 @@ void OLED_FILL(uint8_t* data,uint8_t page,uint8_t start_col, uint8_t length){
 
 void OLED_SELECT(const Screen* screen,uint8_t selopt, int restore){
 
-	char arrow[]="->";
+	char arrow[] = "->";
 
 	uint8_t prevpage,prevcol,thispage,thiscol,index;
-	char* rest;
+	char* rest = "  ";
 
 	if(selopt == 0){
 	    index = screen->selsize - 1;
@@ -453,23 +453,23 @@ void OLED_SELECT(const Screen* screen,uint8_t selopt, int restore){
 		index = selopt - 1;
 	}
 
-	prevpage=screen->seldata[index][0];
-	prevcol=screen->seldata[index][1];
-	thispage=screen->seldata[selopt][0];
-	thiscol=screen->seldata[selopt][1];
+	prevpage = screen->seldata[index][0];
+	prevcol  = screen->seldata[index][1];
+	thispage = screen->seldata[selopt][0];
+	thiscol  = screen->seldata[selopt][1];
 
 	if(restore == OLED_RESTORE){
 	    if (selopt == 0) {
-	    	rest=(char*)screen->data[find_restore_string(screen, screen->selsize - 1)]; //Here we may be wrapping around so we must restore the last select option
+	    	if (find_restore_string(screen, screen->selsize - 1) != 0) {
+	    		rest = (char*)screen->data[find_restore_string(screen, screen->selsize - 1)]; //Here we may be wrapping around so we must restore the last select option
+	    	}
 	    } else {
-	    	rest=(char*)screen->data[find_restore_string(screen, selopt - 1)];
+	    	rest = (char*)screen->data[find_restore_string(screen, selopt - 1)];
 	    }
-	} else {
-	    rest = "  ";
 	}
 
-	    OLED_Printlin(prevpage, prevcol, rest, NORMAL); //This restores the line of the previous (now deselected) select option
-	    OLED_Printlin(thispage, thiscol, arrow, NORMAL);
+	OLED_Printlin(prevpage, prevcol, rest, NORMAL); //This restores the line of the previous (now deselected) select option
+	OLED_Printlin(thispage, thiscol, arrow, NORMAL);
 
 }
 

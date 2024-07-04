@@ -24,9 +24,9 @@ static const char* WRITE_SCREEN[4]={"WRITE CARD","STANDARD: ISO 14443","SRC FILE
 static const uint8_t WRITE_DATLOC[4][2]={{0,0},{2,START_COL},{4,START_COL},{6,START_COL}};
 static const uint8_t WRITE_SEL[1][2] = {{0,0}};
 
-static const char* SHOW_FILESSCREEN[7] = {"FILES", "* ", "* ", "* ", "FREE: ", "USED: ", "  EXIT"};
-static const uint8_t SHOW_DATLOC[7][2] = {{0,0},{2,START_COL},{4,START_COL},{6,START_COL},{2,MID_COL},{4,MID_COL}, {6,MID_COL - 12}};
-static const uint8_t SHOW_SEL[4][2] = {{2, START_COL}, {4,START_COL}, {6, START_COL}, {6, MID_COL-12}};
+static const char* SHOW_FILESSCREEN[8] = {"FILES", "* ", "* ", "* ", "FREE: ", "USED: ", "  NEXT", "EXIT"};
+static const uint8_t SHOW_DATLOC[8][2] = {{0,0},{2,START_COL},{4,START_COL},{6,START_COL},{2,MID_COL},{4,MID_COL}, {6,MID_COL - 12}, {6, END_COL - 24}};
+static const uint8_t SHOW_SEL[5][2] = {{2, START_COL}, {4,START_COL}, {6, START_COL}, {6, MID_COL-12}, {6, END_COL - 36}};
 
 static const char* FILEDATA_SCREEN[5] = {".", "IC:", "UID: ", "DELETE", "EXIT"};
 static const uint8_t FILEDATA_DATLOC[5][2] = {{0,MID_COL-12}, {2,START_COL},{4,START_COL},{6,START_COL + 12}, {6, END_COL - 24}};
