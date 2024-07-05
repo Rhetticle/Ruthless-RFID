@@ -37,13 +37,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  0001ec61  00000000  00000000  00065670  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0002a10d  00000000  00000000  000842d1  2**0
+ 17 .debug_line   0002a109  00000000  00000000  000842d1  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000a13f2  00000000  00000000  000ae3de  2**0
+ 18 .debug_str    000a13f2  00000000  00000000  000ae3da  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000050  00000000  00000000  0014f7d0  2**0
+ 19 .comment      00000050  00000000  00000000  0014f7cc  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  0000a0b8  00000000  00000000  0014f820  2**2
+ 20 .debug_frame  0000a0b8  00000000  00000000  0014f81c  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -10752,24 +10752,24 @@ RFS_StatusTypeDef remove_card_byname(char* name) {
 
 	for (int block = 0; block < BLOCK_COUNT; block++) {
  8004952:	2300      	movs	r3, #0
- 8004954:	60bb      	str	r3, [r7, #8]
+ 8004954:	60fb      	str	r3, [r7, #12]
  8004956:	e026      	b.n	80049a6 <remove_card_byname+0x5c>
 		if (entry_present(block) == RFS_OK) {
- 8004958:	68bb      	ldr	r3, [r7, #8]
+ 8004958:	68fb      	ldr	r3, [r7, #12]
  800495a:	b29b      	uxth	r3, r3
  800495c:	4618      	mov	r0, r3
  800495e:	f7ff ff4b 	bl	80047f8 <entry_present>
  8004962:	4603      	mov	r3, r0
  8004964:	2b00      	cmp	r3, #0
- 8004966:	d118      	bne.n	800499a <remove_card_byname+0x50>
+ 8004966:	d11b      	bne.n	80049a0 <remove_card_byname+0x56>
 			work = read_card_entry(block);
- 8004968:	68bb      	ldr	r3, [r7, #8]
+ 8004968:	68fb      	ldr	r3, [r7, #12]
  800496a:	b29b      	uxth	r3, r3
  800496c:	4618      	mov	r0, r3
  800496e:	f7ff fd30 	bl	80043d2 <read_card_entry>
- 8004972:	60f8      	str	r0, [r7, #12]
+ 8004972:	60b8      	str	r0, [r7, #8]
 			if (strcmp(name, work->name) == 0) {
- 8004974:	68fb      	ldr	r3, [r7, #12]
+ 8004974:	68bb      	ldr	r3, [r7, #8]
  8004976:	689b      	ldr	r3, [r3, #8]
  8004978:	4619      	mov	r1, r3
  800497a:	6878      	ldr	r0, [r7, #4]
@@ -10778,28 +10778,29 @@ RFS_StatusTypeDef remove_card_byname(char* name) {
  8004982:	2b00      	cmp	r3, #0
  8004984:	d109      	bne.n	800499a <remove_card_byname+0x50>
 				remove_card(block);
- 8004986:	68bb      	ldr	r3, [r7, #8]
+ 8004986:	68fb      	ldr	r3, [r7, #12]
  8004988:	b29b      	uxth	r3, r3
  800498a:	4618      	mov	r0, r3
  800498c:	f7ff ffd0 	bl	8004930 <remove_card>
 				free_card(work);
- 8004990:	68f8      	ldr	r0, [r7, #12]
+ 8004990:	68b8      	ldr	r0, [r7, #8]
  8004992:	f7ff fe77 	bl	8004684 <free_card>
 				return RFS_OK;
  8004996:	2300      	movs	r3, #0
  8004998:	e00a      	b.n	80049b0 <remove_card_byname+0x66>
 			}
-		}
-		free_card(work);
- 800499a:	68f8      	ldr	r0, [r7, #12]
+			free_card(work);
+ 800499a:	68b8      	ldr	r0, [r7, #8]
  800499c:	f7ff fe72 	bl	8004684 <free_card>
 	for (int block = 0; block < BLOCK_COUNT; block++) {
- 80049a0:	68bb      	ldr	r3, [r7, #8]
+ 80049a0:	68fb      	ldr	r3, [r7, #12]
  80049a2:	3301      	adds	r3, #1
- 80049a4:	60bb      	str	r3, [r7, #8]
- 80049a6:	68bb      	ldr	r3, [r7, #8]
+ 80049a4:	60fb      	str	r3, [r7, #12]
+ 80049a6:	68fb      	ldr	r3, [r7, #12]
  80049a8:	f5b3 6f80 	cmp.w	r3, #1024	; 0x400
  80049ac:	dbd4      	blt.n	8004958 <remove_card_byname+0xe>
+		}
+
 	}
 
 	return RFS_NO_CARD;

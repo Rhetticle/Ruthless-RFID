@@ -458,8 +458,9 @@ RFS_StatusTypeDef remove_card_byname(char* name) {
 				free_card(work);
 				return RFS_OK;
 			}
+			free_card(work);
 		}
-		free_card(work);
+
 	}
 
 	return RFS_NO_CARD;

@@ -80,3 +80,71 @@ arm-none-eabi-size   Ruthless\ RFID.elf
   81068	   1864	  42240	 125172	  1e8f4	Ruthless RFID.elf
 Finished building: default.size.stdout
  
+19:29:45 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+   text	   data	    bss	    dec	    hex	filename
+  81068	   1864	  42240	 125172	  1e8f4	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+19:30:34 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+   text	   data	    bss	    dec	    hex	filename
+  81068	   1864	  42240	 125172	  1e8f4	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+19:30:48 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+   text	   data	    bss	    dec	    hex	filename
+  81068	   1864	  42240	 125172	  1e8f4	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+19:32:34 **** Incremental Build of configuration Debug for project Ruthless RFID ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/ruthlessfs.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xC -c -I../Core/Inc -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/ruthlessfs.d" -MT"Core/Src/ruthlessfs.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/ruthlessfs.o"
+../Core/Src/ruthlessfs.c: In function 'print_card_to_serial':
+../Core/Src/ruthlessfs.c:264:2: warning: implicit declaration of function 'Print'; did you mean 'printf'? [-Wimplicit-function-declaration]
+  264 |  Print(msg);
+      |  ^~~~~
+      |  printf
+../Core/Src/ruthlessfs.c: In function 'get_used_size_str':
+../Core/Src/ruthlessfs.c:523:20: warning: format '%i' expects argument of type 'int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  523 |  sprintf(result, "%i", used);
+      |                   ~^   ~~~~
+      |                    |   |
+      |                    int uint32_t {aka long unsigned int}
+      |                   %li
+../Core/Src/ruthlessfs.c: In function 'get_free_size_str':
+../Core/Src/ruthlessfs.c:532:20: warning: format '%i' expects argument of type 'int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  532 |  sprintf(result, "%i", free);
+      |                   ~^   ~~~~
+      |                    |   |
+      |                    int uint32_t {aka long unsigned int}
+      |                   %li
+../Core/Src/ruthlessfs.c: In function 'get_total_writes_str':
+../Core/Src/ruthlessfs.c:600:20: warning: format '%i' expects argument of type 'int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  600 |  sprintf(result, "%i", get_total_writes());
+      |                   ~^   ~~~~~~~~~~~~~~~~~~
+      |                    |   |
+      |                    int uint32_t {aka long unsigned int}
+      |                   %li
+../Core/Src/ruthlessfs.c: In function 'get_total_reads_str':
+../Core/Src/ruthlessfs.c:611:20: warning: format '%i' expects argument of type 'int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  611 |  sprintf(result, "%i", get_total_reads());
+      |                   ~^   ~~~~~~~~~~~~~~~~~
+      |                    |   |
+      |                    int uint32_t {aka long unsigned int}
+      |                   %li
+arm-none-eabi-gcc -o "Ruthless RFID.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\rhett\OneDrive\Documents\Ruthless RFID\Firmware\Ruthless RFID\STM32F401CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Ruthless RFID.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Ruthless RFID.elf
+ 
+arm-none-eabi-size   Ruthless\ RFID.elf 
+arm-none-eabi-objdump -h -S  Ruthless\ RFID.elf  > "Ruthless RFID.list"
+   text	   data	    bss	    dec	    hex	filename
+  81068	   1864	  42240	 125172	  1e8f4	Ruthless RFID.elf
+Finished building: default.size.stdout
+ 
+Finished building: Ruthless RFID.list
+ 
