@@ -615,7 +615,7 @@ PCD_StatusTypeDef UL_verify(Card* check) {
 		return PCD_COMM_ERR;
 	}
 
-	for (int byte = 0; byte < UL_MEMSIZE; byte++) {
+	for (int byte = UL_USERSTART; byte < UL_MEMSIZE; byte++) {
 		if (read->contents[byte] != check->contents[byte]) {
 			free(read->contents);
 			free(read->uid);

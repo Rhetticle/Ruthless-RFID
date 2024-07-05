@@ -47,6 +47,7 @@ typedef enum{
 #define UL_PAGESIZE 4 //4 bytes in a page
 #define UL_DATASTART 0x04 //Start address of data memory
 #define UL_DATAEND 0x0F //last page
+#define UL_USERSTART 10 //Start address of user-programmable memory (end of UID)
 
 //Register Addresses
 
