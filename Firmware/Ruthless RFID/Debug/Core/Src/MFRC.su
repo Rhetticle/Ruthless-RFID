@@ -29,4 +29,4 @@
 ../Core/Src/MFRC.c:561:19:UL_writecard	24	static
 ../Core/Src/MFRC.c:587:7:uid_tostring	24	static
 ../Core/Src/MFRC.c:606:19:UL_verify	24	static
-../Core/Src/MFRC.c:635:19:dump_card_serial	32	static
+../Core/Src/MFRC.c:638:19:dump_card_serial	32	static

@@ -609,6 +609,9 @@ PCD_StatusTypeDef UL_verify(Card* check) {
 	read->uid = malloc(UL_UIDSIZE * sizeof(uint8_t));
 
 	if (UL_readcard(read) != PCD_OK) {
+		free(read->contents);
+		free(read->uid);
+		free(read);
 		return PCD_COMM_ERR;
 	}
 
